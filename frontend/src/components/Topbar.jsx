@@ -1,0 +1,210 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { Search, Sun, Moon, Bell, ChevronDown, User, ShieldCheck, GraduationCap, LogOut, Sparkles } from 'lucide-react';
+
+export default function Topbar({
+  searchQuery,
+  setSearchQuery,
+  theme,
+  setTheme,
+  activeTab,
+  setActiveTab,
+  currentRole,
+  setCurrentRole,
+  setIsLoggedIn,
+  studentProfile
+}) {
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setProfileDropdownOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    document.documentElement.setAttribute('data-theme', nextTheme);
+  };
+
+  return (
+    <header className="app-topbar">
+      {/* Search Input */}
+      <div className="search-box-wrap">
+        <Search size={17} />
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search courses, topics, notes..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
+      {/* Right Actions */}
+      <div className="topbar-actions">
+        {/* Theme Toggle */}
+        <button
+          className="icon-btn-circle"
+          onClick={toggleTheme}
+          title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
+        >
+          {theme === 'dark' ? <Sun size={18} color="#f59e0b" /> : <Moon size={18} color="#64748b" />}
+        </button>
+
+        {/* Notifications Icon */}
+        <button
+          className="icon-btn-circle"
+          onClick={() => setActiveTab('notifications')}
+          title="Notifications"
+        >
+          <Bell size={18} />
+          <span className="badge-dot" />
+        </button>
+
+        {/* User Profile */}
+        <div style={{ position: 'relative' }} ref={dropdownRef}>
+          <button
+            className="user-profile-btn"
+            onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+          >
+            <div className="avatar-circle">
+              {studentProfile.initials || 'VK'}
+            </div>
+            <div className="user-profile-info">
+              <div className="user-name">{studentProfile.name}</div>
+              <div className="user-role">{currentRole}</div>
+            </div>
+            <ChevronDown size={15} color="var(--text-muted)" style={{ marginLeft: '4px' }} />
+          </button>
+
+          {/* Profile & Role Switcher Dropdown */}
+          {profileDropdownOpen && (
+            <div
+              className="ui-card fade-in"
+              style={{
+                position: 'absolute',
+                right: 0,
+                top: 'calc(100% + 8px)',
+                width: '240px',
+                padding: '8px',
+                zIndex: 100,
+                boxShadow: 'var(--shadow-lg)'
+              }}
+            >
+              <div style={{ padding: '8px 12px 10px 12px', borderBottom: '1px solid var(--border)' }}>
+                <div style={{ fontWeight: '700', fontSize: '14px', color: 'var(--text-main)' }}>
+                  {studentProfile.name}
+                </div>
+                <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+                  {studentProfile.email}
+                </div>
+                <div style={{
+                  display: 'inline-block',
+                  marginTop: '6px',
+                  padding: '2px 8px',
+                  borderRadius: '12px',
+                  background: 'var(--primary-soft)',
+                  color: 'var(--primary)',
+                  fontSize: '11px',
+                  fontWeight: '600'
+                }}>
+                  {currentRole.toUpperCase()} PORTAL
+                </div>
+              </div>
+
+              {/* Role Selection */}
+              <div style={{ padding: '8px 12px 4px 12px', fontSize: '11px', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                Switch Portal Role
+              </div>
+
+              {['Student', 'Teacher', 'Admin', 'Super Admin'].map((role) => (
+                <button
+                  key={role}
+                  onClick={() => {
+                    setCurrentRole(role);
+                    setProfileDropdownOpen(false);
+                  }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    width: '100%',
+                    padding: '8px 12px',
+                    borderRadius: '8px',
+                    border: 'none',
+                    background: currentRole === role ? 'var(--bg-subtle)' : 'transparent',
+                    color: currentRole === role ? 'var(--primary)' : 'var(--text-main)',
+                    fontWeight: currentRole === role ? '600' : '500',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    textAlign: 'left'
+                  }}
+                >
+                  <span>{role}</span>
+                  {currentRole === role && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--primary)' }} />}
+                </button>
+              ))}
+
+              <div style={{ margin: '6px 0', borderTop: '1px solid var(--border)' }} />
+
+              <button
+                onClick={() => {
+                  setActiveTab('profile');
+                  setProfileDropdownOpen(false);
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  width: '100%',
+                  padding: '8px 12px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  background: 'transparent',
+                  color: 'var(--text-main)',
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                  textAlign: 'left'
+                }}
+              >
+                <User size={15} />
+                <span>Profile & Settings</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setIsLoggedIn(false);
+                  setProfileDropdownOpen(false);
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  width: '100%',
+                  padding: '8px 12px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  background: 'transparent',
+                  color: 'var(--danger)',
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                  textAlign: 'left'
+                }}
+              >
+                <LogOut size={15} />
+                <span>Sign Out</span>
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+}
