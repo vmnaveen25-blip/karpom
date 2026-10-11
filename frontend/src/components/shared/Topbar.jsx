@@ -1,12 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, Sun, Moon, Bell, ChevronDown, User, ShieldCheck, GraduationCap, LogOut, Sparkles } from 'lucide-react';
+import { Search, Sun, Moon, Bell, ChevronDown, User, LogOut } from 'lucide-react';
 
 export default function Topbar({
   searchQuery,
   setSearchQuery,
   theme,
   setTheme,
-  activeTab,
   setActiveTab,
   currentRole,
   setCurrentRole,
@@ -71,14 +70,15 @@ export default function Topbar({
         {/* User Profile */}
         <div style={{ position: 'relative' }} ref={dropdownRef}>
           <button
+            id="user-profile-menu-btn"
             className="user-profile-btn"
-            onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+            onClick={() => setProfileDropdownOpen((prev) => !prev)}
           >
             <div className="avatar-circle">
-              {studentProfile.initials || 'VK'}
+              {studentProfile?.initials || 'VK'}
             </div>
             <div className="user-profile-info">
-              <div className="user-name">{studentProfile.name}</div>
+              <div className="user-name">{studentProfile?.name || 'User'}</div>
               <div className="user-role">{currentRole}</div>
             </div>
             <ChevronDown size={15} color="var(--text-muted)" style={{ marginLeft: '4px' }} />
@@ -87,6 +87,7 @@ export default function Topbar({
           {/* Profile & Role Switcher Dropdown */}
           {profileDropdownOpen && (
             <div
+              id="user-profile-dropdown"
               className="ui-card fade-in"
               style={{
                 position: 'absolute',
@@ -100,10 +101,10 @@ export default function Topbar({
             >
               <div style={{ padding: '8px 12px 10px 12px', borderBottom: '1px solid var(--border)' }}>
                 <div style={{ fontWeight: '700', fontSize: '14px', color: 'var(--text-main)' }}>
-                  {studentProfile.name}
+                  {studentProfile?.name || 'User'}
                 </div>
                 <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-                  {studentProfile.email}
+                  {studentProfile?.email || ''}
                 </div>
                 <div style={{
                   display: 'inline-block',
@@ -124,9 +125,10 @@ export default function Topbar({
                 Switch Portal Role
               </div>
 
-              {['Student', 'Teacher', 'Admin', 'Super Admin'].map((role) => (
+              {['Student', 'Teacher', 'Admin', 'Institution'].map((role) => (
                 <button
                   key={role}
+                  id={`role-switch-${role.toLowerCase()}`}
                   onClick={() => {
                     setCurrentRole(role);
                     setProfileDropdownOpen(false);

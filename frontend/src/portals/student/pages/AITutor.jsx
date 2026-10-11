@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { api } from '../../../services/apiClient';
 import {
   Sparkles,
   Send,
@@ -57,15 +58,11 @@ export default function AITutor({ studentData }) {
 
     try {
       // Try to query FastAPI backend if running
-      const res = await fetch('http://localhost:8000/api/ai/ask', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt: query,
-          course: selectedCourse,
-          material: selectedMaterial,
-          mode: activeMode
-        })
+      const res = await api.post('/api/ai/ask', {
+        prompt: query,
+        course: selectedCourse,
+        material: selectedMaterial,
+        mode: activeMode
       });
 
       if (res.ok) {

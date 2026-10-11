@@ -10,10 +10,15 @@ import {
   TrendingUp,
   Calendar,
   Bell,
-  Settings
+  Settings,
+  Users,
+  FolderOpen,
+  ClipboardCheck,
+  MessageSquare,
+  HelpCircle
 } from 'lucide-react';
 
-const quotesByTab = {
+const studentQuotes = {
   home: '“Learn a little every day, grow a lot.”',
   courses: '“Keep Learning! You’re one step closer to your goals.”',
   courseDetail: '“Consistent learning today builds tomorrow.”',
@@ -30,10 +35,25 @@ const quotesByTab = {
   profile: '“We’re here to support your learning journey.”'
 };
 
-export default function Sidebar({ activeTab, setActiveTab }) {
-  const currentQuote = quotesByTab[activeTab] || quotesByTab.home;
+const teacherQuotes = {
+  home: '“Inspire minds, ignite curiosity, and empower the future.”',
+  teacherClasses: '“Every student possesses potential waiting to be unlocked.”',
+  teacherCourses: '“A thoughtful curriculum is the roadmap to student mastery.”',
+  teacherMaterials: '“Great teaching materials turn complex ideas into clarity.”',
+  teacherAssignments: '“Meaningful assessments measure progress and spark growth.”',
+  teacherSchedule: '“Punctual schedules build disciplined and focused learners.”',
+  teacherCommunication: '“Clear guidance and open dialogue inspire student confidence.”',
+  teacherProgress: '“Tracking progress today ensures success tomorrow.”',
+  profile: '“Personalize your instructional workspace and preferences.”',
+  teacherHelp: '“Dedicated support to help you teach at your best.”'
+};
 
-  const navItems = [
+export default function Sidebar({ activeTab, setActiveTab, currentRole = 'Student' }) {
+  const isTeacher = currentRole === 'Teacher';
+  const quotes = isTeacher ? teacherQuotes : studentQuotes;
+  const currentQuote = quotes[activeTab] || quotes.home;
+
+  const studentNavItems = [
     { id: 'home', label: 'Home', icon: Home },
     { id: 'courses', label: 'My Courses', icon: BookOpen },
     { id: 'aiTutor', label: 'AI Tutor', icon: Bot },
@@ -44,6 +64,19 @@ export default function Sidebar({ activeTab, setActiveTab }) {
     { id: 'progress', label: 'Progress', icon: TrendingUp },
     { id: 'calendar', label: 'Calendar', icon: Calendar },
   ];
+
+  const teacherNavItems = [
+    { id: 'home', label: 'Home', icon: Home },
+    { id: 'teacherClasses', label: 'My Classes & Students', icon: Users },
+    { id: 'teacherCourses', label: 'Courses & Curriculum', icon: BookOpen },
+    { id: 'teacherMaterials', label: 'Teaching Materials', icon: FolderOpen },
+    { id: 'teacherAssignments', label: 'Assignments & Assessments', icon: ClipboardCheck },
+    { id: 'teacherSchedule', label: 'Live Teaching & Schedule', icon: Calendar },
+    { id: 'teacherCommunication', label: 'Communication', icon: MessageSquare },
+    { id: 'teacherProgress', label: 'Student Progress', icon: TrendingUp },
+  ];
+
+  const navItems = isTeacher ? teacherNavItems : studentNavItems;
 
   return (
     <aside className="app-sidebar">
@@ -71,9 +104,9 @@ export default function Sidebar({ activeTab, setActiveTab }) {
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id || 
-            (item.id === 'courses' && activeTab === 'courseDetail') ||
-            (item.id === 'assessments' && activeTab === 'assessmentResult') ||
-            (item.id === 'notes' && activeTab === 'flashcards');
+            (!isTeacher && item.id === 'courses' && activeTab === 'courseDetail') ||
+            (!isTeacher && item.id === 'assessments' && activeTab === 'assessmentResult') ||
+            (!isTeacher && item.id === 'notes' && activeTab === 'flashcards');
 
           return (
             <button
@@ -89,13 +122,15 @@ export default function Sidebar({ activeTab, setActiveTab }) {
 
         <div style={{ margin: '8px 0', borderTop: '1px solid var(--border)' }} />
 
-        <button
-          onClick={() => setActiveTab('notifications')}
-          className={`nav-link-btn ${activeTab === 'notifications' ? 'active' : ''}`}
-        >
-          <Bell size={18} strokeWidth={activeTab === 'notifications' ? 2.3 : 1.8} />
-          <span>Notifications</span>
-        </button>
+        {!isTeacher && (
+          <button
+            onClick={() => setActiveTab('notifications')}
+            className={`nav-link-btn ${activeTab === 'notifications' ? 'active' : ''}`}
+          >
+            <Bell size={18} strokeWidth={activeTab === 'notifications' ? 2.3 : 1.8} />
+            <span>Notifications</span>
+          </button>
+        )}
 
         <button
           onClick={() => setActiveTab('profile')}
@@ -104,6 +139,16 @@ export default function Sidebar({ activeTab, setActiveTab }) {
           <Settings size={18} strokeWidth={activeTab === 'profile' ? 2.3 : 1.8} />
           <span>Profile & Settings</span>
         </button>
+
+        {isTeacher && (
+          <button
+            onClick={() => setActiveTab('teacherHelp')}
+            className={`nav-link-btn ${activeTab === 'teacherHelp' ? 'active' : ''}`}
+          >
+            <HelpCircle size={18} strokeWidth={activeTab === 'teacherHelp' ? 2.3 : 1.8} />
+            <span>Help & Support</span>
+          </button>
+        )}
       </nav>
 
       {/* Mascot Graphic at bottom */}
