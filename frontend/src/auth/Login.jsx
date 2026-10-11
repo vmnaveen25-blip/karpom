@@ -231,13 +231,13 @@ export default function Login({ onLogin, theme, setTheme }) {
             Access your Tutor V2 account
           </p>
 
-          {/* Quick Role Picker for Testing Mini-Project roles */}
+          {/* Quick Role Picker */}
           <div style={{ marginTop: '20px' }}>
             <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#475569', marginBottom: '6px', textTransform: 'uppercase' }}>
               Select Portal Role
             </label>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '6px' }}>
-              {['Student', 'Teacher', 'Admin', 'Super Admin'].map((role) => (
+              {['Student', 'Teacher', 'Admin', 'Institution'].map((role) => (
                 <button
                   type="button"
                   key={role}
