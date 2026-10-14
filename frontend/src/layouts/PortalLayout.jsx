@@ -26,8 +26,6 @@ export default function PortalLayout({
       <div className="app-main">
         {/* Shared Top Navigation Bar */}
         <Topbar
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
           setActiveTab={setActiveTab}
           currentRole={currentRole}
           setCurrentRole={setCurrentRole}

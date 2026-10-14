@@ -226,53 +226,7 @@ button, input, select, textarea {
   box-shadow: 0 0 8px var(--primary);
 }
 
-/* Mascot bottom widget */
-.sidebar-mascot {
-  margin-top: auto;
-  position: relative;
-  padding-top: 14px;
-}
 
-.sidebar-mascot-img-wrap {
-  display: flex;
-  justify-content: center;
-  margin-bottom: -10px;
-  position: relative;
-  z-index: 2;
-}
-
-.sidebar-mascot img {
-  width: 72px;
-  height: 72px;
-  object-fit: contain;
-  filter: drop-shadow(0 4px 12px rgba(23, 75, 255, 0.25));
-}
-
-.mascot-quote-box {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 16px 12px 12px 12px;
-  box-shadow: var(--shadow-neu-raised);
-  position: relative;
-  text-align: center;
-}
-
-.mascot-quote-text {
-  font-size: 11.5px;
-  color: var(--text-secondary);
-  line-height: 1.45;
-  font-weight: 500;
-}
-
-.mascot-quote-indicator {
-  width: 20px;
-  height: 2.5px;
-  border-radius: 4px;
-  background: var(--primary);
-  box-shadow: 0 0 6px var(--primary-glow);
-  margin: 8px auto 0 auto;
-}
 
 /* Main Area */
 .app-main {
@@ -292,26 +246,12 @@ button, input, select, textarea {
   box-shadow: 0 4px 18px rgba(166, 178, 200, 0.14);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 0 32px;
   position: sticky;
   top: 0;
   z-index: 30;
   transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.search-box-wrap {
-  position: relative;
-  width: 420px;
-  max-width: 100%;
-}
-
-.search-box-wrap svg {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-muted);
 }
 
 .search-input {
@@ -818,8 +758,7 @@ tr:hover td {
   .glass-card,
   .glass-panel,
   .modal-dialog,
-  .modal-box,
-  .mascot-quote-box {
+  .modal-box {
     background: #FFFFFF !important;
   }
 }
@@ -852,11 +791,8 @@ tr:hover td {
     width: 76px;
     padding: 14px 8px;
   }
-  .sidebar-logo span, .nav-link-btn span, .mascot-quote-box {
+  .sidebar-logo span, .nav-link-btn span {
     display: none;
-  }
-  .sidebar-mascot img {
-    width: 60px;
   }
   .nav-link-btn {
     justify-content: center;

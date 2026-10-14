@@ -19,40 +19,8 @@ import {
   GraduationCap
 } from 'lucide-react';
 
-const studentQuotes = {
-  home: '“Learn a little every day, grow a lot.”',
-  courses: '“Keep Learning! You’re one step closer to your goals.”',
-  courseDetail: '“Consistent learning today builds tomorrow.”',
-  aiTutor: '“Let’s learn together! ✨”',
-  practice: '“Practice today builds expertise tomorrow.”',
-  assessments: '“Assess. Improve. Achieve. Your next milestone is closer.”',
-  assessmentResult: '“Every answer today is a step towards a stronger tomorrow.”',
-  notes: '“Good notes create better understanding today and bigger opportunities tomorrow.”',
-  flashcards: '“Small steps today, big concepts tomorrow.”',
-  library: '“Good resources today build stronger skills tomorrow.”',
-  progress: '“Consistent learning today builds bigger opportunities tomorrow.”',
-  calendar: '“Plan today, learn better tomorrow.”',
-  notifications: '“Stay updated, stay ahead.”',
-  profile: '“We’re here to support your learning journey.”'
-};
-
-const teacherQuotes = {
-  home: '“Inspire minds, ignite curiosity, and empower the future.”',
-  teacherClasses: '“Every student possesses potential waiting to be unlocked.”',
-  teacherCourses: '“A thoughtful curriculum is the roadmap to student mastery.”',
-  teacherMaterials: '“Great teaching materials turn complex ideas into clarity.”',
-  teacherAssignments: '“Meaningful assessments measure progress and spark growth.”',
-  teacherSchedule: '“Punctual schedules build disciplined and focused learners.”',
-  teacherCommunication: '“Clear guidance and open dialogue inspire student confidence.”',
-  teacherProgress: '“Tracking progress today ensures success tomorrow.”',
-  profile: '“Personalize your instructional workspace and preferences.”',
-  teacherHelp: '“Dedicated support to help you teach at your best.”'
-};
-
 export default function Sidebar({ activeTab, setActiveTab, currentRole = 'Student' }) {
   const isTeacher = currentRole === 'Teacher';
-  const quotes = isTeacher ? teacherQuotes : studentQuotes;
-  const currentQuote = quotes[activeTab] || quotes.home;
 
   const studentNavItems = [
     { id: 'home', label: 'Home', icon: Home },
@@ -158,19 +126,6 @@ export default function Sidebar({ activeTab, setActiveTab, currentRole = 'Studen
           </button>
         )}
       </nav>
-
-      {/* Mascot Graphic only in Student mode */}
-      {!isTeacher && (
-        <div className="sidebar-mascot">
-          <div className="sidebar-mascot-img-wrap">
-            <img src="/assets/cat_mascot.png" alt="Karpom AI Mascot" />
-          </div>
-          <div className="mascot-quote-box">
-            <div className="mascot-quote-text">{currentQuote}</div>
-            <div className="mascot-quote-indicator" />
-          </div>
-        </div>
-      )}
     </aside>
   );
 }
