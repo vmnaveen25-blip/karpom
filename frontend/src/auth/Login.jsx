@@ -11,14 +11,12 @@ import {
   Lock,
   Eye,
   EyeOff,
-  Sun,
-  Moon,
   Globe,
   ArrowRight,
   Info
 } from 'lucide-react';
 
-export default function Login({ onLogin, theme, setTheme }) {
+export default function Login({ onLogin }) {
   const [email, setEmail] = useState('vijay.vikas@college.edu');
   const [password, setPassword] = useState('password123');
   const [showPassword, setShowPassword] = useState(false);
@@ -29,19 +27,11 @@ export default function Login({ onLogin, theme, setTheme }) {
     onLogin({ email, role: selectedRole });
   };
 
-  const toggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(nextTheme);
-    document.documentElement.setAttribute('data-theme', nextTheme);
-  };
-
   return (
     <div style={{
       minHeight: '100vh',
       backgroundColor: 'var(--bg-app)',
-      backgroundImage: theme === 'dark'
-        ? 'radial-gradient(circle at 18% 15%, rgba(23, 75, 255, 0.16) 0%, transparent 45%), radial-gradient(circle at 82% 82%, rgba(16, 53, 201, 0.12) 0%, transparent 50%)'
-        : 'radial-gradient(circle at 20% 0%, rgba(23, 75, 255, 0.05) 0%, transparent 45%), radial-gradient(circle at 80% 100%, rgba(23, 75, 255, 0.03) 0%, transparent 50%)',
+      backgroundImage: 'radial-gradient(circle at 20% 0%, rgba(23, 75, 255, 0.05) 0%, transparent 45%), radial-gradient(circle at 80% 100%, rgba(23, 75, 255, 0.03) 0%, transparent 50%)',
       color: 'var(--text-main)',
       display: 'flex',
       flexDirection: 'column',
@@ -69,14 +59,6 @@ export default function Login({ onLogin, theme, setTheme }) {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          <button
-            onClick={toggleTheme}
-            className="icon-btn-circle"
-            style={{ width: '38px', height: '38px' }}
-          >
-            {theme === 'dark' ? <Sun size={17} color="#f59e0b" /> : <Moon size={17} color="var(--text-muted)" />}
-          </button>
-
           <div style={{
             display: 'flex',
             alignItems: 'center',
@@ -127,9 +109,7 @@ export default function Login({ onLogin, theme, setTheme }) {
             <h1 style={{ fontSize: '42px', fontWeight: '900', color: 'var(--text-main)', lineHeight: 1.15, letterSpacing: '-0.03em' }}>
               Welcome Back <br />
               to <span style={{
-                background: theme === 'dark'
-                  ? 'linear-gradient(135deg, #FFFFFF 0%, #8FAEFF 50%, #174BFF 100%)'
-                  : 'linear-gradient(135deg, #0F172A 0%, #174BFF 100%)',
+                background: 'linear-gradient(135deg, #0F172A 0%, #174BFF 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent'
               }}>Tutor V2</span>

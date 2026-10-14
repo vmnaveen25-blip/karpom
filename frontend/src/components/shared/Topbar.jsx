@@ -1,11 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, Sun, Moon, Bell, ChevronDown, User, LogOut } from 'lucide-react';
+import { Search, Bell, ChevronDown, User, LogOut } from 'lucide-react';
 
 export default function Topbar({
   searchQuery,
   setSearchQuery,
-  theme,
-  setTheme,
   setActiveTab,
   currentRole,
   setCurrentRole,
@@ -26,12 +24,6 @@ export default function Topbar({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const toggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(nextTheme);
-    document.documentElement.setAttribute('data-theme', nextTheme);
-  };
-
   return (
     <header className="app-topbar">
       {/* Search Input */}
@@ -48,15 +40,6 @@ export default function Topbar({
 
       {/* Right Actions */}
       <div className="topbar-actions">
-        {/* Theme Toggle */}
-        <button
-          className="icon-btn-circle"
-          onClick={toggleTheme}
-          title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
-        >
-          {theme === 'dark' ? <Sun size={18} color="#f59e0b" /> : <Moon size={18} color="#64748b" />}
-        </button>
-
         {/* Notifications Icon */}
         <button
           className="icon-btn-circle"

@@ -11,16 +11,17 @@ export default function App() {
   const [selectedCourse, setSelectedCourse] = useState('dsa');
   const [selectedAssessment, setSelectedAssessment] = useState('a1');
   const [searchQuery, setSearchQuery] = useState('');
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('tutor_theme') || 'light';
-  });
   const [studentData, setStudentData] = useState(initialStudentData);
   const [teacherData, setTeacherData] = useState(initialTeacherData);
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('tutor_theme', theme);
-  }, [theme]);
+    document.documentElement.setAttribute('data-theme', 'light');
+    try {
+      localStorage.setItem('tutor_theme', 'light');
+    } catch (e) {
+      // ignore storage errors
+    }
+  }, []);
 
   const handleLogin = ({ email, role }) => {
     setIsLoggedIn(true);
@@ -41,7 +42,7 @@ export default function App() {
   const activeProfile = currentRole === 'Teacher' ? teacherData.profile : studentData.profile;
 
   if (!isLoggedIn) {
-    return <Login onLogin={handleLogin} theme={theme} setTheme={setTheme} />;
+    return <Login onLogin={handleLogin} />;
   }
 
   return (
@@ -50,8 +51,6 @@ export default function App() {
       setActiveTab={setActiveTab}
       searchQuery={searchQuery}
       setSearchQuery={setSearchQuery}
-      theme={theme}
-      setTheme={setTheme}
       currentRole={currentRole}
       setCurrentRole={handleRoleChange}
       setIsLoggedIn={setIsLoggedIn}

@@ -7,8 +7,6 @@ export default function PortalLayout({
   setActiveTab,
   searchQuery,
   setSearchQuery,
-  theme,
-  setTheme,
   currentRole,
   setCurrentRole,
   setIsLoggedIn,
@@ -30,8 +28,6 @@ export default function PortalLayout({
         <Topbar
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          theme={theme}
-          setTheme={setTheme}
           setActiveTab={setActiveTab}
           currentRole={currentRole}
           setCurrentRole={setCurrentRole}
