@@ -374,16 +374,16 @@ export default function Progress({ studentData }) {
           </h3>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <div style={{ padding: '14px', borderRadius: '10px', background: '#fef2f2', border: '1px solid #fee2e2' }}>
-              <div style={{ fontWeight: '700', fontSize: '13px', color: '#dc2626' }}>Focus on Trees and Graphs</div>
-              <div style={{ fontSize: '12px', color: '#991b1b', marginTop: '4px', lineHeight: 1.4 }}>
+            <div style={{ padding: '14px', borderRadius: '10px', background: 'var(--danger-soft)', border: '1px solid rgba(239, 68, 68, 0.25)' }}>
+              <div style={{ fontWeight: '700', fontSize: '13px', color: 'var(--danger)' }}>Focus on Trees and Graphs</div>
+              <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px', lineHeight: 1.4 }}>
                 These topics have lower mastery. Spend more time practicing and reviewing notes.
               </div>
             </div>
 
-            <div style={{ padding: '14px', borderRadius: '10px', background: '#eff6ff', border: '1px solid #dbeafe' }}>
-              <div style={{ fontWeight: '700', fontSize: '13px', color: '#2563eb' }}>Take More Practice Tests</div>
-              <div style={{ fontSize: '12px', color: '#1e40af', marginTop: '4px', lineHeight: 1.4 }}>
+            <div style={{ padding: '14px', borderRadius: '10px', background: 'var(--primary-soft)', border: '1px solid rgba(23, 75, 255, 0.25)' }}>
+              <div style={{ fontWeight: '700', fontSize: '13px', color: 'var(--primary)' }}>Take More Practice Tests</div>
+              <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px', lineHeight: 1.4 }}>
                 Regular practice can improve your assessment performance.
               </div>
             </div>

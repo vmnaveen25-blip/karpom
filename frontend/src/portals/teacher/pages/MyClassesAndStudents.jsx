@@ -124,11 +124,11 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
           width: '56px',
           height: '56px',
           borderRadius: '14px',
-          background: '#fef2f2',
+          background: 'var(--danger-soft)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: '#ef4444',
+          color: 'var(--danger)',
           flexShrink: 0
         }}>
           <Coffee size={28} />
@@ -191,7 +191,7 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
         width: '56px',
         height: '56px',
         borderRadius: '14px',
-        background: '#fdf2f8',
+        background: 'rgba(236, 72, 153, 0.15)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -597,10 +597,10 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                   width: '100%',
                   padding: '8px 12px 8px 36px',
                   borderRadius: '8px',
-                  border: '1px solid #e2e8f0',
-                  background: '#ffffff',
+                  border: '1px solid var(--border)',
+                  background: 'var(--bg-input)',
                   fontSize: '13px',
-                  color: '#0f172a',
+                  color: 'var(--text-main)',
                   outline: 'none'
                 }}
               />

@@ -150,8 +150,8 @@ export default function Practice({ studentData }) {
                 borderRadius: '6px',
                 fontSize: '11.5px',
                 fontWeight: '700',
-                background: '#fffbeb',
-                color: '#d97706'
+                background: 'var(--warning-soft)',
+                color: 'var(--warning)'
               }}>
                 {question.difficulty}
               </span>
@@ -244,10 +244,10 @@ export default function Practice({ studentData }) {
           {showHint && (
             <div style={{
               padding: '14px 16px',
-              background: '#fffbeb',
-              border: '1px solid #fde68a',
+              background: 'var(--warning-soft)',
+              border: '1px solid rgba(245, 158, 11, 0.3)',
               borderRadius: 'var(--radius-md)',
-              color: '#92400e',
+              color: 'var(--warning)',
               fontSize: '13px',
               lineHeight: 1.5
             }}>
@@ -457,7 +457,7 @@ export default function Practice({ studentData }) {
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Difficulty</span>
-                <span style={{ padding: '2px 8px', borderRadius: '4px', background: '#fffbeb', color: '#d97706', fontWeight: '700', fontSize: '11px' }}>
+                <span style={{ padding: '2px 8px', borderRadius: '4px', background: 'var(--warning-soft)', color: 'var(--warning)', fontWeight: '700', fontSize: '11px' }}>
                   {question.difficulty}
                 </span>
               </div>

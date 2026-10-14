@@ -130,9 +130,9 @@ export default function Flashcards({ studentData, setActiveTab }) {
           style={{
             padding: '8px 16px',
             borderRadius: 'var(--radius-full)',
-            background: '#fffbeb',
-            color: '#d97706',
-            border: '1px solid #fde68a',
+            background: 'var(--warning-soft)',
+            color: 'var(--warning)',
+            border: '1px solid rgba(245, 158, 11, 0.3)',
             fontSize: '13px',
             fontWeight: '600',
             cursor: 'pointer'
@@ -372,9 +372,9 @@ export default function Flashcards({ studentData, setActiveTab }) {
                 style={{
                   padding: '10px',
                   borderRadius: '8px',
-                  border: '1px solid #fde68a',
-                  background: '#fffbeb',
-                  color: '#d97706',
+                  border: '1px solid rgba(245, 158, 11, 0.3)',
+                  background: 'var(--warning-soft)',
+                  color: 'var(--warning)',
                   fontSize: '12.5px',
                   fontWeight: '700',
                   display: 'flex',
@@ -393,9 +393,9 @@ export default function Flashcards({ studentData, setActiveTab }) {
                 style={{
                   padding: '10px',
                   borderRadius: '8px',
-                  border: '1px solid #fecaca',
-                  background: '#fef2f2',
-                  color: '#dc2626',
+                  border: '1px solid rgba(239, 68, 68, 0.3)',
+                  background: 'var(--danger-soft)',
+                  color: 'var(--danger)',
                   fontSize: '12.5px',
                   fontWeight: '700',
                   display: 'flex',

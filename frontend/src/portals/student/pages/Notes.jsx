@@ -197,16 +197,16 @@ export default function Notes({ setActiveTab }) {
 
           {/* Badges */}
           <div style={{ display: 'flex', gap: '8px' }}>
-            <span style={{ padding: '3px 10px', borderRadius: '4px', background: 'rgba(23, 75, 255, 0.15)', color: 'var(--accent-ice)', border: '1px solid rgba(23, 75, 255, 0.3)', fontSize: '11px', fontWeight: '700' }}>
+            <span style={{ padding: '3px 10px', borderRadius: '4px', background: 'var(--primary-soft)', color: 'var(--primary)', border: '1px solid rgba(23, 75, 255, 0.25)', fontSize: '11px', fontWeight: '700' }}>
               Arrays
             </span>
-            <span style={{ padding: '3px 10px', borderRadius: '4px', background: '#eff6ff', color: '#3b82f6', fontSize: '11px', fontWeight: '700' }}>
+            <span style={{ padding: '3px 10px', borderRadius: '4px', background: 'var(--primary-soft)', color: 'var(--primary)', fontSize: '11px', fontWeight: '700' }}>
               Basics
             </span>
             <span style={{ padding: '3px 10px', borderRadius: '4px', background: 'var(--bg-subtle)', color: 'var(--text-secondary)', fontSize: '11px', fontWeight: '600' }}>
               Data Structures
             </span>
-            <span style={{ padding: '3px 10px', borderRadius: '4px', background: '#fef2f2', color: '#ef4444', fontSize: '11px', fontWeight: '700' }}>
+            <span style={{ padding: '3px 10px', borderRadius: '4px', background: 'var(--danger-soft)', color: 'var(--danger)', fontSize: '11px', fontWeight: '700' }}>
               Unit 1
             </span>
           </div>
@@ -282,7 +282,7 @@ export default function Notes({ setActiveTab }) {
               </div>
 
               <div style={{ padding: '14px', borderRadius: '10px', background: 'var(--bg-subtle)', textAlign: 'center' }}>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#fef2f2', color: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px auto' }}>
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--danger-soft)', color: 'var(--danger)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px auto' }}>
                   <MinusCircle size={18} />
                 </div>
                 <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-main)' }}>Deletion</div>
@@ -290,7 +290,7 @@ export default function Notes({ setActiveTab }) {
               </div>
 
               <div style={{ padding: '14px', borderRadius: '10px', background: 'var(--bg-subtle)', textAlign: 'center' }}>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(23, 75, 255, 0.15)', color: 'var(--accent-ice)', border: '1px solid rgba(23, 75, 255, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px auto' }}>
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--primary-soft)', color: 'var(--primary)', border: '1px solid rgba(23, 75, 255, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px auto' }}>
                   <Compass size={18} />
                 </div>
                 <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-main)' }}>Traversal</div>
@@ -298,7 +298,7 @@ export default function Notes({ setActiveTab }) {
               </div>
 
               <div style={{ padding: '14px', borderRadius: '10px', background: 'var(--bg-subtle)', textAlign: 'center' }}>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#fffbeb', color: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px auto' }}>
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--warning-soft)', color: 'var(--warning)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px auto' }}>
                   <SearchIcon size={18} />
                 </div>
                 <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-main)' }}>Searching</div>

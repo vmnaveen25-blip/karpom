@@ -12,7 +12,7 @@ export default function App() {
   const [selectedAssessment, setSelectedAssessment] = useState('a1');
   const [searchQuery, setSearchQuery] = useState('');
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('tutor_theme') || 'dark';
+    return localStorage.getItem('tutor_theme') || 'light';
   });
   const [studentData, setStudentData] = useState(initialStudentData);
   const [teacherData, setTeacherData] = useState(initialTeacherData);

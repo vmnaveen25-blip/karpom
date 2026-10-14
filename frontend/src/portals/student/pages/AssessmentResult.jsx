@@ -101,7 +101,7 @@ export default function AssessmentResult({ setActiveTab }) {
       }}>
         {/* Total Marks */}
         <div className="ui-card" style={{ padding: '16px', display: 'flex', alignItems: 'center', gap: '14px' }}>
-          <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: '#fffbeb', color: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'var(--warning-soft)', color: 'var(--warning)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Hourglass size={20} />
           </div>
           <div>
@@ -112,7 +112,7 @@ export default function AssessmentResult({ setActiveTab }) {
 
         {/* Correct */}
         <div className="ui-card" style={{ padding: '16px', display: 'flex', alignItems: 'center', gap: '14px' }}>
-          <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: '#ecfdf5', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'var(--success-soft)', color: 'var(--success)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <CheckCircle size={20} />
           </div>
           <div>
@@ -123,7 +123,7 @@ export default function AssessmentResult({ setActiveTab }) {
 
         {/* Incorrect */}
         <div className="ui-card" style={{ padding: '16px', display: 'flex', alignItems: 'center', gap: '14px' }}>
-          <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: '#fef2f2', color: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'var(--danger-soft)', color: 'var(--danger)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <XCircle size={20} />
           </div>
           <div>
@@ -319,13 +319,13 @@ export default function AssessmentResult({ setActiveTab }) {
             <span style={{ padding: '2px 8px', borderRadius: '4px', background: 'rgba(23, 75, 255, 0.15)', color: 'var(--accent-ice)', border: '1px solid rgba(23, 75, 255, 0.3)', fontSize: '11px', fontWeight: '700' }}>
               Array Operations
             </span>
-            <span style={{ padding: '2px 8px', borderRadius: '4px', background: '#ecfdf5', color: '#059669', fontSize: '11px', fontWeight: '700' }}>
+            <span style={{ padding: '2px 8px', borderRadius: '4px', background: 'var(--success-soft)', color: 'var(--success)', fontSize: '11px', fontWeight: '700' }}>
               Easy
             </span>
-            <span style={{ padding: '2px 8px', borderRadius: '4px', background: '#eff6ff', color: '#3b82f6', fontSize: '11px', fontWeight: '700' }}>
+            <span style={{ padding: '2px 8px', borderRadius: '4px', background: 'var(--primary-soft)', color: 'var(--primary)', fontSize: '11px', fontWeight: '700' }}>
               MCQ
             </span>
-            <span style={{ padding: '2px 8px', borderRadius: '4px', background: '#fef2f2', color: '#ef4444', fontSize: '11px', fontWeight: '700', marginLeft: 'auto' }}>
+            <span style={{ padding: '2px 8px', borderRadius: '4px', background: 'var(--danger-soft)', color: 'var(--danger)', fontSize: '11px', fontWeight: '700', marginLeft: 'auto' }}>
               Incorrect
             </span>
             <Bookmark size={16} color="var(--text-muted)" style={{ cursor: 'pointer' }} />
@@ -358,9 +358,9 @@ export default function AssessmentResult({ setActiveTab }) {
             <div style={{
               padding: '12px 14px',
               borderRadius: '8px',
-              border: '1.5px solid #ef4444',
-              background: '#fef2f2',
-              color: '#dc2626',
+              border: '1.5px solid var(--danger)',
+              background: 'var(--danger-soft)',
+              color: 'var(--danger)',
               fontSize: '13px',
               fontWeight: '600',
               display: 'flex',
