@@ -15,14 +15,15 @@ import {
   FolderOpen,
   ClipboardCheck,
   MessageSquare,
-  HelpCircle
+  HelpCircle,
+  GraduationCap
 } from 'lucide-react';
 
 const studentQuotes = {
   home: '“Learn a little every day, grow a lot.”',
   courses: '“Keep Learning! You’re one step closer to your goals.”',
   courseDetail: '“Consistent learning today builds tomorrow.”',
-  aiTutor: '“Ask. Learn. Practice. Improve. Your AI study companion.”',
+  aiTutor: '“Let’s learn together! ✨”',
   practice: '“Practice today builds expertise tomorrow.”',
   assessments: '“Assess. Improve. Achieve. Your next milestone is closer.”',
   assessmentResult: '“Every answer today is a step towards a stronger tomorrow.”',
@@ -83,27 +84,26 @@ export default function Sidebar({ activeTab, setActiveTab, currentRole = 'Studen
       <div className="sidebar-logo">
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => setActiveTab('home')}>
           <div style={{
-            width: '36px',
-            height: '36px',
-            borderRadius: '50%',
+            width: '38px',
+            height: '38px',
+            borderRadius: '12px',
             background: 'linear-gradient(135deg, #174BFF 0%, #1035C9 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             boxShadow: '0 4px 14px rgba(23, 75, 255, 0.45)',
-            flexShrink: 0
+            flexShrink: 0,
+            color: '#FFFFFF'
           }}>
-            <div style={{ width: '14px', height: '14px', borderRadius: '50%', background: '#ffffff' }} />
+            <GraduationCap size={22} />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontSize: '19px', fontWeight: '800', letterSpacing: '-0.02em', color: 'var(--text-main)', lineHeight: '1.2' }}>
-              Tutor <span style={{ color: 'var(--primary)' }}>V2</span>
+            <span style={{ fontSize: '20px', fontWeight: '800', letterSpacing: '-0.02em', color: 'var(--text-main)', lineHeight: '1.1' }}>
+              Karpom
             </span>
-            {isTeacher && (
-              <span style={{ fontSize: '11px', fontWeight: '600', color: 'var(--accent-ice)', letterSpacing: '0.01em', marginTop: '1px' }}>
-                Teacher Portal
-              </span>
-            )}
+            <span style={{ fontSize: '10px', fontWeight: '600', color: 'var(--text-muted)', letterSpacing: '0.01em', marginTop: '2px' }}>
+              {isTeacher ? 'Teacher Portal' : 'Learn · Practice · Grow'}
+            </span>
           </div>
         </div>
       </div>
@@ -163,7 +163,7 @@ export default function Sidebar({ activeTab, setActiveTab, currentRole = 'Studen
       {!isTeacher && (
         <div className="sidebar-mascot">
           <div className="sidebar-mascot-img-wrap">
-            <img src="/assets/mascot.png" alt="Tutor V2 AI Mascot" />
+            <img src="/assets/cat_mascot.png" alt="Karpom AI Mascot" />
           </div>
           <div className="mascot-quote-box">
             <div className="mascot-quote-text">{currentQuote}</div>

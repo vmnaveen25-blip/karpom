@@ -27,15 +27,32 @@ export default function Topbar({
   return (
     <header className="app-topbar">
       {/* Search Input */}
-      <div className="search-box-wrap">
+      <div className="search-box-wrap" style={{ position: 'relative' }}>
         <Search size={17} />
         <input
           type="text"
           className="search-input"
-          placeholder="Search courses, topics, notes..."
+          placeholder="Search for courses, topics, or resources..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          style={{ paddingRight: '60px' }}
         />
+        <div style={{
+          position: 'absolute',
+          right: '12px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          fontSize: '11px',
+          fontWeight: '700',
+          color: 'var(--text-muted)',
+          background: 'rgba(23, 75, 255, 0.08)',
+          border: '1px solid rgba(23, 75, 255, 0.2)',
+          borderRadius: '6px',
+          padding: '2px 7px',
+          pointerEvents: 'none'
+        }}>
+          Ctrl K
+        </div>
       </div>
 
       {/* Right Actions */}
