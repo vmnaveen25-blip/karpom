@@ -27,7 +27,6 @@ export default function MyCourses({ studentData, setActiveTab, setSelectedCourse
   const filteredCourses = courses.filter((c) => {
     if (activeFilter === 'in-progress' && c.status !== 'in-progress') return false;
     if (activeFilter === 'completed' && c.status !== 'completed') return false;
-    if (activeFilter === 'not-started' && c.status !== 'not-started') return false;
     if (courseSearch && !c.title.toLowerCase().includes(courseSearch.toLowerCase())) return false;
     return true;
   });
@@ -85,8 +84,7 @@ export default function MyCourses({ studentData, setActiveTab, setSelectedCourse
         {[
           { id: 'all', label: 'All Courses (3)' },
           { id: 'in-progress', label: 'In Progress (2)' },
-          { id: 'completed', label: 'Completed (1)' },
-          { id: 'not-started', label: 'Not Started (0)' }
+          { id: 'completed', label: 'Completed (1)' }
         ].map((tab) => (
           <button
             key={tab.id}

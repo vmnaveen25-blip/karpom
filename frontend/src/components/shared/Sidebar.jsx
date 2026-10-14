@@ -71,7 +71,7 @@ export default function Sidebar({ activeTab, setActiveTab, currentRole = 'Studen
     { id: 'teacherCourses', label: 'Courses & Curriculum', icon: BookOpen },
     { id: 'teacherMaterials', label: 'Teaching Materials', icon: FolderOpen },
     { id: 'teacherAssignments', label: 'Assignments & Assessments', icon: ClipboardCheck },
-    { id: 'teacherSchedule', label: 'Live Teaching & Schedule', icon: Calendar },
+    { id: 'teacherSchedule', label: 'Schedule', icon: Calendar },
     { id: 'teacherCommunication', label: 'Communication', icon: MessageSquare },
     { id: 'teacherProgress', label: 'Student Progress', icon: TrendingUp },
   ];
@@ -90,13 +90,21 @@ export default function Sidebar({ activeTab, setActiveTab, currentRole = 'Studen
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 4px 10px rgba(99, 102, 241, 0.4)'
+            boxShadow: '0 4px 10px rgba(99, 102, 241, 0.4)',
+            flexShrink: 0
           }}>
             <div style={{ width: '14px', height: '14px', borderRadius: '50%', background: '#ffffff' }} />
           </div>
-          <span style={{ fontSize: '20px', fontWeight: '800', letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
-            Tutor <span style={{ color: '#4f46e5' }}>V2</span>
-          </span>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <span style={{ fontSize: '19px', fontWeight: '800', letterSpacing: '-0.02em', color: 'var(--text-main)', lineHeight: '1.2' }}>
+              Tutor <span style={{ color: '#4f46e5' }}>V2</span>
+            </span>
+            {isTeacher && (
+              <span style={{ fontSize: '11px', fontWeight: '600', color: '#6366f1', letterSpacing: '0.01em', marginTop: '1px' }}>
+                Teacher Portal
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
@@ -151,16 +159,18 @@ export default function Sidebar({ activeTab, setActiveTab, currentRole = 'Studen
         )}
       </nav>
 
-      {/* Mascot Graphic at bottom */}
-      <div className="sidebar-mascot">
-        <div className="sidebar-mascot-img-wrap">
-          <img src="/assets/mascot.png" alt="Tutor V2 AI Mascot" />
+      {/* Mascot Graphic only in Student mode */}
+      {!isTeacher && (
+        <div className="sidebar-mascot">
+          <div className="sidebar-mascot-img-wrap">
+            <img src="/assets/mascot.png" alt="Tutor V2 AI Mascot" />
+          </div>
+          <div className="mascot-quote-box">
+            <div className="mascot-quote-text">{currentQuote}</div>
+            <div className="mascot-quote-indicator" />
+          </div>
         </div>
-        <div className="mascot-quote-box">
-          <div className="mascot-quote-text">{currentQuote}</div>
-          <div className="mascot-quote-indicator" />
-        </div>
-      </div>
+      )}
     </aside>
   );
 }
