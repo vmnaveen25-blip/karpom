@@ -187,9 +187,9 @@ export default function Flashcards({ studentData, setActiveTab }) {
               flexDirection: 'column',
               justifyContent: 'space-between',
               cursor: 'pointer',
-              background: isFlipped ? '#faf5ff' : 'var(--bg-card)',
-              border: isFlipped ? '1.5px solid #c7d2fe' : '1px solid var(--border)',
-              boxShadow: 'var(--shadow-md)',
+              background: isFlipped ? 'var(--bg-subtle)' : 'var(--bg-card)',
+              border: isFlipped ? '1.5px solid var(--primary)' : '1px solid var(--border)',
+              boxShadow: isFlipped ? '0 0 20px rgba(23, 75, 255, 0.2)' : 'var(--shadow-md)',
               transition: 'all 0.3s ease'
             }}
           >
@@ -198,8 +198,9 @@ export default function Flashcards({ studentData, setActiveTab }) {
               <span style={{
                 padding: '4px 12px',
                 borderRadius: '6px',
-                background: '#ede9fe',
-                color: '#6366f1',
+                background: 'rgba(23, 75, 255, 0.15)',
+                color: 'var(--accent-ice)',
+                border: '1px solid rgba(23, 75, 255, 0.3)',
                 fontSize: '12px',
                 fontWeight: '700'
               }}>
@@ -321,7 +322,7 @@ export default function Flashcards({ studentData, setActiveTab }) {
               Study Mode
             </h4>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '6px', marginBottom: '12px' }}>
-              <div style={{ padding: '8px 4px', textAlign: 'center', borderRadius: '8px', background: '#ede9fe', border: '1px solid #c7d2fe', color: '#4f46e5', fontSize: '11.5px', fontWeight: '700', cursor: 'pointer' }}>
+              <div style={{ padding: '8px 4px', textAlign: 'center', borderRadius: '8px', background: 'var(--primary)', border: '1px solid var(--primary)', color: '#ffffff', fontSize: '11.5px', fontWeight: '700', cursor: 'pointer', boxShadow: '0 0 10px var(--primary-glow)' }}>
                 Learn
               </div>
               <div style={{ padding: '8px 4px', textAlign: 'center', borderRadius: '8px', background: 'var(--bg-subtle)', color: 'var(--text-secondary)', fontSize: '11.5px', cursor: 'pointer' }}>

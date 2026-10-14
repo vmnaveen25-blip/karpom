@@ -265,12 +265,13 @@ public class Solution {
                   <div key={msg.id} style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
                     <div style={{ maxWidth: '75%' }}>
                       <div style={{
-                        background: '#ede9fe',
-                        color: 'var(--text-main)',
+                        background: 'linear-gradient(135deg, #174BFF 0%, #1035C9 100%)',
+                        color: '#FFFFFF',
                         padding: '12px 18px',
                         borderRadius: '16px 16px 2px 16px',
                         fontSize: '14px',
-                        fontWeight: '500'
+                        fontWeight: '500',
+                        boxShadow: '0 4px 14px rgba(23, 75, 255, 0.3)'
                       }}>
                         {msg.text}
                       </div>
@@ -292,14 +293,14 @@ public class Solution {
                     width: '36px',
                     height: '36px',
                     borderRadius: '50%',
-                    background: '#eef2ff',
-                    border: '1px solid #c7d2fe',
+                    background: 'rgba(23, 75, 255, 0.16)',
+                    border: '1px solid rgba(23, 75, 255, 0.35)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     flexShrink: 0
                   }}>
-                    <Sparkles size={18} color="#6366f1" />
+                    <Sparkles size={18} color="var(--accent-ice)" />
                   </div>
 
                   <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -340,8 +341,8 @@ public class Solution {
                                   width: '20px',
                                   height: '20px',
                                   borderRadius: '50%',
-                                  background: '#eef2ff',
-                                  color: '#6366f1',
+                                  background: 'rgba(23, 75, 255, 0.18)',
+                                  color: 'var(--accent-ice)',
                                   fontSize: '11px',
                                   fontWeight: '700',
                                   display: 'flex',
@@ -526,8 +527,8 @@ public class Solution {
                       gap: '12px',
                       padding: '10px 12px',
                       borderRadius: '10px',
-                      background: isActive ? '#ede9fe' : 'transparent',
-                      border: isActive ? '1px solid #c7d2fe' : '1px solid transparent',
+                      background: isActive ? 'rgba(23, 75, 255, 0.18)' : 'transparent',
+                      border: isActive ? '1px solid rgba(23, 75, 255, 0.4)' : '1px solid transparent',
                       cursor: 'pointer'
                     }}
                   >
@@ -535,8 +536,9 @@ public class Solution {
                       width: '32px',
                       height: '32px',
                       borderRadius: '8px',
-                      background: isActive ? '#6366f1' : 'var(--bg-subtle)',
+                      background: isActive ? 'var(--primary)' : 'var(--bg-subtle)',
                       color: isActive ? 'white' : 'var(--text-secondary)',
+                      boxShadow: isActive ? '0 0 10px rgba(23, 75, 255, 0.4)' : 'none',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -545,7 +547,7 @@ public class Solution {
                       <Icon size={16} />
                     </div>
                     <div>
-                      <div style={{ fontSize: '13px', fontWeight: '700', color: isActive ? '#4f46e5' : 'var(--text-main)' }}>
+                      <div style={{ fontSize: '13px', fontWeight: '700', color: isActive ? 'var(--accent-ice)' : 'var(--text-main)' }}>
                         {m.label}
                       </div>
                       <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '1px' }}>
@@ -562,7 +564,7 @@ public class Solution {
           <div className="ui-card" style={{ padding: '16px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
               <span style={{ fontSize: '13.5px', fontWeight: '700', color: 'var(--text-main)' }}>Recent Chats</span>
-              <button style={{ background: 'transparent', border: 'none', color: '#6366f1', fontSize: '12px', fontWeight: '600', cursor: 'pointer' }}>
+              <button style={{ background: 'transparent', border: 'none', color: 'var(--accent-ice)', fontSize: '12px', fontWeight: '600', cursor: 'pointer' }}>
                 View All →
               </button>
             </div>
@@ -579,11 +581,12 @@ public class Solution {
                     padding: '8px 10px',
                     borderRadius: '8px',
                     cursor: 'pointer',
-                    background: chat.id === 1 ? '#ede9fe' : 'transparent',
+                    background: chat.id === 1 ? 'rgba(23, 75, 255, 0.16)' : 'transparent',
+                    border: chat.id === 1 ? '1px solid rgba(23, 75, 255, 0.3)' : '1px solid transparent',
                     fontSize: '12.5px'
                   }}
                 >
-                  <span style={{ fontWeight: '500', color: chat.id === 1 ? '#4f46e5' : 'var(--text-main)' }}>
+                  <span style={{ fontWeight: '500', color: chat.id === 1 ? 'var(--accent-ice)' : 'var(--text-main)' }}>
                     {chat.title}
                   </span>
                   <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{chat.time}</span>

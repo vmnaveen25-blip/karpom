@@ -66,7 +66,7 @@ export default function AssessmentResult({ setActiveTab }) {
           </div>
 
           <div style={{ display: 'flex', gap: '8px', marginTop: '8px', flexWrap: 'wrap' }}>
-            <span style={{ padding: '2px 8px', borderRadius: '4px', background: '#ede9fe', color: '#6366f1', fontSize: '12px', fontWeight: '600' }}>
+            <span style={{ padding: '2px 8px', borderRadius: '4px', background: 'rgba(23, 75, 255, 0.15)', color: 'var(--accent-ice)', border: '1px solid rgba(23, 75, 255, 0.3)', fontSize: '12px', fontWeight: '600' }}>
               Data Structures and Algorithms
             </span>
             <span style={{ padding: '2px 8px', borderRadius: '4px', background: '#eff6ff', color: '#3b82f6', fontSize: '12px', fontWeight: '600' }}>
@@ -145,7 +145,7 @@ export default function AssessmentResult({ setActiveTab }) {
 
         {/* Time Taken */}
         <div className="ui-card" style={{ padding: '16px', display: 'flex', alignItems: 'center', gap: '14px' }}>
-          <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: '#ede9fe', color: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: 'rgba(23, 75, 255, 0.15)', color: 'var(--accent-ice)', border: '1px solid rgba(23, 75, 255, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Clock size={20} />
           </div>
           <div>
@@ -161,8 +161,8 @@ export default function AssessmentResult({ setActiveTab }) {
           padding: '8px 4px',
           border: 'none',
           background: 'transparent',
-          borderBottom: '2px solid #6366f1',
-          color: '#6366f1',
+          borderBottom: '2px solid var(--primary)',
+          color: 'var(--accent-ice)',
           fontWeight: '700',
           fontSize: '14px',
           cursor: 'pointer'
@@ -196,9 +196,10 @@ export default function AssessmentResult({ setActiveTab }) {
             style={{
               padding: '6px 14px',
               borderRadius: 'var(--radius-full)',
-              border: activeFilter === btn.id ? '1px solid #6366f1' : '1px solid var(--border)',
-              background: activeFilter === btn.id ? '#ede9fe' : 'var(--bg-card)',
-              color: activeFilter === btn.id ? '#4f46e5' : 'var(--text-main)',
+              border: activeFilter === btn.id ? '1px solid var(--primary)' : '1px solid var(--border)',
+              background: activeFilter === btn.id ? 'var(--primary)' : 'var(--bg-card)',
+              color: activeFilter === btn.id ? '#ffffff' : 'var(--text-main)',
+              boxShadow: activeFilter === btn.id ? '0 0 12px var(--primary-glow)' : 'none',
               fontSize: '12.5px',
               fontWeight: '600',
               cursor: 'pointer'
@@ -315,7 +316,7 @@ export default function AssessmentResult({ setActiveTab }) {
           </div>
 
           <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-            <span style={{ padding: '2px 8px', borderRadius: '4px', background: '#ede9fe', color: '#6366f1', fontSize: '11px', fontWeight: '700' }}>
+            <span style={{ padding: '2px 8px', borderRadius: '4px', background: 'rgba(23, 75, 255, 0.15)', color: 'var(--accent-ice)', border: '1px solid rgba(23, 75, 255, 0.3)', fontSize: '11px', fontWeight: '700' }}>
               Array Operations
             </span>
             <span style={{ padding: '2px 8px', borderRadius: '4px', background: '#ecfdf5', color: '#059669', fontSize: '11px', fontWeight: '700' }}>

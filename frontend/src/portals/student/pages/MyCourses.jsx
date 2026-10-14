@@ -47,14 +47,14 @@ export default function MyCourses({ studentData, setActiveTab, setSelectedCourse
 
         {/* Your Learning Journey Banner */}
         <div style={{
-          background: 'linear-gradient(135deg, #6366f1 0%, #3b82f6 100%)',
+          background: 'linear-gradient(135deg, #174BFF 0%, #1035C9 100%)',
           borderRadius: 'var(--radius-lg)',
           padding: '18px 24px',
           color: 'white',
           display: 'flex',
           alignItems: 'center',
           gap: '16px',
-          boxShadow: '0 8px 20px rgba(99, 102, 241, 0.25)',
+          boxShadow: '0 8px 24px rgba(23, 75, 255, 0.35)',
           position: 'relative',
           overflow: 'hidden'
         }}>
@@ -197,8 +197,9 @@ export default function MyCourses({ studentData, setActiveTab, setSelectedCourse
                 borderRadius: 'var(--radius-full)',
                 fontSize: '11px',
                 fontWeight: '700',
-                background: course.status === 'completed' ? '#ecfdf5' : '#ede9fe',
-                color: course.status === 'completed' ? '#10b981' : '#6366f1',
+                background: course.status === 'completed' ? 'rgba(16, 185, 129, 0.18)' : 'rgba(23, 75, 255, 0.22)',
+                color: course.status === 'completed' ? '#10b981' : 'var(--accent-ice)',
+                border: course.status === 'completed' ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid rgba(23, 75, 255, 0.35)',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '4px'

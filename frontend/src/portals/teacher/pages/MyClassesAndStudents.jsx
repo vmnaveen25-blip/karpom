@@ -206,18 +206,18 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
   const getDeptBadgeStyle = (dept) => {
     const d = (dept || '').toUpperCase();
     if (d.includes('CSE')) {
-      return { bg: '#ede9fe', text: '#6366f1', label: 'CSE' };
+      return { bg: 'rgba(23, 75, 255, 0.16)', text: 'var(--accent-ice)', label: 'CSE' };
     }
     if (d.includes('IT')) {
-      return { bg: '#e0f2fe', text: '#0284c7', label: 'IT' };
+      return { bg: 'rgba(56, 189, 248, 0.15)', text: '#38bdf8', label: 'IT' };
     }
     if (d.includes('AI')) {
-      return { bg: '#dcfce7', text: '#16a34a', label: 'AI' };
+      return { bg: 'rgba(16, 185, 129, 0.15)', text: '#10b981', label: 'AI' };
     }
     if (d.includes('ECE')) {
-      return { bg: '#fef3c7', text: '#d97706', label: 'ECE' };
+      return { bg: 'rgba(245, 158, 11, 0.15)', text: '#f59e0b', label: 'ECE' };
     }
-    return { bg: '#f1f5f9', text: '#475569', label: dept || 'GEN' };
+    return { bg: 'var(--bg-subtle)', text: 'var(--text-secondary)', label: dept || 'GEN' };
   };
 
   return (
@@ -231,10 +231,10 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
           {/* Main Page Header */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
             <div>
-              <h1 style={{ fontSize: '24px', fontWeight: '700', color: '#0f172a', margin: '0 0 6px 0', letterSpacing: '-0.02em' }}>
+              <h1 style={{ fontSize: '24px', fontWeight: '700', color: 'var(--text-main)', margin: '0 0 6px 0', letterSpacing: '-0.02em' }}>
                 My Classes & Students
               </h1>
-              <p style={{ fontSize: '14px', color: '#64748b', margin: 0 }}>
+              <p style={{ fontSize: '14px', color: 'var(--text-muted)', margin: 0 }}>
                 Your courses and the classes learning each course across departments.
               </p>
             </div>
@@ -245,43 +245,43 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                 position: 'relative',
                 display: 'inline-flex',
                 alignItems: 'center',
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border)',
                 borderRadius: '8px',
                 padding: '8px 14px',
                 fontSize: '13.5px',
                 fontWeight: '500',
-                color: '#334155',
+                color: 'var(--text-main)',
                 cursor: 'pointer',
-                boxShadow: '0 1px 2px rgba(0,0,0,0.03)'
+                boxShadow: 'var(--shadow-xs)'
               }}>
                 <span>{deptFilter}</span>
-                <ChevronDown size={15} style={{ marginLeft: '8px', color: '#64748b' }} />
+                <ChevronDown size={15} style={{ marginLeft: '8px', color: 'var(--text-muted)' }} />
               </div>
 
               <div style={{
                 position: 'relative',
                 display: 'inline-flex',
                 alignItems: 'center',
-                background: '#ffffff',
-                border: '1px solid #e2e8f0',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border)',
                 borderRadius: '8px',
                 padding: '8px 14px',
                 fontSize: '13.5px',
                 fontWeight: '500',
-                color: '#334155',
+                color: 'var(--text-main)',
                 cursor: 'pointer',
-                boxShadow: '0 1px 2px rgba(0,0,0,0.03)'
+                boxShadow: 'var(--shadow-xs)'
               }}>
                 <span>{termFilter}</span>
-                <ChevronDown size={15} style={{ marginLeft: '8px', color: '#64748b' }} />
+                <ChevronDown size={15} style={{ marginLeft: '8px', color: 'var(--text-muted)' }} />
               </div>
             </div>
           </div>
 
           {/* Subheader: My Courses + Search Input */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-            <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', margin: 0 }}>
+            <h2 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--text-main)', margin: 0 }}>
               My Courses
             </h2>
 
@@ -296,10 +296,10 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                   width: '100%',
                   padding: '9px 12px 9px 38px',
                   borderRadius: '8px',
-                  border: '1px solid #e2e8f0',
-                  background: '#ffffff',
+                  border: '1px solid var(--border)',
+                  background: 'var(--bg-input)',
                   fontSize: '13.5px',
-                  color: '#0f172a',
+                  color: 'var(--text-main)',
                   outline: 'none',
                   transition: 'border-color 0.15s ease'
                 }}
@@ -318,35 +318,35 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                 <div
                   key={course.id}
                   style={{
-                    background: '#ffffff',
-                    border: '1px solid #e2e8f0',
+                    background: 'var(--bg-card)',
+                    border: '1px solid var(--border)',
                     borderRadius: '16px',
                     padding: '20px 24px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    boxShadow: '0 1px 3px rgba(0,0,0,0.02)',
+                    boxShadow: 'var(--shadow-xs)',
                     transition: 'all 0.18s ease',
                     flexWrap: 'wrap',
                     gap: '16px'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = '#cbd5e1';
-                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.04)';
+                    e.currentTarget.style.borderColor = 'rgba(143, 174, 255, 0.35)';
+                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(23, 75, 255, 0.15)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = '#e2e8f0';
-                    e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.02)';
+                    e.currentTarget.style.borderColor = 'var(--border)';
+                    e.currentTarget.style.boxShadow = 'var(--shadow-xs)';
                   }}
                 >
                   {/* Left: Icon & Title & Code/Description */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '18px', minWidth: '280px', flex: '1 1 340px' }}>
                     {renderCourseIcon(course)}
                     <div>
-                      <h3 style={{ fontSize: '17px', fontWeight: '700', color: '#0f172a', margin: '0 0 4px 0' }}>
+                      <h3 style={{ fontSize: '17px', fontWeight: '700', color: 'var(--text-main)', margin: '0 0 4px 0' }}>
                         {course.title}
                       </h3>
-                      <p style={{ fontSize: '13.5px', color: '#64748b', margin: 0, lineHeight: 1.4 }}>
+                      <p style={{ fontSize: '13.5px', color: 'var(--text-muted)', margin: 0, lineHeight: 1.4 }}>
                         {subtitleText}
                       </p>
                     </div>
@@ -359,8 +359,8 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                         width: '38px',
                         height: '38px',
                         borderRadius: '10px',
-                        background: '#f5f3ff',
-                        color: '#6366f1',
+                        background: 'rgba(23, 75, 255, 0.16)',
+                        color: 'var(--accent-ice)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -369,10 +369,10 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                         <Users size={19} />
                       </div>
                       <div>
-                        <div style={{ fontSize: '14.5px', fontWeight: '700', color: '#0f172a' }}>
+                        <div style={{ fontSize: '14.5px', fontWeight: '700', color: 'var(--text-main)' }}>
                           {classesCount} Classes
                         </div>
-                        <div style={{ fontSize: '12.5px', color: '#64748b' }}>
+                        <div style={{ fontSize: '12.5px', color: 'var(--text-muted)' }}>
                           Across {deptsCount} Departments
                         </div>
                       </div>
@@ -381,9 +381,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                     <button
                       onClick={() => handleSelectCourse(course)}
                       style={{
-                        background: '#f5f3ff',
-                        color: '#6366f1',
-                        border: 'none',
+                        background: 'rgba(23, 75, 255, 0.16)',
+                        color: 'var(--accent-ice)',
+                        border: '1px solid rgba(23, 75, 255, 0.35)',
                         borderRadius: '9999px',
                         padding: '10px 20px',
                         fontSize: '13.5px',
@@ -395,10 +395,12 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                         transition: 'all 0.15s ease'
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = '#ede9fe';
+                        e.currentTarget.style.background = 'var(--primary)';
+                        e.currentTarget.style.color = '#FFFFFF';
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.background = '#f5f3ff';
+                        e.currentTarget.style.background = 'rgba(23, 75, 255, 0.16)';
+                        e.currentTarget.style.color = 'var(--accent-ice)';
                       }}
                     >
                       <span>View Classes</span>
@@ -418,37 +420,37 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
       {viewLevel === 'classes' && selectedCourse && (
         <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {/* Breadcrumbs */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#64748b' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>
             <span
               onClick={() => setViewLevel('courses')}
-              style={{ cursor: 'pointer', color: '#64748b', transition: 'color 0.15s' }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#6366f1')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#64748b')}
+              style={{ cursor: 'pointer', color: 'var(--text-muted)', transition: 'color 0.15s' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-ice)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
             >
               Home
             </span>
-            <ChevronRight size={14} style={{ color: '#94a3b8' }} />
+            <ChevronRight size={14} style={{ color: 'var(--text-muted)' }} />
             <span
               onClick={() => setViewLevel('courses')}
-              style={{ cursor: 'pointer', color: '#64748b', transition: 'color 0.15s' }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#6366f1')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#64748b')}
+              style={{ cursor: 'pointer', color: 'var(--text-muted)', transition: 'color 0.15s' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-ice)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
             >
               My Classes & Students
             </span>
-            <ChevronRight size={14} style={{ color: '#94a3b8' }} />
-            <span style={{ fontWeight: '600', color: '#0f172a' }}>
+            <ChevronRight size={14} style={{ color: 'var(--text-muted)' }} />
+            <span style={{ fontWeight: '600', color: 'var(--text-main)' }}>
               {selectedCourse.title}
             </span>
           </div>
 
           {/* Hero Card */}
           <div style={{
-            background: '#ffffff',
-            border: '1px solid #e2e8f0',
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border)',
             borderRadius: '16px',
             padding: '24px 28px',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.02)',
+            boxShadow: 'var(--shadow-sm)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -460,10 +462,10 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
               <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
                 {renderCourseIcon(selectedCourse)}
                 <div>
-                  <h1 style={{ fontSize: '22px', fontWeight: '700', color: '#0f172a', margin: '0 0 4px 0' }}>
+                  <h1 style={{ fontSize: '22px', fontWeight: '700', color: 'var(--text-main)', margin: '0 0 4px 0' }}>
                     {selectedCourse.title}
                   </h1>
-                  <p style={{ fontSize: '13.5px', color: '#64748b', margin: 0 }}>
+                  <p style={{ fontSize: '13.5px', color: 'var(--text-muted)', margin: 0 }}>
                     {selectedCourse.subtitle || `${selectedCourse.code} • Object-oriented programming, concurrency, and JVM internals`}
                   </p>
                 </div>
@@ -475,9 +477,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '6px',
-                  background: '#f5f3ff',
-                  color: '#6366f1',
-                  border: '1px solid #e0e7ff',
+                  background: 'rgba(23, 75, 255, 0.16)',
+                  color: 'var(--accent-ice)',
+                  border: '1px solid rgba(23, 75, 255, 0.35)',
                   borderRadius: '9999px',
                   padding: '4px 12px',
                   fontSize: '12.5px',
@@ -491,9 +493,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '6px',
-                  background: '#f8fafc',
-                  color: '#475569',
-                  border: '1px solid #e2e8f0',
+                  background: 'var(--bg-subtle)',
+                  color: 'var(--text-secondary)',
+                  border: '1px solid var(--border)',
                   borderRadius: '9999px',
                   padding: '4px 12px',
                   fontSize: '12.5px',
@@ -507,9 +509,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '6px',
-                  background: '#f8fafc',
-                  color: '#475569',
-                  border: '1px solid #e2e8f0',
+                  background: 'var(--bg-subtle)',
+                  color: 'var(--text-secondary)',
+                  border: '1px solid var(--border)',
                   borderRadius: '9999px',
                   padding: '4px 12px',
                   fontSize: '12.5px',
@@ -523,9 +525,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '6px',
-                  background: '#f8fafc',
-                  color: '#475569',
-                  border: '1px solid #e2e8f0',
+                  background: 'var(--bg-subtle)',
+                  color: 'var(--text-secondary)',
+                  border: '1px solid var(--border)',
                   borderRadius: '9999px',
                   padding: '4px 12px',
                   fontSize: '12.5px',
@@ -544,9 +546,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                   if (setActiveTab) setActiveTab('curriculum');
                 }}
                 style={{
-                  background: '#ffffff',
-                  color: '#334155',
-                  border: '1px solid #cbd5e1',
+                  background: 'var(--glass-surface)',
+                  color: 'var(--text-main)',
+                  border: '1px solid var(--border)',
                   borderRadius: '8px',
                   padding: '9px 18px',
                   fontSize: '13.5px',
@@ -555,20 +557,20 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '8px',
-                  boxShadow: '0 1px 2px rgba(0,0,0,0.02)',
+                  boxShadow: 'var(--shadow-xs)',
                   transition: 'all 0.15s ease'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#94a3b8';
-                  e.currentTarget.style.background = '#f8fafc';
+                  e.currentTarget.style.borderColor = 'rgba(143, 174, 255, 0.4)';
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.10)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = '#cbd5e1';
-                  e.currentTarget.style.background = '#ffffff';
+                  e.currentTarget.style.borderColor = 'var(--border)';
+                  e.currentTarget.style.background = 'var(--glass-surface)';
                 }}
               >
                 <span>View Course Details</span>
-                <ExternalLink size={15} style={{ color: '#64748b' }} />
+                <ExternalLink size={15} style={{ color: 'var(--text-muted)' }} />
               </button>
             </div>
           </div>
@@ -607,24 +609,24 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
 
           {/* Classes Table */}
           <div style={{
-            background: '#ffffff',
-            border: '1px solid #e2e8f0',
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border)',
             borderRadius: '14px',
             overflow: 'hidden',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+            boxShadow: 'var(--shadow-xs)'
           }}>
             <div style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '900px' }}>
                 <thead>
-                  <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
-                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em', width: '50px' }}>#</th>
-                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Department</th>
-                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Year</th>
-                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Section</th>
-                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Academic Term</th>
-                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Students</th>
-                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Teacher(s)</th>
-                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em', textAlign: 'right' }}>Actions</th>
+                  <tr style={{ background: 'var(--bg-subtle)', borderBottom: '1px solid var(--border)' }}>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', width: '50px' }}>#</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Department</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Year</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Section</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Academic Term</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Students</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Teacher(s)</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', textAlign: 'right' }}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -633,11 +635,11 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                     return (
                       <tr
                         key={cls.id || idx}
-                        style={{ borderBottom: idx < courseClasses.length - 1 ? '1px solid #f1f5f9' : 'none', transition: 'background-color 0.1s ease' }}
-                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#fafafa')}
-                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#ffffff')}
+                        style={{ borderBottom: idx < courseClasses.length - 1 ? '1px solid var(--border-subtle)' : 'none', transition: 'background-color 0.1s ease' }}
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.04)')}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                       >
-                        <td style={{ padding: '16px 20px', fontSize: '13.5px', color: '#64748b', fontWeight: '500' }}>
+                        <td style={{ padding: '16px 20px', fontSize: '13.5px', color: 'var(--text-muted)', fontWeight: '500' }}>
                           {idx + 1}
                         </td>
 
@@ -654,27 +656,27 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                             }}>
                               {deptBadge.label}
                             </span>
-                            <span style={{ fontSize: '13.5px', fontWeight: '500', color: '#0f172a' }}>
+                            <span style={{ fontSize: '13.5px', fontWeight: '500', color: 'var(--text-main)' }}>
                               {cls.department}
                             </span>
                           </div>
                         </td>
 
-                        <td style={{ padding: '16px 20px', fontSize: '13.5px', color: '#334155', fontWeight: '500' }}>
+                        <td style={{ padding: '16px 20px', fontSize: '13.5px', color: 'var(--text-secondary)', fontWeight: '500' }}>
                           {cls.year || 'III Year'}
                         </td>
 
-                        <td style={{ padding: '16px 20px', fontSize: '13.5px', color: '#334155', fontWeight: '500' }}>
+                        <td style={{ padding: '16px 20px', fontSize: '13.5px', color: 'var(--text-secondary)', fontWeight: '500' }}>
                           {cls.section}
                         </td>
 
-                        <td style={{ padding: '16px 20px', fontSize: '13.5px', color: '#64748b' }}>
+                        <td style={{ padding: '16px 20px', fontSize: '13.5px', color: 'var(--text-muted)' }}>
                           {cls.academicTerm || cls.term || 'Fall 2026'}
                         </td>
 
                         <td style={{ padding: '16px 20px' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13.5px', fontWeight: '600', color: '#0f172a' }}>
-                            <Users size={14} style={{ color: '#64748b' }} />
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13.5px', fontWeight: '600', color: 'var(--text-main)' }}>
+                            <Users size={14} style={{ color: 'var(--text-muted)' }} />
                             <span>{cls.totalStudents || cls.students?.length || 40}</span>
                           </div>
                         </td>
@@ -685,7 +687,7 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                               width: '28px',
                               height: '28px',
                               borderRadius: '50%',
-                              background: '#6366f1',
+                              background: 'var(--primary)',
                               color: '#ffffff',
                               fontSize: '11px',
                               fontWeight: '700',
@@ -696,7 +698,7 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                             }}>
                               {cls.teacherInitials || 'VV'}
                             </div>
-                            <span style={{ fontSize: '13.5px', fontWeight: '500', color: '#0f172a' }}>
+                            <span style={{ fontSize: '13.5px', fontWeight: '500', color: 'var(--text-main)' }}>
                               {cls.teacher || 'Vijay Vikas'}
                             </span>
                           </div>
@@ -706,9 +708,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                           <button
                             onClick={() => handleSelectClass(cls)}
                             style={{
-                              background: '#f5f3ff',
-                              color: '#6366f1',
-                              border: 'none',
+                              background: 'rgba(23, 75, 255, 0.16)',
+                              color: 'var(--accent-ice)',
+                              border: '1px solid rgba(23, 75, 255, 0.35)',
                               borderRadius: '9999px',
                               padding: '7px 16px',
                               fontSize: '13px',
@@ -719,8 +721,14 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                               gap: '5px',
                               transition: 'all 0.15s ease'
                             }}
-                            onMouseEnter={(e) => (e.currentTarget.style.background = '#ede9fe')}
-                            onMouseLeave={(e) => (e.currentTarget.style.background = '#f5f3ff')}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.background = 'var(--primary)';
+                              e.currentTarget.style.color = '#FFFFFF';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.background = 'rgba(23, 75, 255, 0.16)';
+                              e.currentTarget.style.color = 'var(--accent-ice)';
+                            }}
                           >
                             <span>View Students</span>
                             <ArrowRight size={14} />
@@ -742,59 +750,60 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
       {viewLevel === 'students' && selectedCourse && selectedClass && (
         <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {/* Breadcrumbs */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#64748b', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
             <span
               onClick={() => setViewLevel('courses')}
-              style={{ cursor: 'pointer', color: '#64748b' }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#6366f1')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#64748b')}
+              style={{ cursor: 'pointer', color: 'var(--text-muted)' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-ice)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
             >
               Home
             </span>
-            <ChevronRight size={14} style={{ color: '#94a3b8' }} />
+            <ChevronRight size={14} style={{ color: 'var(--text-muted)' }} />
             <span
               onClick={() => setViewLevel('courses')}
-              style={{ cursor: 'pointer', color: '#64748b' }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#6366f1')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#64748b')}
+              style={{ cursor: 'pointer', color: 'var(--text-muted)' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-ice)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
             >
               My Classes & Students
             </span>
-            <ChevronRight size={14} style={{ color: '#94a3b8' }} />
+            <ChevronRight size={14} style={{ color: 'var(--text-muted)' }} />
             <span
               onClick={() => setViewLevel('classes')}
-              style={{ cursor: 'pointer', color: '#64748b' }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#6366f1')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#64748b')}
+              style={{ cursor: 'pointer', color: 'var(--text-muted)' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-ice)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
             >
               {selectedCourse.title}
             </span>
-            <ChevronRight size={14} style={{ color: '#94a3b8' }} />
-            <span style={{ color: '#64748b' }}>
+            <ChevronRight size={14} style={{ color: 'var(--text-muted)' }} />
+            <span style={{ color: 'var(--text-muted)' }}>
               {selectedClass.deptBadge || 'CSE'} - {selectedClass.year || 'III Year'} - {selectedClass.section || 'Section A'}
             </span>
-            <ChevronRight size={14} style={{ color: '#94a3b8' }} />
-            <span style={{ fontWeight: '600', color: '#0f172a' }}>
+            <ChevronRight size={14} style={{ color: 'var(--text-muted)' }} />
+            <span style={{ fontWeight: '600', color: 'var(--text-main)' }}>
               Students
             </span>
           </div>
 
           {/* Hero Card with Section Pills */}
           <div style={{
-            background: '#ffffff',
-            border: '1px solid #e2e8f0',
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border)',
             borderRadius: '16px',
             padding: '22px 26px',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.02)',
+            boxShadow: 'var(--shadow-sm)',
             display: 'flex',
             flexDirection: 'column',
-            gap: '14px'
+            gap: '14px',
+            backdropFilter: 'blur(16px)'
           }}>
             <div>
-              <h1 style={{ fontSize: '20px', fontWeight: '700', color: '#0f172a', margin: '0 0 4px 0' }}>
+              <h1 style={{ fontSize: '20px', fontWeight: '700', color: 'var(--text-main)', margin: '0 0 4px 0' }}>
                 {selectedCourse.title}
               </h1>
-              <p style={{ fontSize: '13.5px', color: '#64748b', margin: 0 }}>
+              <p style={{ fontSize: '13.5px', color: 'var(--text-muted)', margin: 0 }}>
                 {selectedCourse.subtitle || `${selectedCourse.code} • Object-oriented programming, concurrency, and JVM internals`}
               </p>
             </div>
@@ -802,8 +811,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
             {/* Badges Row */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
               <span style={{
-                background: '#ede9fe',
-                color: '#6366f1',
+                background: 'rgba(23, 75, 255, 0.15)',
+                color: 'var(--accent-ice)',
+                border: '1px solid rgba(23, 75, 255, 0.3)',
                 borderRadius: '9999px',
                 padding: '4px 12px',
                 fontSize: '12px',
@@ -813,8 +823,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
               </span>
 
               <span style={{
-                background: '#f1f5f9',
-                color: '#475569',
+                background: 'var(--bg-subtle)',
+                color: 'var(--text-muted)',
+                border: '1px solid var(--border)',
                 borderRadius: '9999px',
                 padding: '4px 12px',
                 fontSize: '12px',
@@ -824,8 +835,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
               </span>
 
               <span style={{
-                background: '#f1f5f9',
-                color: '#475569',
+                background: 'var(--bg-subtle)',
+                color: 'var(--text-muted)',
+                border: '1px solid var(--border)',
                 borderRadius: '9999px',
                 padding: '4px 12px',
                 fontSize: '12px',
@@ -835,8 +847,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
               </span>
 
               <span style={{
-                background: '#f1f5f9',
-                color: '#475569',
+                background: 'var(--bg-subtle)',
+                color: 'var(--text-muted)',
+                border: '1px solid var(--border)',
                 borderRadius: '9999px',
                 padding: '4px 12px',
                 fontSize: '12px',
@@ -849,8 +862,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '5px',
-                background: '#f5f3ff',
-                color: '#6366f1',
+                background: 'rgba(23, 75, 255, 0.12)',
+                color: 'var(--accent-ice)',
+                border: '1px solid rgba(23, 75, 255, 0.25)',
                 borderRadius: '9999px',
                 padding: '4px 12px',
                 fontSize: '12px',
@@ -867,7 +881,7 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
             display: 'flex',
             alignItems: 'center',
             gap: '24px',
-            borderBottom: '1px solid #e2e8f0',
+            borderBottom: '1px solid var(--border)',
             paddingBottom: '0px',
             marginTop: '4px'
           }}>
@@ -895,16 +909,16 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                     padding: '10px 4px',
                     fontSize: '14px',
                     fontWeight: isActive ? '600' : '500',
-                    color: isActive ? '#6366f1' : '#64748b',
+                    color: isActive ? 'var(--accent-ice)' : 'var(--text-muted)',
                     cursor: 'pointer',
                     position: 'relative',
                     transition: 'color 0.15s ease'
                   }}
                   onMouseEnter={(e) => {
-                    if (!isActive) e.currentTarget.style.color = '#0f172a';
+                    if (!isActive) e.currentTarget.style.color = 'var(--text-main)';
                   }}
                   onMouseLeave={(e) => {
-                    if (!isActive) e.currentTarget.style.color = '#64748b';
+                    if (!isActive) e.currentTarget.style.color = 'var(--text-muted)';
                   }}
                 >
                   {tab.label}
@@ -915,7 +929,8 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                       left: 0,
                       right: 0,
                       height: '2px',
-                      background: '#6366f1',
+                      background: 'var(--primary)',
+                      boxShadow: '0 0 10px var(--primary-glow)',
                       borderRadius: '2px'
                     }} />
                   )}
@@ -927,17 +942,17 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
           {/* Subheader: Students (42) + Search + Add Student Button */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '14px' }}>
             <div>
-              <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', margin: '0 0 2px 0' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--text-main)', margin: '0 0 2px 0' }}>
                 Students ({selectedClass.totalStudents || selectedClass.students?.length || 42})
               </h2>
-              <p style={{ fontSize: '13px', color: '#64748b', margin: 0 }}>
+              <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: 0 }}>
                 List of all students enrolled in this class section.
               </p>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <div style={{ position: 'relative', width: '280px', maxWidth: '100%' }}>
-                <Search size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+                <Search size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                 <input
                   type="text"
                   placeholder="Search students..."
@@ -950,10 +965,10 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                     width: '100%',
                     padding: '8px 12px 8px 36px',
                     borderRadius: '8px',
-                    border: '1px solid #e2e8f0',
-                    background: '#ffffff',
+                    border: '1px solid var(--border)',
+                    background: 'var(--bg-subtle)',
                     fontSize: '13px',
-                    color: '#0f172a',
+                    color: 'var(--text-main)',
                     outline: 'none'
                   }}
                 />
@@ -962,7 +977,7 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
               <button
                 onClick={() => setShowAddStudentModal(true)}
                 style={{
-                  background: '#6366f1',
+                  background: 'var(--primary)',
                   color: '#ffffff',
                   border: 'none',
                   borderRadius: '8px',
@@ -973,11 +988,11 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '6px',
-                  boxShadow: '0 1px 3px rgba(99,102,241,0.25)',
+                  boxShadow: '0 4px 14px rgba(23, 75, 255, 0.35)',
                   transition: 'background-color 0.15s ease'
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#4f46e5')}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#6366f1')}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--primary-hover)')}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--primary)')}
               >
                 <Plus size={16} />
                 <span>Add Student</span>
@@ -987,22 +1002,23 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
 
           {/* Students Table Card */}
           <div style={{
-            background: '#ffffff',
-            border: '1px solid #e2e8f0',
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border)',
             borderRadius: '14px',
             overflow: 'hidden',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+            boxShadow: 'var(--shadow-sm)',
+            backdropFilter: 'blur(16px)'
           }}>
             <div style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '800px' }}>
                 <thead>
-                  <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
-                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em', width: '50px' }}>#</th>
-                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Name</th>
-                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Roll No.</th>
-                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Email</th>
-                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Status</th>
-                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em', textAlign: 'right', width: '60px' }}>Actions</th>
+                  <tr style={{ background: 'var(--bg-subtle)', borderBottom: '1px solid var(--border)' }}>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', width: '50px' }}>#</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Name</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Roll No.</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Email</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Status</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', textAlign: 'right', width: '60px' }}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1017,11 +1033,11 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                     return (
                       <tr
                         key={student.rollNo || idx}
-                        style={{ borderBottom: idx < paginatedStudents.length - 1 ? '1px solid #f1f5f9' : 'none', transition: 'background-color 0.1s ease' }}
-                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#fafafa')}
-                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#ffffff')}
+                        style={{ borderBottom: idx < paginatedStudents.length - 1 ? '1px solid var(--border)' : 'none', transition: 'background-color 0.1s ease' }}
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--bg-subtle)')}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                       >
-                        <td style={{ padding: '14px 20px', fontSize: '13.5px', color: '#64748b', fontWeight: '500' }}>
+                        <td style={{ padding: '14px 20px', fontSize: '13.5px', color: 'var(--text-muted)', fontWeight: '500' }}>
                           {rowNumber}
                         </td>
 
@@ -1031,8 +1047,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                               width: '32px',
                               height: '32px',
                               borderRadius: '50%',
-                              background: '#f1f5f9',
-                              color: '#475569',
+                              background: 'var(--bg-subtle)',
+                              color: 'var(--text-main)',
+                              border: '1px solid var(--border)',
                               fontSize: '12px',
                               fontWeight: '600',
                               display: 'flex',
@@ -1044,9 +1061,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                             </div>
                             <span
                               onClick={() => setInspectedStudent(student)}
-                              style={{ fontSize: '13.5px', fontWeight: '600', color: '#0f172a', cursor: 'pointer' }}
-                              onMouseEnter={(e) => (e.currentTarget.style.color = '#6366f1')}
-                              onMouseLeave={(e) => (e.currentTarget.style.color = '#0f172a')}
+                              style={{ fontSize: '13.5px', fontWeight: '600', color: 'var(--text-main)', cursor: 'pointer' }}
+                              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-ice)')}
+                              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-main)')}
                             >
                               {student.name}
                             </span>
@@ -1056,13 +1073,13 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                         <td style={{ padding: '14px 20px' }}>
                           <span
                             onClick={() => setInspectedStudent(student)}
-                            style={{ fontSize: '13.5px', fontWeight: '500', color: '#2563eb', cursor: 'pointer' }}
+                            style={{ fontSize: '13.5px', fontWeight: '500', color: 'var(--accent-ice)', cursor: 'pointer' }}
                           >
                             {student.rollNo}
                           </span>
                         </td>
 
-                        <td style={{ padding: '14px 20px', fontSize: '13.5px', color: '#64748b' }}>
+                        <td style={{ padding: '14px 20px', fontSize: '13.5px', color: 'var(--text-muted)' }}>
                           {student.email}
                         </td>
 
@@ -1070,8 +1087,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                           <span style={{
                             display: 'inline-flex',
                             alignItems: 'center',
-                            background: '#ecfdf5',
+                            background: 'rgba(16, 185, 129, 0.15)',
                             color: '#10b981',
+                            border: '1px solid rgba(16, 185, 129, 0.3)',
                             padding: '3px 10px',
                             borderRadius: '9999px',
                             fontSize: '12px',
@@ -1087,18 +1105,18 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                             style={{
                               background: 'transparent',
                               border: 'none',
-                              color: '#94a3b8',
+                              color: 'var(--text-muted)',
                               cursor: 'pointer',
                               padding: '6px',
                               borderRadius: '6px',
                               transition: 'color 0.15s, background-color 0.15s'
                             }}
                             onMouseEnter={(e) => {
-                              e.currentTarget.style.color = '#0f172a';
-                              e.currentTarget.style.background = '#f1f5f9';
+                              e.currentTarget.style.color = 'var(--text-main)';
+                              e.currentTarget.style.background = 'var(--bg-subtle)';
                             }}
                             onMouseLeave={(e) => {
-                              e.currentTarget.style.color = '#94a3b8';
+                              e.currentTarget.style.color = 'var(--text-muted)';
                               e.currentTarget.style.background = 'transparent';
                             }}
                           >
@@ -1118,12 +1136,12 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
               alignItems: 'center',
               justifyContent: 'space-between',
               padding: '14px 20px',
-              borderTop: '1px solid #e2e8f0',
-              background: '#ffffff',
+              borderTop: '1px solid var(--border)',
+              background: 'var(--bg-card)',
               flexWrap: 'wrap',
               gap: '12px'
             }}>
-              <div style={{ fontSize: '13px', color: '#64748b' }}>
+              <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
                 Showing {(currentPage - 1) * pageSize + 1} to {Math.min(currentPage * pageSize, totalStudentsCount)} of {totalStudentsCount} students
               </div>
 
@@ -1135,9 +1153,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                     width: '32px',
                     height: '32px',
                     borderRadius: '6px',
-                    border: '1px solid #e2e8f0',
-                    background: '#ffffff',
-                    color: currentPage === 1 ? '#cbd5e1' : '#64748b',
+                    border: '1px solid var(--border)',
+                    background: 'var(--bg-subtle)',
+                    color: currentPage === 1 ? 'rgba(255, 255, 255, 0.2)' : 'var(--text-muted)',
                     cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
                     display: 'flex',
                     alignItems: 'center',
@@ -1157,11 +1175,12 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                         width: '32px',
                         height: '32px',
                         borderRadius: '6px',
-                        border: isActive ? 'none' : '1px solid #e2e8f0',
-                        background: isActive ? '#6366f1' : '#ffffff',
-                        color: isActive ? '#ffffff' : '#475569',
+                        border: isActive ? 'none' : '1px solid var(--border)',
+                        background: isActive ? 'var(--primary)' : 'var(--bg-subtle)',
+                        color: isActive ? '#ffffff' : 'var(--text-muted)',
                         fontSize: '13px',
                         fontWeight: isActive ? '700' : '500',
+                        boxShadow: isActive ? '0 0 12px var(--primary-glow)' : 'none',
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
@@ -1181,9 +1200,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                     width: '32px',
                     height: '32px',
                     borderRadius: '6px',
-                    border: '1px solid #e2e8f0',
-                    background: '#ffffff',
-                    color: currentPage === totalPages ? '#cbd5e1' : '#64748b',
+                    border: '1px solid var(--border)',
+                    background: 'var(--bg-subtle)',
+                    color: currentPage === totalPages ? 'rgba(255, 255, 255, 0.2)' : 'var(--text-muted)',
                     cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
                     display: 'flex',
                     alignItems: 'center',
@@ -1205,8 +1224,8 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
         <div style={{
           position: 'fixed',
           inset: 0,
-          background: 'rgba(15, 23, 42, 0.45)',
-          backdropFilter: 'blur(3px)',
+          background: 'rgba(5, 7, 13, 0.75)',
+          backdropFilter: 'blur(16px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -1214,12 +1233,13 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
           padding: '20px'
         }}>
           <div style={{
-            background: '#ffffff',
+            background: 'rgba(17, 24, 39, 0.95)',
+            border: '1px solid var(--border)',
             borderRadius: '16px',
             width: '100%',
             maxWidth: '460px',
             padding: '24px',
-            boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
             display: 'flex',
             flexDirection: 'column',
             gap: '18px'
@@ -1230,8 +1250,9 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                   width: '46px',
                   height: '46px',
                   borderRadius: '50%',
-                  background: '#f5f3ff',
-                  color: '#6366f1',
+                  background: 'rgba(23, 75, 255, 0.15)',
+                  color: 'var(--accent-ice)',
+                  border: '1px solid rgba(23, 75, 255, 0.3)',
                   fontSize: '16px',
                   fontWeight: '700',
                   display: 'flex',
@@ -1241,10 +1262,10 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                   {inspectedStudent.name.split(' ').map((n) => n[0]).slice(0, 2).join('')}
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', margin: '0 0 2px 0' }}>
+                  <h3 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--text-main)', margin: '0 0 2px 0' }}>
                     {inspectedStudent.name}
                   </h3>
-                  <div style={{ fontSize: '13px', color: '#64748b', fontWeight: '500' }}>
+                  <div style={{ fontSize: '13px', color: 'var(--text-muted)', fontWeight: '500' }}>
                     {inspectedStudent.rollNo}
                   </div>
                 </div>
@@ -1252,27 +1273,27 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
 
               <button
                 onClick={() => setInspectedStudent(null)}
-                style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '4px' }}
+                style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '4px' }}
               >
                 <X size={20} />
               </button>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
-              <div style={{ padding: '12px', borderRadius: '10px', background: '#f8fafc', textAlign: 'center', border: '1px solid #f1f5f9' }}>
-                <div style={{ fontSize: '11px', color: '#64748b' }}>Attendance</div>
+              <div style={{ padding: '12px', borderRadius: '10px', background: 'var(--bg-subtle)', textAlign: 'center', border: '1px solid var(--border)' }}>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Attendance</div>
                 <div style={{ fontSize: '16px', fontWeight: '800', color: inspectedStudent.attendance >= 85 ? '#10b981' : '#ef4444', marginTop: '2px' }}>
                   {inspectedStudent.attendance || 95}%
                 </div>
               </div>
-              <div style={{ padding: '12px', borderRadius: '10px', background: '#f8fafc', textAlign: 'center', border: '1px solid #f1f5f9' }}>
-                <div style={{ fontSize: '11px', color: '#64748b' }}>CGPA</div>
-                <div style={{ fontSize: '16px', fontWeight: '800', color: '#6366f1', marginTop: '2px' }}>
+              <div style={{ padding: '12px', borderRadius: '10px', background: 'var(--bg-subtle)', textAlign: 'center', border: '1px solid var(--border)' }}>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>CGPA</div>
+                <div style={{ fontSize: '16px', fontWeight: '800', color: 'var(--accent-ice)', marginTop: '2px' }}>
                   {inspectedStudent.cgpa || 8.9}
                 </div>
               </div>
-              <div style={{ padding: '12px', borderRadius: '10px', background: '#f8fafc', textAlign: 'center', border: '1px solid #f1f5f9' }}>
-                <div style={{ fontSize: '11px', color: '#64748b' }}>Status</div>
+              <div style={{ padding: '12px', borderRadius: '10px', background: 'var(--bg-subtle)', textAlign: 'center', border: '1px solid var(--border)' }}>
+                <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Status</div>
                 <div style={{ fontSize: '13px', fontWeight: '700', color: '#10b981', marginTop: '4px' }}>
                   {inspectedStudent.status || 'Active'}
                 </div>
@@ -1280,23 +1301,23 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '13px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
-                <span style={{ color: '#64748b' }}>Email Address</span>
-                <span style={{ fontWeight: '500', color: '#0f172a' }}>{inspectedStudent.email}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>
+                <span style={{ color: 'var(--text-muted)' }}>Email Address</span>
+                <span style={{ fontWeight: '500', color: 'var(--text-main)' }}>{inspectedStudent.email}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
-                <span style={{ color: '#64748b' }}>Course & Section</span>
-                <span style={{ fontWeight: '500', color: '#0f172a' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>
+                <span style={{ color: 'var(--text-muted)' }}>Course & Section</span>
+                <span style={{ fontWeight: '500', color: 'var(--text-main)' }}>
                   {selectedCourse?.code || 'CSE301'} — {selectedClass?.section || 'Section A'}
                 </span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
-                <span style={{ color: '#64748b' }}>Assignments Submitted</span>
-                <span style={{ fontWeight: '500', color: '#0f172a' }}>{inspectedStudent.assignmentsSubmitted || '2/2'}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>
+                <span style={{ color: 'var(--text-muted)' }}>Assignments Submitted</span>
+                <span style={{ fontWeight: '500', color: 'var(--text-main)' }}>{inspectedStudent.assignmentsSubmitted || '2/2'}</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: '#64748b' }}>Last Platform Activity</span>
-                <span style={{ fontWeight: '500', color: '#0f172a' }}>{inspectedStudent.lastActive || 'Today'}</span>
+                <span style={{ color: 'var(--text-muted)' }}>Last Platform Activity</span>
+                <span style={{ fontWeight: '500', color: 'var(--text-main)' }}>{inspectedStudent.lastActive || 'Today'}</span>
               </div>
             </div>
 
@@ -1305,7 +1326,7 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                 style={{
                   flex: 1,
                   height: '40px',
-                  background: '#6366f1',
+                  background: 'var(--primary)',
                   color: '#ffffff',
                   border: 'none',
                   borderRadius: '8px',
@@ -1315,8 +1336,12 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '8px'
+                  gap: '8px',
+                  boxShadow: '0 4px 14px rgba(23, 75, 255, 0.35)',
+                  transition: 'background-color 0.15s ease'
                 }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--primary-hover)')}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--primary)')}
                 onClick={() => {
                   setInspectedStudent(null);
                   if (setActiveTab) setActiveTab('teacherCommunication');
@@ -1329,12 +1354,12 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                 style={{
                   height: '40px',
                   padding: '0 16px',
-                  background: '#ffffff',
-                  border: '1px solid #cbd5e1',
+                  background: 'var(--bg-subtle)',
+                  border: '1px solid var(--border)',
                   borderRadius: '8px',
                   fontWeight: '600',
                   fontSize: '13.5px',
-                  color: '#475569',
+                  color: 'var(--text-muted)',
                   cursor: 'pointer'
                 }}
                 onClick={() => setInspectedStudent(null)}
@@ -1353,8 +1378,8 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
         <div style={{
           position: 'fixed',
           inset: 0,
-          background: 'rgba(15, 23, 42, 0.45)',
-          backdropFilter: 'blur(3px)',
+          background: 'rgba(5, 7, 13, 0.75)',
+          backdropFilter: 'blur(16px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -1362,23 +1387,24 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
           padding: '20px'
         }}>
           <div style={{
-            background: '#ffffff',
+            background: 'rgba(17, 24, 39, 0.95)',
+            border: '1px solid var(--border)',
             borderRadius: '16px',
             width: '100%',
             maxWidth: '440px',
             padding: '24px',
-            boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
             display: 'flex',
             flexDirection: 'column',
             gap: '16px'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', margin: 0 }}>
+              <h3 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--text-main)', margin: 0 }}>
                 Add Student to {selectedClass?.section || 'Class'}
               </h3>
               <button
                 onClick={() => setShowAddStudentModal(false)}
-                style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer' }}
+                style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
               >
                 <X size={20} />
               </button>
@@ -1386,35 +1412,62 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <div>
-                <label style={{ fontSize: '12.5px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '4px' }}>Full Name</label>
+                <label style={{ fontSize: '12.5px', fontWeight: '600', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Full Name</label>
                 <input
                   type="text"
                   placeholder="e.g. Anand R"
                   value={newStudent.name}
                   onChange={(e) => setNewStudent({ ...newStudent, name: e.target.value })}
-                  style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13.5px' }}
+                  style={{
+                    width: '100%',
+                    padding: '9px 12px',
+                    borderRadius: '8px',
+                    border: '1px solid var(--border)',
+                    background: 'var(--bg-subtle)',
+                    color: 'var(--text-main)',
+                    fontSize: '13.5px',
+                    outline: 'none'
+                  }}
                 />
               </div>
 
               <div>
-                <label style={{ fontSize: '12.5px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '4px' }}>Roll Number</label>
+                <label style={{ fontSize: '12.5px', fontWeight: '600', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Roll Number</label>
                 <input
                   type="text"
                   placeholder="e.g. CSE2024043"
                   value={newStudent.rollNo}
                   onChange={(e) => setNewStudent({ ...newStudent, rollNo: e.target.value })}
-                  style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13.5px' }}
+                  style={{
+                    width: '100%',
+                    padding: '9px 12px',
+                    borderRadius: '8px',
+                    border: '1px solid var(--border)',
+                    background: 'var(--bg-subtle)',
+                    color: 'var(--text-main)',
+                    fontSize: '13.5px',
+                    outline: 'none'
+                  }}
                 />
               </div>
 
               <div>
-                <label style={{ fontSize: '12.5px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '4px' }}>Email Address</label>
+                <label style={{ fontSize: '12.5px', fontWeight: '600', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Email Address</label>
                 <input
                   type="email"
                   placeholder="e.g. anand.r@example.com"
                   value={newStudent.email}
                   onChange={(e) => setNewStudent({ ...newStudent, email: e.target.value })}
-                  style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13.5px' }}
+                  style={{
+                    width: '100%',
+                    padding: '9px 12px',
+                    borderRadius: '8px',
+                    border: '1px solid var(--border)',
+                    background: 'var(--bg-subtle)',
+                    color: 'var(--text-main)',
+                    fontSize: '13.5px',
+                    outline: 'none'
+                  }}
                 />
               </div>
             </div>
@@ -1424,14 +1477,18 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                 style={{
                   flex: 1,
                   height: '40px',
-                  background: '#6366f1',
+                  background: 'var(--primary)',
                   color: '#ffffff',
                   border: 'none',
                   borderRadius: '8px',
                   fontWeight: '600',
                   fontSize: '13.5px',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 14px rgba(23, 75, 255, 0.35)',
+                  transition: 'background-color 0.15s ease'
                 }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--primary-hover)')}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--primary)')}
                 onClick={() => {
                   if (newStudent.name && newStudent.rollNo) {
                     if (selectedClass && selectedClass.students) {
@@ -1455,12 +1512,12 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                 style={{
                   height: '40px',
                   padding: '0 16px',
-                  background: '#ffffff',
-                  border: '1px solid #cbd5e1',
+                  background: 'var(--bg-subtle)',
+                  border: '1px solid var(--border)',
                   borderRadius: '8px',
                   fontWeight: '600',
                   fontSize: '13.5px',
-                  color: '#475569',
+                  color: 'var(--text-muted)',
                   cursor: 'pointer'
                 }}
                 onClick={() => setShowAddStudentModal(false)}

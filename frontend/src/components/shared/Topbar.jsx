@@ -140,9 +140,9 @@ export default function Topbar({
                     width: '100%',
                     padding: '8px 12px',
                     borderRadius: '8px',
-                    border: 'none',
-                    background: currentRole === role ? 'var(--bg-subtle)' : 'transparent',
-                    color: currentRole === role ? 'var(--primary)' : 'var(--text-main)',
+                    border: currentRole === role ? '1px solid rgba(23, 75, 255, 0.4)' : '1px solid transparent',
+                    background: currentRole === role ? 'rgba(23, 75, 255, 0.18)' : 'transparent',
+                    color: currentRole === role ? '#FFFFFF' : 'var(--text-main)',
                     fontWeight: currentRole === role ? '600' : '500',
                     fontSize: '13px',
                     cursor: 'pointer',
@@ -150,7 +150,7 @@ export default function Topbar({
                   }}
                 >
                   <span>{role}</span>
-                  {currentRole === role && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--primary)' }} />}
+                  {currentRole === role && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--primary)', boxShadow: '0 0 8px var(--primary)' }} />}
                 </button>
               ))}
 

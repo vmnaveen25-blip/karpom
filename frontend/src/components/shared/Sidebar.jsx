@@ -86,21 +86,21 @@ export default function Sidebar({ activeTab, setActiveTab, currentRole = 'Studen
             width: '36px',
             height: '36px',
             borderRadius: '50%',
-            background: 'linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%)',
+            background: 'linear-gradient(135deg, #174BFF 0%, #1035C9 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 4px 10px rgba(99, 102, 241, 0.4)',
+            boxShadow: '0 4px 14px rgba(23, 75, 255, 0.45)',
             flexShrink: 0
           }}>
             <div style={{ width: '14px', height: '14px', borderRadius: '50%', background: '#ffffff' }} />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ fontSize: '19px', fontWeight: '800', letterSpacing: '-0.02em', color: 'var(--text-main)', lineHeight: '1.2' }}>
-              Tutor <span style={{ color: '#4f46e5' }}>V2</span>
+              Tutor <span style={{ color: 'var(--primary)' }}>V2</span>
             </span>
             {isTeacher && (
-              <span style={{ fontSize: '11px', fontWeight: '600', color: '#6366f1', letterSpacing: '0.01em', marginTop: '1px' }}>
+              <span style={{ fontSize: '11px', fontWeight: '600', color: 'var(--accent-ice)', letterSpacing: '0.01em', marginTop: '1px' }}>
                 Teacher Portal
               </span>
             )}

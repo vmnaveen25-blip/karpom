@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PortalLayout from './layouts/PortalLayout';
 import AppRouter from './app/router';
 import Login from './auth/Login';
@@ -11,9 +11,16 @@ export default function App() {
   const [selectedCourse, setSelectedCourse] = useState('dsa');
   const [selectedAssessment, setSelectedAssessment] = useState('a1');
   const [searchQuery, setSearchQuery] = useState('');
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('tutor_theme') || 'dark';
+  });
   const [studentData, setStudentData] = useState(initialStudentData);
   const [teacherData, setTeacherData] = useState(initialTeacherData);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('tutor_theme', theme);
+  }, [theme]);
 
   const handleLogin = ({ email, role }) => {
     setIsLoggedIn(true);
