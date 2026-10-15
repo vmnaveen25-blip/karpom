@@ -1,11 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, Sun, Moon, Bell, ChevronDown, User, LogOut } from 'lucide-react';
+import { Bell, ChevronDown, User, LogOut } from 'lucide-react';
 
 export default function Topbar({
-  searchQuery,
-  setSearchQuery,
-  theme,
-  setTheme,
   setActiveTab,
   currentRole,
   setCurrentRole,
@@ -26,37 +22,10 @@ export default function Topbar({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const toggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(nextTheme);
-    document.documentElement.setAttribute('data-theme', nextTheme);
-  };
-
   return (
     <header className="app-topbar">
-      {/* Search Input */}
-      <div className="search-box-wrap">
-        <Search size={17} />
-        <input
-          type="text"
-          className="search-input"
-          placeholder="Search courses, topics, notes..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </div>
-
       {/* Right Actions */}
       <div className="topbar-actions">
-        {/* Theme Toggle */}
-        <button
-          className="icon-btn-circle"
-          onClick={toggleTheme}
-          title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
-        >
-          {theme === 'dark' ? <Sun size={18} color="#f59e0b" /> : <Moon size={18} color="#64748b" />}
-        </button>
-
         {/* Notifications Icon */}
         <button
           className="icon-btn-circle"
@@ -140,9 +109,9 @@ export default function Topbar({
                     width: '100%',
                     padding: '8px 12px',
                     borderRadius: '8px',
-                    border: 'none',
-                    background: currentRole === role ? 'var(--bg-subtle)' : 'transparent',
-                    color: currentRole === role ? 'var(--primary)' : 'var(--text-main)',
+                    border: currentRole === role ? '1px solid rgba(23, 75, 255, 0.4)' : '1px solid transparent',
+                    background: currentRole === role ? 'rgba(23, 75, 255, 0.18)' : 'transparent',
+                    color: currentRole === role ? '#FFFFFF' : 'var(--text-main)',
                     fontWeight: currentRole === role ? '600' : '500',
                     fontSize: '13px',
                     cursor: 'pointer',
@@ -150,7 +119,7 @@ export default function Topbar({
                   }}
                 >
                   <span>{role}</span>
-                  {currentRole === role && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--primary)' }} />}
+                  {currentRole === role && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--primary)', boxShadow: '0 0 8px var(--primary)' }} />}
                 </button>
               ))}
 

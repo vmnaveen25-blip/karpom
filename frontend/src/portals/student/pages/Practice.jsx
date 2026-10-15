@@ -150,8 +150,8 @@ export default function Practice({ studentData }) {
                 borderRadius: '6px',
                 fontSize: '11.5px',
                 fontWeight: '700',
-                background: '#fffbeb',
-                color: '#d97706'
+                background: 'var(--warning-soft)',
+                color: 'var(--warning)'
               }}>
                 {question.difficulty}
               </span>
@@ -160,8 +160,9 @@ export default function Practice({ studentData }) {
                 borderRadius: '6px',
                 fontSize: '11.5px',
                 fontWeight: '700',
-                background: '#ede9fe',
-                color: '#6366f1'
+                background: 'rgba(23, 75, 255, 0.15)',
+                color: 'var(--accent-ice)',
+                border: '1px solid rgba(23, 75, 255, 0.3)'
               }}>
                 {question.badge}
               </span>
@@ -214,8 +215,9 @@ export default function Practice({ studentData }) {
                     gap: '12px',
                     padding: '14px 16px',
                     borderRadius: 'var(--radius-md)',
-                    border: isSelected ? '1.5px solid #6366f1' : '1px solid var(--border)',
-                    background: isSelected ? '#ede9fe' : 'var(--bg-card)',
+                    border: isSelected ? '1.5px solid var(--primary)' : '1px solid var(--border)',
+                    background: isSelected ? 'rgba(23, 75, 255, 0.15)' : 'var(--bg-card)',
+                    boxShadow: isSelected ? '0 0 14px rgba(23, 75, 255, 0.2)' : 'none',
                     cursor: 'pointer',
                     transition: 'all 0.2s'
                   }}
@@ -224,7 +226,7 @@ export default function Practice({ studentData }) {
                     width: '18px',
                     height: '18px',
                     borderRadius: '50%',
-                    border: isSelected ? '5px solid #6366f1' : '2px solid #cbd5e1',
+                    border: isSelected ? '5px solid var(--primary)' : '2px solid var(--border)',
                     background: 'white',
                     display: 'flex',
                     alignItems: 'center',
@@ -242,10 +244,10 @@ export default function Practice({ studentData }) {
           {showHint && (
             <div style={{
               padding: '14px 16px',
-              background: '#fffbeb',
-              border: '1px solid #fde68a',
+              background: 'var(--warning-soft)',
+              border: '1px solid rgba(245, 158, 11, 0.3)',
               borderRadius: 'var(--radius-md)',
-              color: '#92400e',
+              color: 'var(--warning)',
               fontSize: '13px',
               lineHeight: 1.5
             }}>
@@ -404,9 +406,9 @@ export default function Practice({ studentData }) {
                 let color = 'var(--text-main)';
 
                 if (isCurrent) {
-                  bg = '#ede9fe';
-                  border = '1.5px solid #6366f1';
-                  color = '#4f46e5';
+                  bg = 'rgba(23, 75, 255, 0.2)';
+                  border = '1.5px solid var(--primary)';
+                  color = 'var(--accent-ice)';
                 } else if (isCorrect) {
                   bg = '#ecfdf5';
                   border = '1px solid #10b981';
@@ -455,7 +457,7 @@ export default function Practice({ studentData }) {
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Difficulty</span>
-                <span style={{ padding: '2px 8px', borderRadius: '4px', background: '#fffbeb', color: '#d97706', fontWeight: '700', fontSize: '11px' }}>
+                <span style={{ padding: '2px 8px', borderRadius: '4px', background: 'var(--warning-soft)', color: 'var(--warning)', fontWeight: '700', fontSize: '11px' }}>
                   {question.difficulty}
                 </span>
               </div>

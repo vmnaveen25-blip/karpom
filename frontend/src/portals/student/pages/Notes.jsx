@@ -129,9 +129,10 @@ export default function Notes({ setActiveTab }) {
                   style={{
                     padding: '8px 10px',
                     borderRadius: '6px',
-                    background: selectedTopic === 'overview' ? '#ede9fe' : 'transparent',
-                    color: selectedTopic === 'overview' ? '#4f46e5' : 'var(--text-secondary)',
+                    background: selectedTopic === 'overview' ? 'rgba(23, 75, 255, 0.18)' : 'transparent',
+                    color: selectedTopic === 'overview' ? 'var(--accent-ice)' : 'var(--text-secondary)',
                     fontWeight: selectedTopic === 'overview' ? '700' : '500',
+                    border: selectedTopic === 'overview' ? '1px solid rgba(23, 75, 255, 0.3)' : '1px solid transparent',
                     cursor: 'pointer'
                   }}
                 >
@@ -196,16 +197,16 @@ export default function Notes({ setActiveTab }) {
 
           {/* Badges */}
           <div style={{ display: 'flex', gap: '8px' }}>
-            <span style={{ padding: '3px 10px', borderRadius: '4px', background: '#ede9fe', color: '#6366f1', fontSize: '11px', fontWeight: '700' }}>
+            <span style={{ padding: '3px 10px', borderRadius: '4px', background: 'var(--primary-soft)', color: 'var(--primary)', border: '1px solid rgba(23, 75, 255, 0.25)', fontSize: '11px', fontWeight: '700' }}>
               Arrays
             </span>
-            <span style={{ padding: '3px 10px', borderRadius: '4px', background: '#eff6ff', color: '#3b82f6', fontSize: '11px', fontWeight: '700' }}>
+            <span style={{ padding: '3px 10px', borderRadius: '4px', background: 'var(--primary-soft)', color: 'var(--primary)', fontSize: '11px', fontWeight: '700' }}>
               Basics
             </span>
             <span style={{ padding: '3px 10px', borderRadius: '4px', background: 'var(--bg-subtle)', color: 'var(--text-secondary)', fontSize: '11px', fontWeight: '600' }}>
               Data Structures
             </span>
-            <span style={{ padding: '3px 10px', borderRadius: '4px', background: '#fef2f2', color: '#ef4444', fontSize: '11px', fontWeight: '700' }}>
+            <span style={{ padding: '3px 10px', borderRadius: '4px', background: 'var(--danger-soft)', color: 'var(--danger)', fontSize: '11px', fontWeight: '700' }}>
               Unit 1
             </span>
           </div>
@@ -281,7 +282,7 @@ export default function Notes({ setActiveTab }) {
               </div>
 
               <div style={{ padding: '14px', borderRadius: '10px', background: 'var(--bg-subtle)', textAlign: 'center' }}>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#fef2f2', color: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px auto' }}>
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--danger-soft)', color: 'var(--danger)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px auto' }}>
                   <MinusCircle size={18} />
                 </div>
                 <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-main)' }}>Deletion</div>
@@ -289,7 +290,7 @@ export default function Notes({ setActiveTab }) {
               </div>
 
               <div style={{ padding: '14px', borderRadius: '10px', background: 'var(--bg-subtle)', textAlign: 'center' }}>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#ede9fe', color: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px auto' }}>
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--primary-soft)', color: 'var(--primary)', border: '1px solid rgba(23, 75, 255, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px auto' }}>
                   <Compass size={18} />
                 </div>
                 <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-main)' }}>Traversal</div>
@@ -297,7 +298,7 @@ export default function Notes({ setActiveTab }) {
               </div>
 
               <div style={{ padding: '14px', borderRadius: '10px', background: 'var(--bg-subtle)', textAlign: 'center' }}>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#fffbeb', color: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px auto' }}>
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--warning-soft)', color: 'var(--warning)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px auto' }}>
                   <SearchIcon size={18} />
                 </div>
                 <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-main)' }}>Searching</div>
@@ -400,19 +401,21 @@ export default function Notes({ setActiveTab }) {
                 padding: '18px 14px',
                 textAlign: 'center',
                 cursor: 'pointer',
-                background: flippedCard ? '#ede9fe' : 'var(--bg-subtle)',
+                background: flippedCard ? 'rgba(23, 75, 255, 0.15)' : 'var(--bg-subtle)',
+                border: flippedCard ? '1px solid rgba(23, 75, 255, 0.4)' : '1px solid var(--border)',
                 minHeight: '120px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                boxShadow: flippedCard ? '0 0 15px rgba(23, 75, 255, 0.2)' : 'none'
               }}
             >
               <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '8px' }}>1 / 8</div>
               <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-main)', lineHeight: 1.4 }}>
                 {flippedCard ? 'Answer: 0 (Zero-indexed array element in Java/C++)' : 'What is the index of the first element in an array?'}
               </div>
-              <div style={{ fontSize: '11px', color: '#6366f1', marginTop: '10px' }}>
+              <div style={{ fontSize: '11px', color: 'var(--accent-ice)', marginTop: '10px' }}>
                 {flippedCard ? '✓ Tap to flip back' : '👆 Tap to reveal answer'}
               </div>
             </div>
@@ -422,7 +425,7 @@ export default function Notes({ setActiveTab }) {
           <div className="ui-card" style={{ padding: '16px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
               <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-main)' }}>Recent Notes</span>
-              <span style={{ fontSize: '11px', color: '#6366f1', fontWeight: '600', cursor: 'pointer' }}>View All →</span>
+              <span style={{ fontSize: '11px', color: 'var(--accent-ice)', fontWeight: '600', cursor: 'pointer' }}>View All →</span>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '12px' }}>

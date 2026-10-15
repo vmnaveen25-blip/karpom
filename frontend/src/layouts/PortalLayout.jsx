@@ -7,8 +7,6 @@ export default function PortalLayout({
   setActiveTab,
   searchQuery,
   setSearchQuery,
-  theme,
-  setTheme,
   currentRole,
   setCurrentRole,
   setIsLoggedIn,
@@ -28,10 +26,6 @@ export default function PortalLayout({
       <div className="app-main">
         {/* Shared Top Navigation Bar */}
         <Topbar
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          theme={theme}
-          setTheme={setTheme}
           setActiveTab={setActiveTab}
           currentRole={currentRole}
           setCurrentRole={setCurrentRole}

@@ -4,69 +4,95 @@ import {
   BookOpen,
   Search,
   ChevronRight,
+  ChevronDown,
+  ArrowRight,
   ArrowLeft,
-  Clock,
-  Download,
+  Calendar,
+  Building2,
+  ExternalLink,
+  Plus,
+  MoreVertical,
   Mail,
   CheckCircle2,
   AlertTriangle,
-  X
+  X,
+  Layers,
+  Database,
+  Cpu,
+  Coffee,
+  Code2,
+  Settings,
+  ChevronLeft
 } from 'lucide-react';
 
 export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
   // Navigation level: 'courses' | 'classes' | 'students'
   const [viewLevel, setViewLevel] = useState('courses');
-  const [selectedCourse, setSelectedCourse] = useState(teacherData.courses[0] || null);
-  const [selectedClass, setSelectedClass] = useState(teacherData.classes[0] || null);
+  const [selectedCourse, setSelectedCourse] = useState(teacherData.courses?.[0] || null);
+  const [selectedClass, setSelectedClass] = useState(teacherData.classes?.[0] || null);
 
   // Filters & Search
-  const [courseDeptFilter, setCourseDeptFilter] = useState('All');
+  const [deptFilter, setDeptFilter] = useState('All Departments');
+  const [termFilter, setTermFilter] = useState('Fall 2026');
   const [courseSearch, setCourseSearch] = useState('');
+  const [classSearch, setClassSearch] = useState('');
   const [studentSearch, setStudentSearch] = useState('');
-  const [studentAttendanceFilter, setStudentAttendanceFilter] = useState('All');
-  const [studentStatusFilter, setStudentStatusFilter] = useState('All');
+  const [activeSubTab, setActiveSubTab] = useState('students');
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
 
   // Student Profile Drawer / Modal
   const [inspectedStudent, setInspectedStudent] = useState(null);
+  const [showAddStudentModal, setShowAddStudentModal] = useState(false);
+  const [newStudent, setNewStudent] = useState({ name: '', rollNo: '', email: '' });
 
-  // Courses filtered
+  // Get course list
+  const coursesList = useMemo(() => {
+    return teacherData.courses || [];
+  }, [teacherData.courses]);
+
+  // Filtered courses
   const filteredCourses = useMemo(() => {
-    return (teacherData.courses || []).filter((course) => {
-      const matchDept = courseDeptFilter === 'All' || course.department === courseDeptFilter;
+    return coursesList.filter((course) => {
       const matchSearch =
         course.title.toLowerCase().includes(courseSearch.toLowerCase()) ||
-        course.code.toLowerCase().includes(courseSearch.toLowerCase());
-      return matchDept && matchSearch;
+        course.code.toLowerCase().includes(courseSearch.toLowerCase()) ||
+        (course.subtitle && course.subtitle.toLowerCase().includes(courseSearch.toLowerCase()));
+      return matchSearch;
     });
-  }, [teacherData.courses, courseDeptFilter, courseSearch]);
+  }, [coursesList, courseSearch]);
 
-  // Classes for current course
+  // Classes for current selected course
   const courseClasses = useMemo(() => {
     if (!selectedCourse) return [];
-    return (teacherData.classes || []).filter((cls) => cls.courseId === selectedCourse.id);
-  }, [teacherData.classes, selectedCourse]);
+    const all = teacherData.classes || [];
+    const matching = all.filter((cls) => cls.courseId === selectedCourse.id || cls.courseCode === selectedCourse.code);
+    return matching.filter((cls) => {
+      if (!classSearch) return true;
+      return (
+        cls.department.toLowerCase().includes(classSearch.toLowerCase()) ||
+        cls.section.toLowerCase().includes(classSearch.toLowerCase()) ||
+        (cls.deptBadge && cls.deptBadge.toLowerCase().includes(classSearch.toLowerCase()))
+      );
+    });
+  }, [teacherData.classes, selectedCourse, classSearch]);
 
   // Students in selected class
   const classStudents = useMemo(() => {
     if (!selectedClass || !selectedClass.students) return [];
     return selectedClass.students.filter((st) => {
-      const matchSearch =
+      if (!studentSearch) return true;
+      return (
         st.name.toLowerCase().includes(studentSearch.toLowerCase()) ||
-        st.rollNo.toLowerCase().includes(studentSearch.toLowerCase());
-      const matchAttendance =
-        studentAttendanceFilter === 'All' ||
-        (studentAttendanceFilter === 'above85' && st.attendance >= 85) ||
-        (studentAttendanceFilter === 'below85' && st.attendance < 85);
-      const matchStatus =
-        studentStatusFilter === 'All' || st.status === studentStatusFilter;
-      return matchSearch && matchAttendance && matchStatus;
+        st.rollNo.toLowerCase().includes(studentSearch.toLowerCase()) ||
+        st.email.toLowerCase().includes(studentSearch.toLowerCase())
+      );
     });
-  }, [selectedClass, studentSearch, studentAttendanceFilter, studentStatusFilter]);
+  }, [selectedClass, studentSearch]);
 
   // Pagination for students
-  const totalPages = Math.ceil(classStudents.length / pageSize) || 1;
+  const totalStudentsCount = classStudents.length || selectedClass?.totalStudents || 42;
+  const totalPages = Math.ceil(totalStudentsCount / pageSize) || 1;
   const paginatedStudents = useMemo(() => {
     const start = (currentPage - 1) * pageSize;
     return classStudents.slice(start, start + pageSize);
@@ -74,696 +100,1116 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
 
   const handleSelectCourse = (course) => {
     setSelectedCourse(course);
-    // find first class for this course
-    const cls = (teacherData.classes || []).find((c) => c.courseId === course.id);
+    const cls = (teacherData.classes || []).find((c) => c.courseId === course.id || c.courseCode === course.code);
     if (cls) setSelectedClass(cls);
+    setClassSearch('');
     setViewLevel('classes');
   };
 
   const handleSelectClass = (cls) => {
     setSelectedClass(cls);
     setCurrentPage(1);
+    setStudentSearch('');
+    setActiveSubTab('students');
     setViewLevel('students');
   };
 
+  const renderCourseIcon = (course) => {
+    const code = course.code || course.id || '';
+    const title = course.title || '';
+    
+    if (code.includes('301') || title.includes('Java')) {
+      return (
+        <div style={{
+          width: '56px',
+          height: '56px',
+          borderRadius: '14px',
+          background: 'var(--danger-soft)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'var(--danger)',
+          flexShrink: 0
+        }}>
+          <Coffee size={28} />
+        </div>
+      );
+    }
+    if (code.includes('302') || title.includes('Python')) {
+      return (
+        <div style={{
+          width: '56px',
+          height: '56px',
+          borderRadius: '14px',
+          background: '#eff6ff',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#2563eb',
+          flexShrink: 0
+        }}>
+          <Code2 size={28} />
+        </div>
+      );
+    }
+    if (code.includes('303') || title.includes('Software')) {
+      return (
+        <div style={{
+          width: '56px',
+          height: '56px',
+          borderRadius: '14px',
+          background: '#eff6ff',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#3b82f6',
+          flexShrink: 0
+        }}>
+          <Settings size={28} />
+        </div>
+      );
+    }
+    if (code.includes('304') || title.includes('Database')) {
+      return (
+        <div style={{
+          width: '56px',
+          height: '56px',
+          borderRadius: '14px',
+          background: '#ecfdf5',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#10b981',
+          flexShrink: 0
+        }}>
+          <Database size={28} />
+        </div>
+      );
+    }
+    return (
+      <div style={{
+        width: '56px',
+        height: '56px',
+        borderRadius: '14px',
+        background: 'rgba(236, 72, 153, 0.15)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#ec4899',
+        flexShrink: 0
+      }}>
+        <Cpu size={28} />
+      </div>
+    );
+  };
+
+  const getDeptBadgeStyle = (dept) => {
+    const d = (dept || '').toUpperCase();
+    if (d.includes('CSE')) {
+      return { bg: 'rgba(23, 75, 255, 0.16)', text: 'var(--accent-ice)', label: 'CSE' };
+    }
+    if (d.includes('IT')) {
+      return { bg: 'rgba(56, 189, 248, 0.15)', text: '#38bdf8', label: 'IT' };
+    }
+    if (d.includes('AI')) {
+      return { bg: 'rgba(16, 185, 129, 0.15)', text: '#10b981', label: 'AI' };
+    }
+    if (d.includes('ECE')) {
+      return { bg: 'rgba(245, 158, 11, 0.15)', text: '#f59e0b', label: 'ECE' };
+    }
+    return { bg: 'var(--bg-subtle)', text: 'var(--text-secondary)', label: dept || 'GEN' };
+  };
+
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      {/* Level 1: My Courses */}
+    <div style={{ width: '100%', maxWidth: '1440px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      
+      {/* ========================================================
+          LEVEL 1: MY COURSES LIST VIEW (Reference: My Cources.png)
+         ======================================================== */}
       {viewLevel === 'courses' && (
-        <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          {/* Header */}
+        <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          {/* Main Page Header */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
             <div>
-              <h1 className="page-title">My Courses</h1>
-              <p className="page-subtitle">
-                Assigned teaching courses, department sections, and student rosters for the current academic session.
+              <h1 style={{ fontSize: '24px', fontWeight: '700', color: 'var(--text-main)', margin: '0 0 6px 0', letterSpacing: '-0.02em' }}>
+                My Classes & Students
+              </h1>
+              <p style={{ fontSize: '14px', color: 'var(--text-muted)', margin: 0 }}>
+                Your courses and the classes learning each course across departments.
               </p>
+            </div>
+
+            {/* Top Right Dropdowns */}
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+              <div style={{
+                position: 'relative',
+                display: 'inline-flex',
+                alignItems: 'center',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border)',
+                borderRadius: '8px',
+                padding: '8px 14px',
+                fontSize: '13.5px',
+                fontWeight: '500',
+                color: 'var(--text-main)',
+                cursor: 'pointer',
+                boxShadow: 'var(--shadow-xs)'
+              }}>
+                <span>{deptFilter}</span>
+                <ChevronDown size={15} style={{ marginLeft: '8px', color: 'var(--text-muted)' }} />
+              </div>
+
+              <div style={{
+                position: 'relative',
+                display: 'inline-flex',
+                alignItems: 'center',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border)',
+                borderRadius: '8px',
+                padding: '8px 14px',
+                fontSize: '13.5px',
+                fontWeight: '500',
+                color: 'var(--text-main)',
+                cursor: 'pointer',
+                boxShadow: 'var(--shadow-xs)'
+              }}>
+                <span>{termFilter}</span>
+                <ChevronDown size={15} style={{ marginLeft: '8px', color: 'var(--text-muted)' }} />
+              </div>
             </div>
           </div>
 
-          {/* Search & Department Filters */}
+          {/* Subheader: My Courses + Search Input */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-            {/* Department Tabs */}
-            <div style={{ display: 'flex', gap: '8px', background: 'var(--bg-subtle)', padding: '4px', borderRadius: 'var(--radius-md)' }}>
-              {['All', 'CSE', 'IT', 'AI & DS'].map((dept) => (
-                <button
-                  key={dept}
-                  onClick={() => setCourseDeptFilter(dept)}
-                  style={{
-                    padding: '8px 16px',
-                    borderRadius: '8px',
-                    border: 'none',
-                    background: courseDeptFilter === dept ? 'var(--bg-card)' : 'transparent',
-                    color: courseDeptFilter === dept ? 'var(--primary)' : 'var(--text-muted)',
-                    fontWeight: courseDeptFilter === dept ? '600' : '500',
-                    fontSize: '13px',
-                    cursor: 'pointer',
-                    boxShadow: courseDeptFilter === dept ? 'var(--shadow-xs)' : 'none',
-                    transition: 'all 0.15s ease'
-                  }}
-                >
-                  {dept === 'All' ? 'All Departments' : dept}
-                </button>
-              ))}
-            </div>
+            <h2 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--text-main)', margin: 0 }}>
+              My Courses
+            </h2>
 
-            {/* Search Input */}
             <div style={{ position: 'relative', width: '320px', maxWidth: '100%' }}>
-              <Search size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+              <Search size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
               <input
                 type="text"
-                className="search-input"
-                placeholder="Search courses by code or title..."
+                placeholder="Search courses..."
                 value={courseSearch}
                 onChange={(e) => setCourseSearch(e.target.value)}
-                style={{ paddingLeft: '38px', height: '38px', fontSize: '13px' }}
+                style={{
+                  width: '100%',
+                  padding: '9px 12px 9px 38px',
+                  borderRadius: '8px',
+                  border: '1px solid var(--border)',
+                  background: 'var(--bg-input)',
+                  fontSize: '13.5px',
+                  color: 'var(--text-main)',
+                  outline: 'none',
+                  transition: 'border-color 0.15s ease'
+                }}
               />
             </div>
           </div>
 
-          {/* Courses Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '20px' }}>
-            {filteredCourses.map((course) => (
-              <div
-                key={course.id}
-                className="ui-card"
-                style={{
-                  padding: '24px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '16px',
-                  borderRadius: '16px',
-                  border: '1px solid var(--border)'
-                }}
-              >
-                {/* Header badges */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <span style={{
-                      padding: '4px 10px',
-                      borderRadius: '6px',
-                      background: 'var(--primary-soft)',
-                      color: 'var(--primary)',
-                      fontSize: '12px',
-                      fontWeight: '700',
-                      letterSpacing: '0.02em'
-                    }}>
-                      {course.code}
-                    </span>
-                    <span style={{
-                      padding: '4px 8px',
-                      borderRadius: '6px',
-                      background: 'var(--bg-subtle)',
-                      color: 'var(--text-secondary)',
-                      fontSize: '11px',
-                      fontWeight: '600'
-                    }}>
-                      {course.department}
-                    </span>
-                  </div>
-                  <span style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: '500' }}>
-                    {course.year} • {course.semester}
-                  </span>
-                </div>
+          {/* Courses List - Horizontal Cards Stack */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            {filteredCourses.map((course) => {
+              const classesCount = course.classesCount || 4;
+              const deptsCount = course.departmentsCount || 3;
+              const subtitleText = course.subtitle || `${course.code} • ${course.description?.slice(0, 75)}...`;
 
-                {/* Title & Description */}
-                <div>
-                  <h3 style={{ fontSize: '17px', fontWeight: '700', color: 'var(--text-main)', marginBottom: '6px' }}>
-                    {course.title}
-                  </h3>
-                  <p style={{
-                    fontSize: '13px',
-                    color: 'var(--text-muted)',
-                    lineHeight: '1.5',
-                    display: '-webkit-box',
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden'
-                  }}>
-                    {course.description}
-                  </p>
-                </div>
+              return (
+                <div
+                  key={course.id}
+                  style={{
+                    background: 'var(--bg-card)',
+                    border: '1px solid var(--border)',
+                    borderRadius: '16px',
+                    padding: '20px 24px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    boxShadow: 'var(--shadow-xs)',
+                    transition: 'all 0.18s ease',
+                    flexWrap: 'wrap',
+                    gap: '16px'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(143, 174, 255, 0.35)';
+                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(23, 75, 255, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'var(--border)';
+                    e.currentTarget.style.boxShadow = 'var(--shadow-xs)';
+                  }}
+                >
+                  {/* Left: Icon & Title & Code/Description */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '18px', minWidth: '280px', flex: '1 1 340px' }}>
+                    {renderCourseIcon(course)}
+                    <div>
+                      <h3 style={{ fontSize: '17px', fontWeight: '700', color: 'var(--text-main)', margin: '0 0 4px 0' }}>
+                        {course.title}
+                      </h3>
+                      <p style={{ fontSize: '13.5px', color: 'var(--text-muted)', margin: 0, lineHeight: 1.4 }}>
+                        {subtitleText}
+                      </p>
+                    </div>
+                  </div>
 
-                {/* Stats Row */}
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(4, 1fr)',
-                  gap: '8px',
-                  padding: '12px 14px',
-                  borderRadius: '10px',
-                  background: 'var(--bg-subtle)',
-                  textAlign: 'center'
-                }}>
-                  <div>
-                    <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Credits</div>
-                    <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-main)', marginTop: '2px' }}>{course.credits}</div>
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Sections</div>
-                    <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-main)', marginTop: '2px' }}>{course.sectionsCount}</div>
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Students</div>
-                    <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-main)', marginTop: '2px' }}>{course.studentsCount}</div>
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Units</div>
-                    <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-main)', marginTop: '2px' }}>{course.unitsCount}</div>
-                  </div>
-                </div>
+                  {/* Right: Classes & Depts Count + View Classes Button */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '36px', flexWrap: 'wrap' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div style={{
+                        width: '38px',
+                        height: '38px',
+                        borderRadius: '10px',
+                        background: 'rgba(23, 75, 255, 0.16)',
+                        color: 'var(--accent-ice)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0
+                      }}>
+                        <Users size={19} />
+                      </div>
+                      <div>
+                        <div style={{ fontSize: '14.5px', fontWeight: '700', color: 'var(--text-main)' }}>
+                          {classesCount} Classes
+                        </div>
+                        <div style={{ fontSize: '12.5px', color: 'var(--text-muted)' }}>
+                          Across {deptsCount} Departments
+                        </div>
+                      </div>
+                    </div>
 
-                {/* Actions */}
-                <div style={{ display: 'flex', gap: '10px', marginTop: 'auto' }}>
-                  <button
-                    onClick={() => handleSelectCourse(course)}
-                    className="btn-primary"
-                    style={{ flex: 1, height: '40px', padding: '0 14px', fontSize: '13px' }}
-                  >
-                    <Users size={16} />
-                    <span>View Classes</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      if (setActiveTab) setActiveTab('teacherCourses');
-                    }}
-                    className="btn-outline"
-                    style={{ height: '40px', padding: '0 14px', fontSize: '13px' }}
-                    title="Inspect curriculum and specifications"
-                  >
-                    <BookOpen size={16} />
-                    <span>Curriculum</span>
-                  </button>
+                    <button
+                      onClick={() => handleSelectCourse(course)}
+                      style={{
+                        background: 'rgba(23, 75, 255, 0.16)',
+                        color: 'var(--accent-ice)',
+                        border: '1px solid rgba(23, 75, 255, 0.35)',
+                        borderRadius: '9999px',
+                        padding: '10px 20px',
+                        fontSize: '13.5px',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        transition: 'all 0.15s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'var(--primary)';
+                        e.currentTarget.style.color = '#FFFFFF';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'rgba(23, 75, 255, 0.16)';
+                        e.currentTarget.style.color = 'var(--accent-ice)';
+                      }}
+                    >
+                      <span>View Classes</span>
+                      <ArrowRight size={15} />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
 
-      {/* Level 2: My Classes */}
+      {/* ========================================================
+          LEVEL 2: MY CLASSES VIEW (Reference: My Classes.png)
+         ======================================================== */}
       {viewLevel === 'classes' && selectedCourse && (
         <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          {/* Breadcrumb Back */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <button
+          {/* Breadcrumbs */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>
+            <span
               onClick={() => setViewLevel('courses')}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                background: 'none',
-                border: 'none',
-                color: 'var(--text-muted)',
-                fontSize: '13px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                padding: '4px 0'
-              }}
+              style={{ cursor: 'pointer', color: 'var(--text-muted)', transition: 'color 0.15s' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-ice)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
             >
-              <ArrowLeft size={16} />
-              <span>Back to Courses</span>
-            </button>
-            <span style={{ color: 'var(--border)' }}>/</span>
-            <span style={{ fontSize: '13px', color: 'var(--primary)', fontWeight: '600' }}>
-              {selectedCourse.code} Classes
+              Home
+            </span>
+            <ChevronRight size={14} style={{ color: 'var(--text-muted)' }} />
+            <span
+              onClick={() => setViewLevel('courses')}
+              style={{ cursor: 'pointer', color: 'var(--text-muted)', transition: 'color 0.15s' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-ice)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+            >
+              My Classes & Students
+            </span>
+            <ChevronRight size={14} style={{ color: 'var(--text-muted)' }} />
+            <span style={{ fontWeight: '600', color: 'var(--text-main)' }}>
+              {selectedCourse.title}
             </span>
           </div>
 
-          {/* Header */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <h1 className="page-title">{selectedCourse.title}</h1>
+          {/* Hero Card */}
+          <div style={{
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border)',
+            borderRadius: '16px',
+            padding: '24px 28px',
+            boxShadow: 'var(--shadow-sm)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '20px'
+          }}>
+            {/* Left: Icon, Title, Subtitle, Badges */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: '1 1 450px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
+                {renderCourseIcon(selectedCourse)}
+                <div>
+                  <h1 style={{ fontSize: '22px', fontWeight: '700', color: 'var(--text-main)', margin: '0 0 4px 0' }}>
+                    {selectedCourse.title}
+                  </h1>
+                  <p style={{ fontSize: '13.5px', color: 'var(--text-muted)', margin: 0 }}>
+                    {selectedCourse.subtitle || `${selectedCourse.code} • Object-oriented programming, concurrency, and JVM internals`}
+                  </p>
+                </div>
+              </div>
+
+              {/* Badges Row */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
                 <span style={{
-                  padding: '3px 10px',
-                  borderRadius: '12px',
-                  background: 'var(--primary-soft)',
-                  color: 'var(--primary)',
-                  fontSize: '12px',
-                  fontWeight: '700'
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  background: 'rgba(23, 75, 255, 0.16)',
+                  color: 'var(--accent-ice)',
+                  border: '1px solid rgba(23, 75, 255, 0.35)',
+                  borderRadius: '9999px',
+                  padding: '4px 12px',
+                  fontSize: '12.5px',
+                  fontWeight: '600'
                 }}>
-                  {selectedCourse.code}
+                  <Users size={14} />
+                  <span>{selectedCourse.classesCount || courseClasses.length || 4} Classes</span>
+                </span>
+
+                <span style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  background: 'var(--bg-subtle)',
+                  color: 'var(--text-secondary)',
+                  border: '1px solid var(--border)',
+                  borderRadius: '9999px',
+                  padding: '4px 12px',
+                  fontSize: '12.5px',
+                  fontWeight: '500'
+                }}>
+                  <Building2 size={14} />
+                  <span>Departments</span>
+                </span>
+
+                <span style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  background: 'var(--bg-subtle)',
+                  color: 'var(--text-secondary)',
+                  border: '1px solid var(--border)',
+                  borderRadius: '9999px',
+                  padding: '4px 12px',
+                  fontSize: '12.5px',
+                  fontWeight: '500'
+                }}>
+                  <Calendar size={14} />
+                  <span>{selectedCourse.term || 'Fall 2026'}</span>
+                </span>
+
+                <span style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  background: 'var(--bg-subtle)',
+                  color: 'var(--text-secondary)',
+                  border: '1px solid var(--border)',
+                  borderRadius: '9999px',
+                  padding: '4px 12px',
+                  fontSize: '12.5px',
+                  fontWeight: '500'
+                }}>
+                  <BookOpen size={14} />
+                  <span>{selectedCourse.courseTypeBadge || 'Theory + Lab'}</span>
                 </span>
               </div>
-              <p className="page-subtitle">
-                Class sections assigned to you for {selectedCourse.department} • {selectedCourse.year} ({selectedCourse.semester}).
-              </p>
             </div>
-          </div>
 
-          {/* Quick Metrics Banner */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '14px',
-          }}>
-            <div className="ui-card" style={{ padding: '16px 20px', borderRadius: '12px' }}>
-              <div style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: '500' }}>Total Sections</div>
-              <div style={{ fontSize: '24px', fontWeight: '800', color: 'var(--text-main)', marginTop: '4px' }}>
-                {courseClasses.length}
-              </div>
-            </div>
-            <div className="ui-card" style={{ padding: '16px 20px', borderRadius: '12px' }}>
-              <div style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: '500' }}>Enrolled Students</div>
-              <div style={{ fontSize: '24px', fontWeight: '800', color: 'var(--text-main)', marginTop: '4px' }}>
-                {selectedCourse.studentsCount}
-              </div>
-            </div>
-            <div className="ui-card" style={{ padding: '16px 20px', borderRadius: '12px' }}>
-              <div style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: '500' }}>Avg Attendance</div>
-              <div style={{ fontSize: '24px', fontWeight: '800', color: 'var(--success)', marginTop: '4px' }}>
-                89.4%
-              </div>
-            </div>
-            <div className="ui-card" style={{ padding: '16px 20px', borderRadius: '12px' }}>
-              <div style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: '500' }}>Avg CGPA</div>
-              <div style={{ fontSize: '24px', fontWeight: '800', color: 'var(--primary)', marginTop: '4px' }}>
-                8.15
-              </div>
-            </div>
-          </div>
-
-          {/* Classes Cards List */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '20px' }}>
-            {courseClasses.map((cls) => (
-              <div
-                key={cls.id}
-                className="ui-card"
+            {/* Right: View Course Details Button */}
+            <div>
+              <button
+                onClick={() => {
+                  if (setActiveTab) setActiveTab('curriculum');
+                }}
                 style={{
-                  padding: '24px',
-                  borderRadius: '16px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '16px'
+                  background: 'var(--glass-surface)',
+                  color: 'var(--text-main)',
+                  border: '1px solid var(--border)',
+                  borderRadius: '8px',
+                  padding: '9px 18px',
+                  fontSize: '13.5px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  boxShadow: 'var(--shadow-xs)',
+                  transition: 'all 0.15s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(143, 174, 255, 0.4)';
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.10)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--border)';
+                  e.currentTarget.style.background = 'var(--glass-surface)';
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <div>
-                    <h3 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--text-main)' }}>
-                      {cls.department} — {cls.section}
-                    </h3>
-                    <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '3px' }}>
-                      {cls.classroom}
-                    </div>
-                  </div>
-                  <span style={{
-                    padding: '4px 10px',
-                    borderRadius: '8px',
-                    background: 'var(--bg-subtle)',
-                    color: 'var(--text-secondary)',
-                    fontSize: '12px',
-                    fontWeight: '600'
-                  }}>
-                    {cls.totalStudents} Students
-                  </span>
-                </div>
-
-                {/* Timetable schedule badges */}
-                <div>
-                  <div style={{ fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', marginBottom: '8px' }}>
-                    Weekly Schedule
-                  </div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                    {cls.scheduleBadges.map((badge, idx) => (
-                      <span
-                        key={idx}
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '5px',
-                          padding: '4px 10px',
-                          borderRadius: '6px',
-                          background: 'var(--bg-subtle)',
-                          color: 'var(--text-main)',
-                          fontSize: '12px',
-                          fontWeight: '500'
-                        }}
-                      >
-                        <Clock size={12} color="var(--primary)" />
-                        {badge}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Metrics */}
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: '12px',
-                  padding: '12px 14px',
-                  background: 'var(--bg-subtle)',
-                  borderRadius: '10px'
-                }}>
-                  <div>
-                    <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Class Attendance</div>
-                    <div style={{ fontSize: '15px', fontWeight: '700', color: 'var(--success)', marginTop: '2px' }}>
-                      {cls.avgAttendance}%
-                    </div>
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Class Avg CGPA</div>
-                    <div style={{ fontSize: '15px', fontWeight: '700', color: 'var(--primary)', marginTop: '2px' }}>
-                      {cls.avgCgpa} / 10
-                    </div>
-                  </div>
-                </div>
-
-                {/* Action */}
-                <button
-                  onClick={() => handleSelectClass(cls)}
-                  className="btn-primary"
-                  style={{ width: '100%', height: '40px', marginTop: 'auto', fontSize: '13px' }}
-                >
-                  <Users size={16} />
-                  <span>View Student Roster</span>
-                  <ChevronRight size={16} />
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Level 3: Student Roster */}
-      {viewLevel === 'students' && selectedClass && (
-        <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          {/* Breadcrumb Back */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <button
-              onClick={() => setViewLevel('classes')}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                background: 'none',
-                border: 'none',
-                color: 'var(--text-muted)',
-                fontSize: '13px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                padding: '4px 0'
-              }}
-            >
-              <ArrowLeft size={16} />
-              <span>Back to Classes</span>
-            </button>
-            <span style={{ color: 'var(--border)' }}>/</span>
-            <span style={{ fontSize: '13px', color: 'var(--primary)', fontWeight: '600' }}>
-              {selectedClass.department} {selectedClass.section} Roster
-            </span>
-          </div>
-
-          {/* Header */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
-            <div>
-              <h1 className="page-title">
-                Student Roster — {selectedClass.department} ({selectedClass.section})
-              </h1>
-              <p className="page-subtitle">
-                {selectedClass.totalStudents} enrolled students for {selectedClass.courseTitle} ({selectedClass.courseCode}).
-              </p>
-            </div>
-
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <button
-                className="btn-outline"
-                style={{ height: '38px', padding: '0 14px', fontSize: '13px' }}
-                onClick={() => alert('Exporting student roster CSV report...')}
-              >
-                <Download size={15} />
-                <span>Export Roster CSV</span>
+                <span>View Course Details</span>
+                <ExternalLink size={15} style={{ color: 'var(--text-muted)' }} />
               </button>
             </div>
           </div>
 
-          {/* Search & Filters Bar */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '12px',
-            background: 'var(--bg-card)',
-            padding: '14px 18px',
-            borderRadius: '12px',
-            border: '1px solid var(--border)'
-          }}>
-            {/* Search */}
-            <div style={{ position: 'relative', width: '320px', maxWidth: '100%' }}>
-              <Search size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-              <input
-                type="text"
-                className="search-input"
-                placeholder="Search by student name or roll no..."
-                value={studentSearch}
-                onChange={(e) => {
-                  setStudentSearch(e.target.value);
-                  setCurrentPage(1);
-                }}
-                style={{ paddingLeft: '38px', height: '38px', fontSize: '13px' }}
-              />
+          {/* Subheader: Classes using this course + Search */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+            <div>
+              <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', margin: '0 0 2px 0' }}>
+                Classes using this course
+              </h2>
+              <p style={{ fontSize: '13px', color: '#64748b', margin: 0 }}>
+                This course is offered to {courseClasses.length || 4} classes across 3 departments.
+              </p>
             </div>
 
-            {/* Attendance & Status Filter dropdowns */}
-            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: '500' }}>Attendance:</span>
-                <select
-                  value={studentAttendanceFilter}
-                  onChange={(e) => {
-                    setStudentAttendanceFilter(e.target.value);
-                    setCurrentPage(1);
-                  }}
-                  style={{
-                    padding: '6px 12px',
-                    borderRadius: '8px',
-                    border: '1px solid var(--border)',
-                    background: 'var(--bg-subtle)',
-                    fontSize: '13px',
-                    color: 'var(--text-main)',
-                    outline: 'none'
-                  }}
-                >
-                  <option value="All">All Attendance</option>
-                  <option value="above85">85% and Above</option>
-                  <option value="below85">Below 85%</option>
-                </select>
-              </div>
-
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: '500' }}>Status:</span>
-                <select
-                  value={studentStatusFilter}
-                  onChange={(e) => {
-                    setStudentStatusFilter(e.target.value);
-                    setCurrentPage(1);
-                  }}
-                  style={{
-                    padding: '6px 12px',
-                    borderRadius: '8px',
-                    border: '1px solid var(--border)',
-                    background: 'var(--bg-subtle)',
-                    fontSize: '13px',
-                    color: 'var(--text-main)',
-                    outline: 'none'
-                  }}
-                >
-                  <option value="All">All Status</option>
-                  <option value="Active">Active</option>
-                  <option value="At Risk">At Risk</option>
-                </select>
-              </div>
+            <div style={{ position: 'relative', width: '300px', maxWidth: '100%' }}>
+              <Search size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+              <input
+                type="text"
+                placeholder="Search classes..."
+                value={classSearch}
+                onChange={(e) => setClassSearch(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '8px 12px 8px 36px',
+                  borderRadius: '8px',
+                  border: '1px solid var(--border)',
+                  background: 'var(--bg-input)',
+                  fontSize: '13px',
+                  color: 'var(--text-main)',
+                  outline: 'none'
+                }}
+              />
             </div>
           </div>
 
-          {/* Students Table */}
-          <div className="ui-card" style={{ borderRadius: '16px', overflow: 'hidden' }}>
+          {/* Classes Table */}
+          <div style={{
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border)',
+            borderRadius: '14px',
+            overflow: 'hidden',
+            boxShadow: 'var(--shadow-xs)'
+          }}>
             <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '13.5px' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '900px' }}>
                 <thead>
-                  <tr style={{ background: 'var(--bg-subtle)', borderBottom: '1px solid var(--border)', color: 'var(--text-muted)' }}>
-                    <th style={{ padding: '14px 20px', fontWeight: '600', fontSize: '12px' }}>ROLL NUMBER</th>
-                    <th style={{ padding: '14px 20px', fontWeight: '600', fontSize: '12px' }}>STUDENT NAME</th>
-                    <th style={{ padding: '14px 20px', fontWeight: '600', fontSize: '12px' }}>ATTENDANCE</th>
-                    <th style={{ padding: '14px 20px', fontWeight: '600', fontSize: '12px' }}>CGPA</th>
-                    <th style={{ padding: '14px 20px', fontWeight: '600', fontSize: '12px' }}>SUBMISSIONS</th>
-                    <th style={{ padding: '14px 20px', fontWeight: '600', fontSize: '12px' }}>STATUS</th>
-                    <th style={{ padding: '14px 20px', fontWeight: '600', fontSize: '12px', textAlign: 'right' }}>ACTIONS</th>
+                  <tr style={{ background: 'var(--bg-subtle)', borderBottom: '1px solid var(--border)' }}>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', width: '50px' }}>#</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Department</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Year</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Section</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Academic Term</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Students</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Teacher(s)</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', textAlign: 'right' }}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {paginatedStudents.length === 0 ? (
-                    <tr>
-                      <td colSpan={7} style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
-                        No students found matching your search and filter criteria.
-                      </td>
-                    </tr>
-                  ) : (
-                    paginatedStudents.map((st) => (
+                  {courseClasses.map((cls, idx) => {
+                    const deptBadge = getDeptBadgeStyle(cls.deptBadge || cls.department);
+                    return (
                       <tr
-                        key={st.rollNo}
-                        style={{ borderBottom: '1px solid var(--border)', transition: 'background 0.15s ease' }}
-                        onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--bg-subtle)')}
-                        onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                        key={cls.id || idx}
+                        style={{ borderBottom: idx < courseClasses.length - 1 ? '1px solid var(--border-subtle)' : 'none', transition: 'background-color 0.1s ease' }}
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.04)')}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                       >
-                        <td style={{ padding: '14px 20px', fontWeight: '600', color: 'var(--text-main)', fontFamily: 'var(--font-mono)', fontSize: '12.5px' }}>
-                          {st.rollNo}
+                        <td style={{ padding: '16px 20px', fontSize: '13.5px', color: 'var(--text-muted)', fontWeight: '500' }}>
+                          {idx + 1}
                         </td>
-                        <td style={{ padding: '14px 20px' }}>
+
+                        <td style={{ padding: '16px 20px' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <span style={{
+                              background: deptBadge.bg,
+                              color: deptBadge.text,
+                              borderRadius: '6px',
+                              padding: '3px 8px',
+                              fontSize: '11.5px',
+                              fontWeight: '700',
+                              letterSpacing: '0.02em'
+                            }}>
+                              {deptBadge.label}
+                            </span>
+                            <span style={{ fontSize: '13.5px', fontWeight: '500', color: 'var(--text-main)' }}>
+                              {cls.department}
+                            </span>
+                          </div>
+                        </td>
+
+                        <td style={{ padding: '16px 20px', fontSize: '13.5px', color: 'var(--text-secondary)', fontWeight: '500' }}>
+                          {cls.year || 'III Year'}
+                        </td>
+
+                        <td style={{ padding: '16px 20px', fontSize: '13.5px', color: 'var(--text-secondary)', fontWeight: '500' }}>
+                          {cls.section}
+                        </td>
+
+                        <td style={{ padding: '16px 20px', fontSize: '13.5px', color: 'var(--text-muted)' }}>
+                          {cls.academicTerm || cls.term || 'Fall 2026'}
+                        </td>
+
+                        <td style={{ padding: '16px 20px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13.5px', fontWeight: '600', color: 'var(--text-main)' }}>
+                            <Users size={14} style={{ color: 'var(--text-muted)' }} />
+                            <span>{cls.totalStudents || cls.students?.length || 40}</span>
+                          </div>
+                        </td>
+
+                        <td style={{ padding: '16px 20px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <div style={{
+                              width: '28px',
+                              height: '28px',
+                              borderRadius: '50%',
+                              background: 'var(--primary)',
+                              color: '#ffffff',
+                              fontSize: '11px',
+                              fontWeight: '700',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              flexShrink: 0
+                            }}>
+                              {cls.teacherInitials || 'VV'}
+                            </div>
+                            <span style={{ fontSize: '13.5px', fontWeight: '500', color: 'var(--text-main)' }}>
+                              {cls.teacher || 'Vijay Vikas'}
+                            </span>
+                          </div>
+                        </td>
+
+                        <td style={{ padding: '16px 20px', textAlign: 'right' }}>
+                          <button
+                            onClick={() => handleSelectClass(cls)}
+                            style={{
+                              background: 'rgba(23, 75, 255, 0.16)',
+                              color: 'var(--accent-ice)',
+                              border: '1px solid rgba(23, 75, 255, 0.35)',
+                              borderRadius: '9999px',
+                              padding: '7px 16px',
+                              fontSize: '13px',
+                              fontWeight: '600',
+                              cursor: 'pointer',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '5px',
+                              transition: 'all 0.15s ease'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.background = 'var(--primary)';
+                              e.currentTarget.style.color = '#FFFFFF';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.background = 'rgba(23, 75, 255, 0.16)';
+                              e.currentTarget.style.color = 'var(--accent-ice)';
+                            }}
+                          >
+                            <span>View Students</span>
+                            <ArrowRight size={14} />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================
+          LEVEL 3: MY STUDENTS VIEW (Reference: My Students.png)
+         ======================================================== */}
+      {viewLevel === 'students' && selectedCourse && selectedClass && (
+        <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          {/* Breadcrumbs */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
+            <span
+              onClick={() => setViewLevel('courses')}
+              style={{ cursor: 'pointer', color: 'var(--text-muted)' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-ice)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+            >
+              Home
+            </span>
+            <ChevronRight size={14} style={{ color: 'var(--text-muted)' }} />
+            <span
+              onClick={() => setViewLevel('courses')}
+              style={{ cursor: 'pointer', color: 'var(--text-muted)' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-ice)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+            >
+              My Classes & Students
+            </span>
+            <ChevronRight size={14} style={{ color: 'var(--text-muted)' }} />
+            <span
+              onClick={() => setViewLevel('classes')}
+              style={{ cursor: 'pointer', color: 'var(--text-muted)' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-ice)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+            >
+              {selectedCourse.title}
+            </span>
+            <ChevronRight size={14} style={{ color: 'var(--text-muted)' }} />
+            <span style={{ color: 'var(--text-muted)' }}>
+              {selectedClass.deptBadge || 'CSE'} - {selectedClass.year || 'III Year'} - {selectedClass.section || 'Section A'}
+            </span>
+            <ChevronRight size={14} style={{ color: 'var(--text-muted)' }} />
+            <span style={{ fontWeight: '600', color: 'var(--text-main)' }}>
+              Students
+            </span>
+          </div>
+
+          {/* Hero Card with Section Pills */}
+          <div style={{
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border)',
+            borderRadius: '16px',
+            padding: '22px 26px',
+            boxShadow: 'var(--shadow-sm)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '14px',
+            backdropFilter: 'blur(16px)'
+          }}>
+            <div>
+              <h1 style={{ fontSize: '20px', fontWeight: '700', color: 'var(--text-main)', margin: '0 0 4px 0' }}>
+                {selectedCourse.title}
+              </h1>
+              <p style={{ fontSize: '13.5px', color: 'var(--text-muted)', margin: 0 }}>
+                {selectedCourse.subtitle || `${selectedCourse.code} • Object-oriented programming, concurrency, and JVM internals`}
+              </p>
+            </div>
+
+            {/* Badges Row */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+              <span style={{
+                background: 'rgba(23, 75, 255, 0.15)',
+                color: 'var(--accent-ice)',
+                border: '1px solid rgba(23, 75, 255, 0.3)',
+                borderRadius: '9999px',
+                padding: '4px 12px',
+                fontSize: '12px',
+                fontWeight: '700'
+              }}>
+                {selectedClass.deptBadge || 'CSE'}
+              </span>
+
+              <span style={{
+                background: 'var(--bg-subtle)',
+                color: 'var(--text-muted)',
+                border: '1px solid var(--border)',
+                borderRadius: '9999px',
+                padding: '4px 12px',
+                fontSize: '12px',
+                fontWeight: '500'
+              }}>
+                {selectedClass.year || 'III Year'}
+              </span>
+
+              <span style={{
+                background: 'var(--bg-subtle)',
+                color: 'var(--text-muted)',
+                border: '1px solid var(--border)',
+                borderRadius: '9999px',
+                padding: '4px 12px',
+                fontSize: '12px',
+                fontWeight: '500'
+              }}>
+                {selectedClass.section || 'Section A'}
+              </span>
+
+              <span style={{
+                background: 'var(--bg-subtle)',
+                color: 'var(--text-muted)',
+                border: '1px solid var(--border)',
+                borderRadius: '9999px',
+                padding: '4px 12px',
+                fontSize: '12px',
+                fontWeight: '500'
+              }}>
+                {selectedClass.academicTerm || selectedClass.term || 'Fall 2026'}
+              </span>
+
+              <span style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                background: 'rgba(23, 75, 255, 0.12)',
+                color: 'var(--accent-ice)',
+                border: '1px solid rgba(23, 75, 255, 0.25)',
+                borderRadius: '9999px',
+                padding: '4px 12px',
+                fontSize: '12px',
+                fontWeight: '600'
+              }}>
+                <Users size={13} />
+                <span>{selectedClass.totalStudents || selectedClass.students?.length || 42} Students</span>
+              </span>
+            </div>
+          </div>
+
+          {/* Sub-tabs Navigation Bar */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '24px',
+            borderBottom: '1px solid var(--border)',
+            paddingBottom: '0px',
+            marginTop: '4px'
+          }}>
+            {[
+              { id: 'students', label: 'Students' },
+              { id: 'assignments', label: 'Assignments' },
+              { id: 'assessments', label: 'Assessments' },
+              { id: 'schedule', label: 'Schedule' },
+              { id: 'announcements', label: 'Announcements' }
+            ].map((tab) => {
+              const isActive = activeSubTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    setActiveSubTab(tab.id);
+                    if (tab.id === 'assignments' && setActiveTab) setActiveTab('assignmentsAssessments');
+                    if (tab.id === 'assessments' && setActiveTab) setActiveTab('assignmentsAssessments');
+                    if (tab.id === 'schedule' && setActiveTab) setActiveTab('academicCalendar');
+                    if (tab.id === 'announcements' && setActiveTab) setActiveTab('teacherCommunication');
+                  }}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    padding: '10px 4px',
+                    fontSize: '14px',
+                    fontWeight: isActive ? '600' : '500',
+                    color: isActive ? 'var(--accent-ice)' : 'var(--text-muted)',
+                    cursor: 'pointer',
+                    position: 'relative',
+                    transition: 'color 0.15s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) e.currentTarget.style.color = 'var(--text-main)';
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) e.currentTarget.style.color = 'var(--text-muted)';
+                  }}
+                >
+                  {tab.label}
+                  {isActive && (
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '-1px',
+                      left: 0,
+                      right: 0,
+                      height: '2px',
+                      background: 'var(--primary)',
+                      boxShadow: '0 0 10px var(--primary-glow)',
+                      borderRadius: '2px'
+                    }} />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Subheader: Students (42) + Search + Add Student Button */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '14px' }}>
+            <div>
+              <h2 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--text-main)', margin: '0 0 2px 0' }}>
+                Students ({selectedClass.totalStudents || selectedClass.students?.length || 42})
+              </h2>
+              <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: 0 }}>
+                List of all students enrolled in this class section.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ position: 'relative', width: '280px', maxWidth: '100%' }}>
+                <Search size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                <input
+                  type="text"
+                  placeholder="Search students..."
+                  value={studentSearch}
+                  onChange={(e) => {
+                    setStudentSearch(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: '8px 12px 8px 36px',
+                    borderRadius: '8px',
+                    border: '1px solid var(--border)',
+                    background: 'var(--bg-subtle)',
+                    fontSize: '13px',
+                    color: 'var(--text-main)',
+                    outline: 'none'
+                  }}
+                />
+              </div>
+
+              <button
+                onClick={() => setShowAddStudentModal(true)}
+                style={{
+                  background: 'var(--primary)',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '8px',
+                  padding: '9px 18px',
+                  fontSize: '13.5px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  boxShadow: '0 4px 14px rgba(23, 75, 255, 0.35)',
+                  transition: 'background-color 0.15s ease'
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--primary-hover)')}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--primary)')}
+              >
+                <Plus size={16} />
+                <span>Add Student</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Students Table Card */}
+          <div style={{
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border)',
+            borderRadius: '14px',
+            overflow: 'hidden',
+            boxShadow: 'var(--shadow-sm)',
+            backdropFilter: 'blur(16px)'
+          }}>
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '800px' }}>
+                <thead>
+                  <tr style={{ background: 'var(--bg-subtle)', borderBottom: '1px solid var(--border)' }}>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', width: '50px' }}>#</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Name</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Roll No.</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Email</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Status</th>
+                    <th style={{ padding: '14px 20px', fontSize: '12px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', textAlign: 'right', width: '60px' }}>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {paginatedStudents.map((student, idx) => {
+                    const rowNumber = (currentPage - 1) * pageSize + idx + 1;
+                    const initials = student.name
+                      .split(' ')
+                      .map((n) => n[0])
+                      .slice(0, 2)
+                      .join('');
+
+                    return (
+                      <tr
+                        key={student.rollNo || idx}
+                        style={{ borderBottom: idx < paginatedStudents.length - 1 ? '1px solid var(--border)' : 'none', transition: 'background-color 0.1s ease' }}
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--bg-subtle)')}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+                      >
+                        <td style={{ padding: '14px 20px', fontSize: '13.5px', color: 'var(--text-muted)', fontWeight: '500' }}>
+                          {rowNumber}
+                        </td>
+
+                        <td style={{ padding: '14px 20px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                             <div style={{
                               width: '32px',
                               height: '32px',
                               borderRadius: '50%',
-                              background: 'var(--primary-soft)',
-                              color: 'var(--primary)',
+                              background: 'var(--bg-subtle)',
+                              color: 'var(--text-main)',
+                              border: '1px solid var(--border)',
                               fontSize: '12px',
-                              fontWeight: '700',
+                              fontWeight: '600',
                               display: 'flex',
                               alignItems: 'center',
-                              justifyContent: 'center'
+                              justifyContent: 'center',
+                              flexShrink: 0
                             }}>
-                              {st.name.split(' ').map((n) => n[0]).slice(0, 2).join('')}
+                              {initials}
                             </div>
-                            <div>
-                              <div style={{ fontWeight: '600', color: 'var(--text-main)' }}>{st.name}</div>
-                              <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{st.email}</div>
-                            </div>
-                          </div>
-                        </td>
-                        <td style={{ padding: '14px 20px' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <span style={{
-                              fontWeight: '700',
-                              color: st.attendance >= 85 ? 'var(--success)' : 'var(--danger)'
-                            }}>
-                              {st.attendance}%
+                            <span
+                              onClick={() => setInspectedStudent(student)}
+                              style={{ fontSize: '13.5px', fontWeight: '600', color: 'var(--text-main)', cursor: 'pointer' }}
+                              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-ice)')}
+                              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-main)')}
+                            >
+                              {student.name}
                             </span>
-                            <div style={{ width: '60px', height: '5px', borderRadius: '4px', background: 'var(--border)', overflow: 'hidden' }}>
-                              <div style={{
-                                width: `${st.attendance}%`,
-                                height: '100%',
-                                background: st.attendance >= 85 ? 'var(--success)' : 'var(--danger)',
-                                borderRadius: '4px'
-                              }} />
-                            </div>
                           </div>
                         </td>
-                        <td style={{ padding: '14px 20px', fontWeight: '600', color: 'var(--text-main)' }}>
-                          {st.cgpa}
+
+                        <td style={{ padding: '14px 20px' }}>
+                          <span
+                            onClick={() => setInspectedStudent(student)}
+                            style={{ fontSize: '13.5px', fontWeight: '500', color: 'var(--accent-ice)', cursor: 'pointer' }}
+                          >
+                            {student.rollNo}
+                          </span>
                         </td>
-                        <td style={{ padding: '14px 20px', color: 'var(--text-secondary)' }}>
-                          {st.assignmentsSubmitted || '2/2'}
+
+                        <td style={{ padding: '14px 20px', fontSize: '13.5px', color: 'var(--text-muted)' }}>
+                          {student.email}
                         </td>
+
                         <td style={{ padding: '14px 20px' }}>
                           <span style={{
                             display: 'inline-flex',
                             alignItems: 'center',
-                            gap: '4px',
-                            padding: '3px 8px',
-                            borderRadius: '12px',
-                            fontSize: '11px',
-                            fontWeight: '600',
-                            background: st.status === 'Active' ? 'var(--success-soft)' : 'var(--danger-soft)',
-                            color: st.status === 'Active' ? 'var(--success)' : 'var(--danger)'
+                            background: 'rgba(16, 185, 129, 0.15)',
+                            color: '#10b981',
+                            border: '1px solid rgba(16, 185, 129, 0.3)',
+                            padding: '3px 10px',
+                            borderRadius: '9999px',
+                            fontSize: '12px',
+                            fontWeight: '600'
                           }}>
-                            {st.status === 'Active' ? <CheckCircle2 size={12} /> : <AlertTriangle size={12} />}
-                            {st.status}
+                            Active
                           </span>
                         </td>
+
                         <td style={{ padding: '14px 20px', textAlign: 'right' }}>
-                          <div style={{ display: 'inline-flex', gap: '8px' }}>
-                            <button
-                              onClick={() => setInspectedStudent(st)}
-                              className="btn-outline"
-                              style={{ padding: '5px 10px', fontSize: '12px', height: '30px' }}
-                            >
-                              Profile
-                            </button>
-                            <button
-                              onClick={() => {
-                                if (setActiveTab) setActiveTab('teacherCommunication');
-                              }}
-                              className="btn-outline"
-                              style={{ padding: '5px 10px', fontSize: '12px', height: '30px' }}
-                              title="Message student"
-                            >
-                              <Mail size={13} />
-                            </button>
-                          </div>
+                          <button
+                            onClick={() => setInspectedStudent(student)}
+                            style={{
+                              background: 'transparent',
+                              border: 'none',
+                              color: 'var(--text-muted)',
+                              cursor: 'pointer',
+                              padding: '6px',
+                              borderRadius: '6px',
+                              transition: 'color 0.15s, background-color 0.15s'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.color = 'var(--text-main)';
+                              e.currentTarget.style.background = 'var(--bg-subtle)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.color = 'var(--text-muted)';
+                              e.currentTarget.style.background = 'transparent';
+                            }}
+                          >
+                            <MoreVertical size={16} />
+                          </button>
                         </td>
                       </tr>
-                    ))
-                  )}
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
 
-            {/* Pagination Controls */}
+            {/* Pagination Bottom Bar */}
             <div style={{
               display: 'flex',
-              justifyContent: 'space-between',
               alignItems: 'center',
+              justifyContent: 'space-between',
               padding: '14px 20px',
               borderTop: '1px solid var(--border)',
-              background: 'var(--bg-subtle)'
+              background: 'var(--bg-card)',
+              flexWrap: 'wrap',
+              gap: '12px'
             }}>
               <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
-                Showing {(currentPage - 1) * pageSize + 1} to {Math.min(currentPage * pageSize, classStudents.length)} of {classStudents.length} students
+                Showing {(currentPage - 1) * pageSize + 1} to {Math.min(currentPage * pageSize, totalStudentsCount)} of {totalStudentsCount} students
               </div>
 
-              <div style={{ display: 'flex', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <button
                   disabled={currentPage === 1}
-                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
                   style={{
-                    padding: '6px 14px',
+                    width: '32px',
+                    height: '32px',
                     borderRadius: '6px',
                     border: '1px solid var(--border)',
-                    background: currentPage === 1 ? 'transparent' : 'var(--bg-card)',
-                    color: currentPage === 1 ? 'var(--text-disabled)' : 'var(--text-main)',
-                    fontSize: '12px',
-                    fontWeight: '600',
-                    cursor: currentPage === 1 ? 'not-allowed' : 'pointer'
+                    background: 'var(--bg-subtle)',
+                    color: currentPage === 1 ? 'rgba(255, 255, 255, 0.2)' : 'var(--text-muted)',
+                    cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}
                 >
-                  Previous
+                  <ChevronLeft size={16} />
                 </button>
-                {Array.from({ length: totalPages }, (_, idx) => idx + 1).map((pg) => (
-                  <button
-                    key={pg}
-                    onClick={() => setCurrentPage(pg)}
-                    style={{
-                      width: '30px',
-                      height: '30px',
-                      borderRadius: '6px',
-                      border: '1px solid var(--border)',
-                      background: currentPage === pg ? 'var(--primary)' : 'var(--bg-card)',
-                      color: currentPage === pg ? '#ffffff' : 'var(--text-main)',
-                      fontSize: '12px',
-                      fontWeight: '600',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    {pg}
-                  </button>
-                ))}
+
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
+                  const isActive = currentPage === pageNum;
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => setCurrentPage(pageNum)}
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '6px',
+                        border: isActive ? 'none' : '1px solid var(--border)',
+                        background: isActive ? 'var(--primary)' : 'var(--bg-subtle)',
+                        color: isActive ? '#ffffff' : 'var(--text-muted)',
+                        fontSize: '13px',
+                        fontWeight: isActive ? '700' : '500',
+                        boxShadow: isActive ? '0 0 12px var(--primary-glow)' : 'none',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                })}
+
                 <button
                   disabled={currentPage === totalPages}
-                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                  onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
                   style={{
-                    padding: '6px 14px',
+                    width: '32px',
+                    height: '32px',
                     borderRadius: '6px',
                     border: '1px solid var(--border)',
-                    background: currentPage === totalPages ? 'transparent' : 'var(--bg-card)',
-                    color: currentPage === totalPages ? 'var(--text-disabled)' : 'var(--text-main)',
-                    fontSize: '12px',
-                    fontWeight: '600',
-                    cursor: currentPage === totalPages ? 'not-allowed' : 'pointer'
+                    background: 'var(--bg-subtle)',
+                    color: currentPage === totalPages ? 'rgba(255, 255, 255, 0.2)' : 'var(--text-muted)',
+                    cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}
                 >
-                  Next
+                  <ChevronRight size={16} />
                 </button>
               </div>
             </div>
@@ -771,37 +1217,42 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
         </div>
       )}
 
-      {/* Student Profile Quick Drawer / Modal */}
+      {/* ========================================================
+          STUDENT DETAIL MODAL / DRAWER
+         ======================================================== */}
       {inspectedStudent && (
         <div style={{
           position: 'fixed',
           inset: 0,
-          background: 'rgba(15, 23, 42, 0.45)',
-          backdropFilter: 'blur(3px)',
+          background: 'rgba(5, 7, 13, 0.75)',
+          backdropFilter: 'blur(16px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          zIndex: 9999,
+          zIndex: 100,
           padding: '20px'
         }}>
-          <div className="ui-card fade-in" style={{
-            width: '480px',
-            maxWidth: '100%',
-            padding: '28px',
-            borderRadius: '20px',
+          <div style={{
+            background: 'rgba(17, 24, 39, 0.95)',
+            border: '1px solid var(--border)',
+            borderRadius: '16px',
+            width: '100%',
+            maxWidth: '460px',
+            padding: '24px',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
             display: 'flex',
             flexDirection: 'column',
-            gap: '20px',
-            boxShadow: 'var(--shadow-lg)'
+            gap: '18px'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                 <div style={{
-                  width: '48px',
-                  height: '48px',
+                  width: '46px',
+                  height: '46px',
                   borderRadius: '50%',
-                  background: 'var(--primary-soft)',
-                  color: 'var(--primary)',
+                  background: 'rgba(23, 75, 255, 0.15)',
+                  color: 'var(--accent-ice)',
+                  border: '1px solid rgba(23, 75, 255, 0.3)',
                   fontSize: '16px',
                   fontWeight: '700',
                   display: 'flex',
@@ -811,10 +1262,10 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                   {inspectedStudent.name.split(' ').map((n) => n[0]).slice(0, 2).join('')}
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--text-main)' }}>
+                  <h3 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--text-main)', margin: '0 0 2px 0' }}>
                     {inspectedStudent.name}
                   </h3>
-                  <div style={{ fontSize: '13px', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                  <div style={{ fontSize: '13px', color: 'var(--text-muted)', fontWeight: '500' }}>
                     {inspectedStudent.rollNo}
                   </div>
                 </div>
@@ -829,34 +1280,36 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
-              <div style={{ padding: '12px', borderRadius: '10px', background: 'var(--bg-subtle)', textAlign: 'center' }}>
+              <div style={{ padding: '12px', borderRadius: '10px', background: 'var(--bg-subtle)', textAlign: 'center', border: '1px solid var(--border)' }}>
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Attendance</div>
-                <div style={{ fontSize: '16px', fontWeight: '800', color: inspectedStudent.attendance >= 85 ? 'var(--success)' : 'var(--danger)', marginTop: '2px' }}>
-                  {inspectedStudent.attendance}%
+                <div style={{ fontSize: '16px', fontWeight: '800', color: inspectedStudent.attendance >= 85 ? '#10b981' : '#ef4444', marginTop: '2px' }}>
+                  {inspectedStudent.attendance || 95}%
                 </div>
               </div>
-              <div style={{ padding: '12px', borderRadius: '10px', background: 'var(--bg-subtle)', textAlign: 'center' }}>
+              <div style={{ padding: '12px', borderRadius: '10px', background: 'var(--bg-subtle)', textAlign: 'center', border: '1px solid var(--border)' }}>
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>CGPA</div>
-                <div style={{ fontSize: '16px', fontWeight: '800', color: 'var(--primary)', marginTop: '2px' }}>
-                  {inspectedStudent.cgpa}
+                <div style={{ fontSize: '16px', fontWeight: '800', color: 'var(--accent-ice)', marginTop: '2px' }}>
+                  {inspectedStudent.cgpa || 8.9}
                 </div>
               </div>
-              <div style={{ padding: '12px', borderRadius: '10px', background: 'var(--bg-subtle)', textAlign: 'center' }}>
+              <div style={{ padding: '12px', borderRadius: '10px', background: 'var(--bg-subtle)', textAlign: 'center', border: '1px solid var(--border)' }}>
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Status</div>
-                <div style={{ fontSize: '13px', fontWeight: '700', color: inspectedStudent.status === 'Active' ? 'var(--success)' : 'var(--danger)', marginTop: '4px' }}>
-                  {inspectedStudent.status}
+                <div style={{ fontSize: '13px', fontWeight: '700', color: '#10b981', marginTop: '4px' }}>
+                  {inspectedStudent.status || 'Active'}
                 </div>
               </div>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '13px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '13px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Email Address</span>
                 <span style={{ fontWeight: '500', color: 'var(--text-main)' }}>{inspectedStudent.email}</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Course & Section</span>
-                <span style={{ fontWeight: '500', color: 'var(--text-main)' }}>{selectedClass.courseCode} — {selectedClass.section}</span>
+                <span style={{ fontWeight: '500', color: 'var(--text-main)' }}>
+                  {selectedCourse?.code || 'CSE301'} — {selectedClass?.section || 'Section A'}
+                </span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Assignments Submitted</span>
@@ -868,10 +1321,27 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+            <div style={{ display: 'flex', gap: '10px', marginTop: '6px' }}>
               <button
-                className="btn-primary"
-                style={{ flex: 1, height: '40px' }}
+                style={{
+                  flex: 1,
+                  height: '40px',
+                  background: 'var(--primary)',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontWeight: '600',
+                  fontSize: '13.5px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  boxShadow: '0 4px 14px rgba(23, 75, 255, 0.35)',
+                  transition: 'background-color 0.15s ease'
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--primary-hover)')}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--primary)')}
                 onClick={() => {
                   setInspectedStudent(null);
                   if (setActiveTab) setActiveTab('teacherCommunication');
@@ -881,8 +1351,17 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
                 <span>Message Student</span>
               </button>
               <button
-                className="btn-outline"
-                style={{ height: '40px' }}
+                style={{
+                  height: '40px',
+                  padding: '0 16px',
+                  background: 'var(--bg-subtle)',
+                  border: '1px solid var(--border)',
+                  borderRadius: '8px',
+                  fontWeight: '600',
+                  fontSize: '13.5px',
+                  color: 'var(--text-muted)',
+                  cursor: 'pointer'
+                }}
                 onClick={() => setInspectedStudent(null)}
               >
                 Close
@@ -891,6 +1370,165 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
           </div>
         </div>
       )}
+
+      {/* ========================================================
+          ADD STUDENT MODAL
+         ======================================================== */}
+      {showAddStudentModal && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(5, 7, 13, 0.75)',
+          backdropFilter: 'blur(16px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 100,
+          padding: '20px'
+        }}>
+          <div style={{
+            background: 'rgba(17, 24, 39, 0.95)',
+            border: '1px solid var(--border)',
+            borderRadius: '16px',
+            width: '100%',
+            maxWidth: '440px',
+            padding: '24px',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h3 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--text-main)', margin: 0 }}>
+                Add Student to {selectedClass?.section || 'Class'}
+              </h3>
+              <button
+                onClick={() => setShowAddStudentModal(false)}
+                style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div>
+                <label style={{ fontSize: '12.5px', fontWeight: '600', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Full Name</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Anand R"
+                  value={newStudent.name}
+                  onChange={(e) => setNewStudent({ ...newStudent, name: e.target.value })}
+                  style={{
+                    width: '100%',
+                    padding: '9px 12px',
+                    borderRadius: '8px',
+                    border: '1px solid var(--border)',
+                    background: 'var(--bg-subtle)',
+                    color: 'var(--text-main)',
+                    fontSize: '13.5px',
+                    outline: 'none'
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '12.5px', fontWeight: '600', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Roll Number</label>
+                <input
+                  type="text"
+                  placeholder="e.g. CSE2024043"
+                  value={newStudent.rollNo}
+                  onChange={(e) => setNewStudent({ ...newStudent, rollNo: e.target.value })}
+                  style={{
+                    width: '100%',
+                    padding: '9px 12px',
+                    borderRadius: '8px',
+                    border: '1px solid var(--border)',
+                    background: 'var(--bg-subtle)',
+                    color: 'var(--text-main)',
+                    fontSize: '13.5px',
+                    outline: 'none'
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '12.5px', fontWeight: '600', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>Email Address</label>
+                <input
+                  type="email"
+                  placeholder="e.g. anand.r@example.com"
+                  value={newStudent.email}
+                  onChange={(e) => setNewStudent({ ...newStudent, email: e.target.value })}
+                  style={{
+                    width: '100%',
+                    padding: '9px 12px',
+                    borderRadius: '8px',
+                    border: '1px solid var(--border)',
+                    background: 'var(--bg-subtle)',
+                    color: 'var(--text-main)',
+                    fontSize: '13.5px',
+                    outline: 'none'
+                  }}
+                />
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+              <button
+                style={{
+                  flex: 1,
+                  height: '40px',
+                  background: 'var(--primary)',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontWeight: '600',
+                  fontSize: '13.5px',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 14px rgba(23, 75, 255, 0.35)',
+                  transition: 'background-color 0.15s ease'
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--primary-hover)')}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--primary)')}
+                onClick={() => {
+                  if (newStudent.name && newStudent.rollNo) {
+                    if (selectedClass && selectedClass.students) {
+                      selectedClass.students.unshift({
+                        rollNo: newStudent.rollNo,
+                        name: newStudent.name,
+                        email: newStudent.email || `${newStudent.rollNo.toLowerCase()}@example.com`,
+                        status: 'Active',
+                        attendance: 95,
+                        cgpa: 8.5
+                      });
+                    }
+                    setShowAddStudentModal(false);
+                    setNewStudent({ name: '', rollNo: '', email: '' });
+                  }
+                }}
+              >
+                Add Student
+              </button>
+              <button
+                style={{
+                  height: '40px',
+                  padding: '0 16px',
+                  background: 'var(--bg-subtle)',
+                  border: '1px solid var(--border)',
+                  borderRadius: '8px',
+                  fontWeight: '600',
+                  fontSize: '13.5px',
+                  color: 'var(--text-muted)',
+                  cursor: 'pointer'
+                }}
+                onClick={() => setShowAddStudentModal(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

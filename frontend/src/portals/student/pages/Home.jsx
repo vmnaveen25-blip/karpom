@@ -40,42 +40,46 @@ export default function Home({ studentData, setActiveTab, setSelectedCourse }) {
           </p>
         </div>
 
-        {/* Right Quote Card with soft purple gradient banner */}
+        {/* Right Learning Journey Banner */}
         <div style={{
-          background: 'linear-gradient(135deg, rgba(238, 242, 255, 0.8) 0%, rgba(224, 231, 255, 0.6) 100%)',
-          border: '1px solid #c7d2fe',
+          background: 'linear-gradient(135deg, #174BFF 0%, #1035C9 100%)',
           borderRadius: 'var(--radius-lg)',
           padding: '16px 20px',
           display: 'flex',
           alignItems: 'center',
-          gap: '12px',
+          gap: '14px',
           position: 'relative',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          boxShadow: '0 8px 24px rgba(23, 75, 255, 0.28)'
         }}>
           <div style={{
-            fontSize: '32px',
-            lineHeight: 1,
-            color: '#6366f1',
-            fontFamily: 'serif',
-            opacity: 0.8
+            width: '42px',
+            height: '42px',
+            borderRadius: '12px',
+            background: 'rgba(255, 255, 255, 0.18)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#FFFFFF',
+            flexShrink: 0
           }}>
-            “
+            <Sparkles size={20} />
           </div>
-          <div style={{
-            fontSize: '13px',
-            fontWeight: '600',
-            color: '#3730a3',
-            lineHeight: 1.4
-          }}>
-            “Consistency today builds expertise tomorrow.”
+          <div>
+            <div style={{ fontSize: '14.5px', fontWeight: '700', color: '#FFFFFF', letterSpacing: '-0.01em' }}>
+              Your Learning Journey
+            </div>
+            <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.88)', marginTop: '2px' }}>
+              Consistency today builds expertise tomorrow.
+            </div>
           </div>
           <div style={{
             position: 'absolute',
-            right: '-10px',
-            top: '-10px',
-            width: '80px',
-            height: '80px',
-            background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, transparent 70%)',
+            right: '-15px',
+            top: '-15px',
+            width: '85px',
+            height: '85px',
+            background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%)',
             borderRadius: '50%'
           }} />
         </div>
@@ -93,8 +97,8 @@ export default function Home({ studentData, setActiveTab, setSelectedCourse }) {
             width: '48px',
             height: '48px',
             borderRadius: '14px',
-            background: '#eef2ff',
-            color: '#6366f1',
+            background: 'rgba(23, 75, 255, 0.16)',
+            color: 'var(--accent-ice)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
@@ -117,8 +121,8 @@ export default function Home({ studentData, setActiveTab, setSelectedCourse }) {
             width: '48px',
             height: '48px',
             borderRadius: '14px',
-            background: '#ecfdf5',
-            color: '#10b981',
+            background: 'var(--success-soft)',
+            color: 'var(--success)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
@@ -141,8 +145,8 @@ export default function Home({ studentData, setActiveTab, setSelectedCourse }) {
             width: '48px',
             height: '48px',
             borderRadius: '14px',
-            background: '#fff7ed',
-            color: '#f97316',
+            background: 'var(--warning-soft)',
+            color: 'var(--warning)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
@@ -165,8 +169,8 @@ export default function Home({ studentData, setActiveTab, setSelectedCourse }) {
             width: '48px',
             height: '48px',
             borderRadius: '14px',
-            background: '#eff6ff',
-            color: '#3b82f6',
+            background: 'rgba(23, 75, 255, 0.16)',
+            color: 'var(--accent-ice)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
@@ -263,7 +267,7 @@ export default function Home({ studentData, setActiveTab, setSelectedCourse }) {
                   gap: '4px',
                   background: 'transparent',
                   border: 'none',
-                  color: '#4f46e5',
+                  color: 'var(--accent-ice)',
                   fontSize: '13.5px',
                   fontWeight: '600',
                   cursor: 'pointer'
@@ -502,8 +506,8 @@ export default function Home({ studentData, setActiveTab, setSelectedCourse }) {
                   width: '38px',
                   height: '38px',
                   borderRadius: '10px',
-                  background: '#ecfdf5',
-                  color: '#10b981',
+                  background: 'var(--success-soft)',
+                  color: 'var(--success)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -556,8 +560,8 @@ export default function Home({ studentData, setActiveTab, setSelectedCourse }) {
                       width: '10px',
                       height: '10px',
                       borderRadius: '50%',
-                      background: item.status === 'Ongoing' ? '#6366f1' : 'transparent',
-                      border: item.status === 'Ongoing' ? 'none' : '2px solid #cbd5e1'
+                      background: item.status === 'Ongoing' ? 'var(--primary)' : 'transparent',
+                      border: item.status === 'Ongoing' ? 'none' : '2px solid var(--border)'
                     }} />
                     <div>
                       <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{item.time}</div>
@@ -572,8 +576,8 @@ export default function Home({ studentData, setActiveTab, setSelectedCourse }) {
                     borderRadius: '12px',
                     fontSize: '11px',
                     fontWeight: '600',
-                    background: item.status === 'Ongoing' ? '#ede9fe' : 'var(--bg-subtle)',
-                    color: item.status === 'Ongoing' ? '#6366f1' : 'var(--text-muted)'
+                    background: item.status === 'Ongoing' ? 'rgba(23, 75, 255, 0.2)' : 'var(--bg-subtle)',
+                    color: item.status === 'Ongoing' ? 'var(--accent-ice)' : 'var(--text-muted)'
                   }}>
                     {item.status}
                   </span>
@@ -606,11 +610,12 @@ export default function Home({ studentData, setActiveTab, setSelectedCourse }) {
                   width: '36px',
                   height: '36px',
                   borderRadius: '10px',
-                  background: '#6366f1',
+                  background: 'var(--primary)',
                   color: 'white',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  boxShadow: '0 2px 8px rgba(23, 75, 255, 0.35)'
                 }}>
                   <Sparkles size={18} />
                 </div>
@@ -635,11 +640,12 @@ export default function Home({ studentData, setActiveTab, setSelectedCourse }) {
                   width: '36px',
                   height: '36px',
                   borderRadius: '10px',
-                  background: '#3b82f6',
+                  background: 'linear-gradient(135deg, #174BFF 0%, #3565FF 100%)',
                   color: 'white',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  boxShadow: '0 2px 8px rgba(23, 75, 255, 0.25)'
                 }}>
                   <FileQuestion size={18} />
                 </div>
@@ -724,7 +730,7 @@ export default function Home({ studentData, setActiveTab, setSelectedCourse }) {
                 width: '46px',
                 height: '46px',
                 borderRadius: '50%',
-                background: '#fff7ed',
+                background: 'var(--warning-soft)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center'

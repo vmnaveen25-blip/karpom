@@ -27,7 +27,6 @@ export default function MyCourses({ studentData, setActiveTab, setSelectedCourse
   const filteredCourses = courses.filter((c) => {
     if (activeFilter === 'in-progress' && c.status !== 'in-progress') return false;
     if (activeFilter === 'completed' && c.status !== 'completed') return false;
-    if (activeFilter === 'not-started' && c.status !== 'not-started') return false;
     if (courseSearch && !c.title.toLowerCase().includes(courseSearch.toLowerCase())) return false;
     return true;
   });
@@ -48,14 +47,14 @@ export default function MyCourses({ studentData, setActiveTab, setSelectedCourse
 
         {/* Your Learning Journey Banner */}
         <div style={{
-          background: 'linear-gradient(135deg, #6366f1 0%, #3b82f6 100%)',
+          background: 'linear-gradient(135deg, #174BFF 0%, #1035C9 100%)',
           borderRadius: 'var(--radius-lg)',
           padding: '18px 24px',
           color: 'white',
           display: 'flex',
           alignItems: 'center',
           gap: '16px',
-          boxShadow: '0 8px 20px rgba(99, 102, 241, 0.25)',
+          boxShadow: '0 8px 24px rgba(23, 75, 255, 0.35)',
           position: 'relative',
           overflow: 'hidden'
         }}>
@@ -85,8 +84,7 @@ export default function MyCourses({ studentData, setActiveTab, setSelectedCourse
         {[
           { id: 'all', label: 'All Courses (3)' },
           { id: 'in-progress', label: 'In Progress (2)' },
-          { id: 'completed', label: 'Completed (1)' },
-          { id: 'not-started', label: 'Not Started (0)' }
+          { id: 'completed', label: 'Completed (1)' }
         ].map((tab) => (
           <button
             key={tab.id}
@@ -199,8 +197,9 @@ export default function MyCourses({ studentData, setActiveTab, setSelectedCourse
                 borderRadius: 'var(--radius-full)',
                 fontSize: '11px',
                 fontWeight: '700',
-                background: course.status === 'completed' ? '#ecfdf5' : '#ede9fe',
-                color: course.status === 'completed' ? '#10b981' : '#6366f1',
+                background: course.status === 'completed' ? 'rgba(16, 185, 129, 0.18)' : 'rgba(23, 75, 255, 0.22)',
+                color: course.status === 'completed' ? '#10b981' : 'var(--accent-ice)',
+                border: course.status === 'completed' ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid rgba(23, 75, 255, 0.35)',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '4px'
@@ -364,8 +363,8 @@ export default function MyCourses({ studentData, setActiveTab, setSelectedCourse
                 width: '40px',
                 height: '40px',
                 borderRadius: '10px',
-                background: '#fffbeb',
-                color: '#f59e0b',
+                background: 'var(--warning-soft)',
+                color: 'var(--warning)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',

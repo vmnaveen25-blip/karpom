@@ -49,8 +49,8 @@ export default function Progress({ studentData }) {
           width: '38px',
           height: '38px',
           borderRadius: '10px',
-          background: '#eef2ff',
-          color: '#6366f1',
+          background: 'rgba(23, 75, 255, 0.15)',
+          color: 'var(--accent-ice)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center'
@@ -79,7 +79,7 @@ export default function Progress({ studentData }) {
                 cy="30"
                 r="24"
                 fill="none"
-                stroke="#6366f1"
+                stroke="var(--primary)"
                 strokeWidth="6"
                 strokeDasharray="150.8"
                 strokeDashoffset={150.8 * (1 - 0.68)}
@@ -111,7 +111,7 @@ export default function Progress({ studentData }) {
 
         {/* Assessment Performance */}
         <div className="ui-card" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <div style={{ width: '52px', height: '52px', borderRadius: '14px', background: '#ede9fe', color: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <div style={{ width: '52px', height: '52px', borderRadius: '14px', background: 'rgba(23, 75, 255, 0.15)', color: 'var(--accent-ice)', border: '1px solid rgba(23, 75, 255, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
             <ClipboardList size={24} />
           </div>
           <div>
@@ -147,16 +147,16 @@ export default function Progress({ studentData }) {
               <h3 style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-main)' }}>Course Progress</h3>
               <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>34 of 50 topics completed</div>
             </div>
-            <span style={{ fontSize: '18px', fontWeight: '800', color: '#6366f1' }}>68%</span>
+            <span style={{ fontSize: '18px', fontWeight: '800', color: 'var(--accent-ice)' }}>68%</span>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {[
               { id: 1, name: 'Introduction to DSA', pct: 100, color: '#10b981' },
-              { id: 2, name: 'Array and String', pct: 80, color: '#6366f1' },
-              { id: 3, name: 'Linked Lists', pct: 60, color: '#6366f1' },
-              { id: 4, name: 'Stacks and Queues', pct: 40, color: '#6366f1' },
-              { id: 5, name: 'Trees', pct: 20, color: '#6366f1' },
+              { id: 2, name: 'Array and String', pct: 80, color: '#174BFF' },
+              { id: 3, name: 'Linked Lists', pct: 60, color: '#3565FF' },
+              { id: 4, name: 'Stacks and Queues', pct: 40, color: '#174BFF' },
+              { id: 5, name: 'Trees', pct: 20, color: '#8FAEFF' },
               { id: 6, name: 'Graphs', pct: 0, color: '#94a3b8' },
             ].map((topic) => (
               <div key={topic.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '12.5px' }}>
@@ -185,18 +185,18 @@ export default function Progress({ studentData }) {
         <div className="ui-card" style={{ padding: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
             <h3 style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-main)' }}>Topic Mastery</h3>
-            <span style={{ fontSize: '12px', color: '#6366f1', fontWeight: '600', cursor: 'pointer' }}>View All →</span>
+            <span style={{ fontSize: '12px', color: 'var(--accent-ice)', fontWeight: '600', cursor: 'pointer' }}>View All →</span>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {[
               { name: 'Arrays', pct: 90, color: '#10b981' },
               { name: 'Strings', pct: 75, color: '#3b82f6' },
-              { name: 'Linked Lists', pct: 60, color: '#6366f1' },
-              { name: 'Stacks', pct: 55, color: '#6366f1' },
-              { name: 'Queues', pct: 50, color: '#6366f1' },
-              { name: 'Trees', pct: 30, color: '#818cf8' },
-              { name: 'Graphs', pct: 10, color: '#c7d2fe' },
+              { name: 'Linked Lists', pct: 60, color: '#174BFF' },
+              { name: 'Stacks', pct: 55, color: '#3565FF' },
+              { name: 'Queues', pct: 50, color: '#174BFF' },
+              { name: 'Trees', pct: 30, color: '#8FAEFF' },
+              { name: 'Graphs', pct: 10, color: 'rgba(143, 174, 255, 0.4)' },
             ].map((tp) => (
               <div key={tp.name}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '4px' }}>
@@ -215,16 +215,16 @@ export default function Progress({ studentData }) {
         <div className="ui-card" style={{ padding: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
             <h3 style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-main)' }}>Assessment Performance</h3>
-            <span style={{ fontSize: '12px', color: '#6366f1', fontWeight: '600', cursor: 'pointer' }}>View All →</span>
+            <span style={{ fontSize: '12px', color: 'var(--accent-ice)', fontWeight: '600', cursor: 'pointer' }}>View All →</span>
           </div>
 
           <div style={{ display: 'flex', gap: '16px', fontSize: '11.5px', marginBottom: '16px' }}>
             <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#6366f1' }} />
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--primary)', boxShadow: '0 0 6px var(--primary)' }} />
               Your Score
             </span>
             <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#94a3b8' }} />
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--text-muted)' }} />
               Class Average
             </span>
           </div>
@@ -247,23 +247,23 @@ export default function Progress({ studentData }) {
               {/* Class Average Line (grey) */}
               <polyline
                 fill="none"
-                stroke="#cbd5e1"
+                stroke="var(--text-muted)"
                 strokeWidth="2"
                 points="50,110 110,120 170,95 230,105 290,85"
               />
               {[ [50, 110], [110, 120], [170, 95], [230, 105], [290, 85] ].map(([cx, cy], i) => (
-                <circle key={i} cx={cx} cy={cy} r="3" fill="#cbd5e1" />
+                <circle key={i} cx={cx} cy={cy} r="3" fill="var(--text-muted)" />
               ))}
 
-              {/* Your Score Line (purple) */}
+              {/* Your Score Line (cobalt) */}
               <polyline
                 fill="none"
-                stroke="#6366f1"
+                stroke="var(--primary)"
                 strokeWidth="2.5"
                 points="50,100 110,88 170,70 230,82 290,45"
               />
               {[ [50, 100], [110, 88], [170, 70], [230, 82], [290, 45] ].map(([cx, cy], i) => (
-                <circle key={i} cx={cx} cy={cy} r="4" fill="#6366f1" stroke="white" strokeWidth="1.5" />
+                <circle key={i} cx={cx} cy={cy} r="4" fill="var(--primary)" stroke="white" strokeWidth="1.5" />
               ))}
 
               {/* X Axis labels */}
@@ -374,16 +374,16 @@ export default function Progress({ studentData }) {
           </h3>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <div style={{ padding: '14px', borderRadius: '10px', background: '#fef2f2', border: '1px solid #fee2e2' }}>
-              <div style={{ fontWeight: '700', fontSize: '13px', color: '#dc2626' }}>Focus on Trees and Graphs</div>
-              <div style={{ fontSize: '12px', color: '#991b1b', marginTop: '4px', lineHeight: 1.4 }}>
+            <div style={{ padding: '14px', borderRadius: '10px', background: 'var(--danger-soft)', border: '1px solid rgba(239, 68, 68, 0.25)' }}>
+              <div style={{ fontWeight: '700', fontSize: '13px', color: 'var(--danger)' }}>Focus on Trees and Graphs</div>
+              <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px', lineHeight: 1.4 }}>
                 These topics have lower mastery. Spend more time practicing and reviewing notes.
               </div>
             </div>
 
-            <div style={{ padding: '14px', borderRadius: '10px', background: '#eff6ff', border: '1px solid #dbeafe' }}>
-              <div style={{ fontWeight: '700', fontSize: '13px', color: '#2563eb' }}>Take More Practice Tests</div>
-              <div style={{ fontSize: '12px', color: '#1e40af', marginTop: '4px', lineHeight: 1.4 }}>
+            <div style={{ padding: '14px', borderRadius: '10px', background: 'var(--primary-soft)', border: '1px solid rgba(23, 75, 255, 0.25)' }}>
+              <div style={{ fontWeight: '700', fontSize: '13px', color: 'var(--primary)' }}>Take More Practice Tests</div>
+              <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px', lineHeight: 1.4 }}>
                 Regular practice can improve your assessment performance.
               </div>
             </div>
