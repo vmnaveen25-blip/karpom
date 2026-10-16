@@ -194,7 +194,7 @@ export default function AssignmentsAndAssessments({ teacherData, setTeacherData 
   };
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div className="fade-in" style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '24px' }}>
       {/* Level 1: List View (Dual Tabs: Assignments vs Assessments) */}
       {subView === 'list' && (
         <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>

@@ -193,7 +193,7 @@ export default function CoursesAndCurriculum({ teacherData, setTeacherData, setA
   });
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div className="fade-in" style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '24px' }}>
       {/* View 1: Course Catalog */}
       {currentView === 'list' && (
         <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>

@@ -62,7 +62,7 @@ export default function TeacherProfileSettings({ teacherData, setTeacherData }) 
   };
 
   return (
-    <div style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div className="fade-in" style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '24px' }}>
       {/* Header */}
       <div>
         <h1 className="page-title">Profile & Settings</h1>

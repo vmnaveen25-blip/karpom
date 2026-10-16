@@ -8,7 +8,7 @@ import {
 
 export default function StudentProgressOnHold() {
   return (
-    <div style={{ maxWidth: '900px', margin: '0 auto', padding: '32px 0' }}>
+    <div className="fade-in" style={{ width: '100%', padding: '32px 0' }}>
       <div className="ui-card" style={{
         padding: '48px 36px',
         borderRadius: '20px',

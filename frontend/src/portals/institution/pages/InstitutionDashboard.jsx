@@ -3,7 +3,7 @@ import { Building, Award, BarChart3, Globe, ShieldAlert } from 'lucide-react';
 
 export default function InstitutionDashboard() {
   return (
-    <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '24px 0' }}>
+    <div className="fade-in" style={{ width: '100%', padding: '24px 0' }}>
       <div style={{
         background: 'var(--bg-card)',
         borderRadius: '16px',

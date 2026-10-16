@@ -10,7 +10,7 @@ import {
 
 export default function TeacherHomeOnHold({ teacherData, setActiveTab }) {
   return (
-    <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div className="fade-in" style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '24px' }}>
       {/* Welcome Banner */}
       <div className="ui-card" style={{
         padding: '36px',

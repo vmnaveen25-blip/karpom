@@ -72,7 +72,7 @@ export default function AppRouter({
   }
 
   if (currentRole === 'Admin') {
-    return <AdminDashboard />;
+    return <AdminDashboard setActiveTab={setActiveTab} />;
   }
 
   if (currentRole === 'Institution') {

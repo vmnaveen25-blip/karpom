@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Bell, ChevronDown, User, LogOut } from 'lucide-react';
+import { Bell, ChevronDown, User, LogOut, GraduationCap } from 'lucide-react';
 
 export default function Topbar({
   setActiveTab,
   currentRole,
   setCurrentRole,
   setIsLoggedIn,
-  studentProfile
+  studentProfile,
+  sidebarOpen = true,
+  onToggleSidebar
 }) {
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -23,7 +25,59 @@ export default function Topbar({
   }, []);
 
   return (
-    <header className="app-topbar">
+    <header className="app-topbar" style={{ justifyContent: sidebarOpen ? 'flex-end' : 'space-between' }}>
+      {/* If sidebar is collapsed, show the brand logo button at top-left to expand it */}
+      {!sidebarOpen && (
+        <div
+          id="sidebar-expand-toggle"
+          className="sidebar-toggle-logo-btn"
+          onClick={onToggleSidebar}
+          title="Click logo to expand sidebar"
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onToggleSidebar && onToggleSidebar();
+            }
+          }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            cursor: 'pointer',
+            padding: '2px 6px',
+            borderRadius: '14px'
+          }}
+        >
+          <div
+            className="logo-icon-box"
+            style={{
+              width: '38px',
+              height: '38px',
+              borderRadius: '12px',
+              background: 'linear-gradient(135deg, #174BFF 0%, #1035C9 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 4px 14px rgba(23, 75, 255, 0.45)',
+              flexShrink: 0,
+              color: '#FFFFFF'
+            }}
+          >
+            <GraduationCap size={22} />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <span style={{ fontSize: '20px', fontWeight: '800', letterSpacing: '-0.02em', color: 'var(--text-main)', lineHeight: '1.1' }}>
+              Karpom
+            </span>
+            <span style={{ fontSize: '10px', fontWeight: '600', color: 'var(--text-muted)', letterSpacing: '0.01em', marginTop: '2px' }}>
+              {currentRole === 'Teacher' ? 'Teacher Portal' : 'Learn · Practice · Grow'}
+            </span>
+          </div>
+        </div>
+      )}
+
       {/* Right Actions */}
       <div className="topbar-actions">
         {/* Notifications Icon */}

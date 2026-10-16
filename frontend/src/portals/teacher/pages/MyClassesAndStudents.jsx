@@ -221,7 +221,7 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
   };
 
   return (
-    <div style={{ width: '100%', maxWidth: '1440px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div className="fade-in" style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px' }}>
       
       {/* ========================================================
           LEVEL 1: MY COURSES LIST VIEW (Reference: My Cources.png)
