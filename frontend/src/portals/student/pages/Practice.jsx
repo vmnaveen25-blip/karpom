@@ -171,8 +171,9 @@ export default function Practice({ studentData }) {
                 borderRadius: '6px',
                 fontSize: '11.5px',
                 fontWeight: '700',
-                background: '#eff6ff',
-                color: '#3b82f6'
+                background: 'rgba(59, 130, 246, 0.15)',
+                color: '#60a5fa',
+                border: '1px solid rgba(59, 130, 246, 0.3)'
               }}>
                 MCQ
               </span>
@@ -227,7 +228,7 @@ export default function Practice({ studentData }) {
                     height: '18px',
                     borderRadius: '50%',
                     border: isSelected ? '5px solid var(--primary)' : '2px solid var(--border)',
-                    background: 'white',
+                    background: isSelected ? 'var(--primary)' : 'var(--bg-app)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'

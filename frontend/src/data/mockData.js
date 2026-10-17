@@ -577,7 +577,7 @@ export const initialTeacherData = {
     email: 'vijay.vikas@college.edu',
     employeeId: 'EMP-CSE-2020-088',
     office: 'Room 304, Academic Block B',
-    phone: '+91 98765 43210',
+    phone: '+91 9876543210',
     institution: 'Erode Sengunthar Engineering College',
     bio: 'Assistant Professor in Computer Science specializing in Java architecture, multithreading, and distributed systems.',
     avatar: '',

@@ -295,9 +295,9 @@ export default function AdminDashboard({ setActiveTab }) {
               gap: '8px',
               padding: '9px 16px',
               borderRadius: '12px',
-              background: '#FFFFFF',
+              background: 'var(--bg-card)',
               border: '1px solid var(--border)',
-              boxShadow: 'var(--shadow-neu-btn)',
+              boxShadow: 'var(--shadow-sm)',
               fontSize: '13.5px',
               fontWeight: '600',
               color: 'var(--text-main)',
@@ -318,7 +318,7 @@ export default function AdminDashboard({ setActiveTab }) {
                 right: 0,
                 top: 'calc(100% + 6px)',
                 width: '180px',
-                background: '#FFFFFF',
+                background: 'var(--bg-elevated)',
                 borderRadius: '12px',
                 border: '1px solid var(--border)',
                 boxShadow: 'var(--shadow-lg)',
@@ -378,24 +378,26 @@ export default function AdminDashboard({ setActiveTab }) {
                 }
               }}
               style={{
-                background: '#FFFFFF',
+                background: 'var(--bg-card)',
                 borderRadius: '16px',
                 border: '1px solid var(--border)',
-                boxShadow: 'var(--shadow-neu-raised)',
+                boxShadow: 'var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
                 padding: '18px 20px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 cursor: 'pointer',
-                transition: 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease'
+                transition: 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = 'var(--shadow-neu-hover)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-md), var(--shadow-glow-sm)';
+                e.currentTarget.style.borderColor = 'rgba(23, 75, 255, 0.45)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'var(--shadow-neu-raised)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.05)';
+                e.currentTarget.style.borderColor = 'var(--border)';
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
@@ -446,10 +448,10 @@ export default function AdminDashboard({ setActiveTab }) {
       }}>
         {/* Left: Academic Structure */}
         <div style={{
-          background: '#FFFFFF',
+          background: 'var(--bg-card)',
           borderRadius: '18px',
           border: '1px solid var(--border)',
-          boxShadow: 'var(--shadow-neu-raised)',
+          boxShadow: 'var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
           padding: '22px 24px',
           display: 'flex',
           flexDirection: 'column',
@@ -503,9 +505,9 @@ export default function AdminDashboard({ setActiveTab }) {
                 <div
                   key={item.id}
                   style={{
-                    background: 'var(--bg-app)',
+                    background: 'var(--bg-input)',
                     borderRadius: '14px',
-                    border: '1px solid var(--border)',
+                    border: '1px solid var(--border-subtle)',
                     padding: '16px 14px',
                     display: 'flex',
                     flexDirection: 'column',
@@ -545,10 +547,10 @@ export default function AdminDashboard({ setActiveTab }) {
 
         {/* Right: Account Status */}
         <div style={{
-          background: '#FFFFFF',
+          background: 'var(--bg-card)',
           borderRadius: '18px',
           border: '1px solid var(--border)',
-          boxShadow: 'var(--shadow-neu-raised)',
+          boxShadow: 'var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
           padding: '22px 24px',
           display: 'flex',
           flexDirection: 'column',
@@ -659,10 +661,10 @@ export default function AdminDashboard({ setActiveTab }) {
       }}>
         {/* Left: Recent Activity Table */}
         <div style={{
-          background: '#FFFFFF',
+          background: 'var(--bg-card)',
           borderRadius: '18px',
           border: '1px solid var(--border)',
-          boxShadow: 'var(--shadow-neu-raised)',
+          boxShadow: 'var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
           padding: '22px 24px',
           display: 'flex',
           flexDirection: 'column'
@@ -706,7 +708,7 @@ export default function AdminDashboard({ setActiveTab }) {
           <div style={{ overflowX: 'auto', flex: 1 }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
-                <tr style={{ borderBottom: '1px solid var(--border)', color: 'var(--text-muted)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                <tr style={{ borderBottom: '1px solid var(--border)', background: 'rgba(6, 13, 29, 0.75)', color: 'var(--text-muted)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                   <th style={{ padding: '10px 8px', fontWeight: '700', width: '32px' }}>#</th>
                   <th style={{ padding: '10px 12px', fontWeight: '700' }}>Action</th>
                   <th style={{ padding: '10px 12px', fontWeight: '700' }}>Details</th>
@@ -764,10 +766,10 @@ export default function AdminDashboard({ setActiveTab }) {
 
         {/* Right: Pending Items */}
         <div style={{
-          background: '#FFFFFF',
+          background: 'var(--bg-card)',
           borderRadius: '18px',
           border: '1px solid var(--border)',
-          boxShadow: 'var(--shadow-neu-raised)',
+          boxShadow: 'var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
           padding: '22px 24px',
           display: 'flex',
           flexDirection: 'column'
@@ -821,8 +823,8 @@ export default function AdminDashboard({ setActiveTab }) {
                     justifyContent: 'space-between',
                     padding: '12px 14px',
                     borderRadius: '12px',
-                    background: 'var(--bg-app)',
-                    border: '1px solid var(--border)',
+                    background: 'var(--bg-input)',
+                    border: '1px solid var(--border-subtle)',
                     cursor: 'pointer',
                     transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
                   }}
@@ -905,10 +907,10 @@ export default function AdminDashboard({ setActiveTab }) {
         >
           <div
             style={{
-              background: '#FFFFFF',
+              background: 'var(--bg-elevated)',
               borderRadius: '20px',
-              border: '1px solid var(--border)',
-              boxShadow: 'var(--shadow-lg)',
+              border: '1px solid var(--glass-border-hover)',
+              boxShadow: '0 24px 70px rgba(0, 0, 0, 0.8), var(--shadow-glow)',
               width: '100%',
               maxWidth: '920px',
               maxHeight: '90vh',
@@ -968,11 +970,12 @@ export default function AdminDashboard({ setActiveTab }) {
                       padding: '6px 14px',
                       borderRadius: '20px',
                       border: userFilter === t.id ? '1px solid var(--primary)' : '1px solid var(--border)',
-                      background: userFilter === t.id ? 'rgba(23, 75, 255, 0.1)' : '#FFFFFF',
-                      color: userFilter === t.id ? 'var(--primary)' : 'var(--text-secondary)',
+                      background: userFilter === t.id ? 'var(--primary)' : 'var(--bg-input)',
+                      color: userFilter === t.id ? '#FFFFFF' : 'var(--text-secondary)',
                       fontSize: '12.5px',
                       fontWeight: userFilter === t.id ? '700' : '500',
-                      cursor: 'pointer'
+                      cursor: 'pointer',
+                      boxShadow: userFilter === t.id ? '0 0 12px rgba(23, 75, 255, 0.35)' : 'none'
                     }}
                   >
                     {t.label}
@@ -1133,10 +1136,10 @@ export default function AdminDashboard({ setActiveTab }) {
         >
           <div
             style={{
-              background: '#FFFFFF',
+              background: 'var(--bg-elevated)',
               borderRadius: '20px',
-              border: '1px solid var(--border)',
-              boxShadow: 'var(--shadow-lg)',
+              border: '1px solid var(--glass-border-hover)',
+              boxShadow: '0 24px 70px rgba(0, 0, 0, 0.8), var(--shadow-glow)',
               width: '100%',
               maxWidth: '680px',
               padding: '24px',
@@ -1219,10 +1222,10 @@ export default function AdminDashboard({ setActiveTab }) {
         >
           <div
             style={{
-              background: '#FFFFFF',
+              background: 'var(--bg-elevated)',
               borderRadius: '20px',
-              border: '1px solid var(--border)',
-              boxShadow: 'var(--shadow-lg)',
+              border: '1px solid var(--glass-border-hover)',
+              boxShadow: '0 24px 70px rgba(0, 0, 0, 0.8), var(--shadow-glow)',
               width: '100%',
               maxWidth: '620px',
               padding: '24px',

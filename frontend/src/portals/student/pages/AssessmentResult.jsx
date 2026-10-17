@@ -69,7 +69,7 @@ export default function AssessmentResult({ setActiveTab }) {
             <span style={{ padding: '2px 8px', borderRadius: '4px', background: 'rgba(23, 75, 255, 0.15)', color: 'var(--accent-ice)', border: '1px solid rgba(23, 75, 255, 0.3)', fontSize: '12px', fontWeight: '600' }}>
               Data Structures and Algorithms
             </span>
-            <span style={{ padding: '2px 8px', borderRadius: '4px', background: '#eff6ff', color: '#3b82f6', fontSize: '12px', fontWeight: '600' }}>
+            <span style={{ padding: '2px 8px', borderRadius: '4px', background: 'rgba(59, 130, 246, 0.15)', color: '#60a5fa', border: '1px solid rgba(59, 130, 246, 0.3)', fontSize: '12px', fontWeight: '600' }}>
               Quiz
             </span>
             <span style={{ padding: '2px 8px', borderRadius: '4px', background: 'var(--bg-subtle)', color: 'var(--text-secondary)', fontSize: '12px' }}>

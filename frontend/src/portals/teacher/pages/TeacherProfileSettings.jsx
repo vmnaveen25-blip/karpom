@@ -13,7 +13,7 @@ export default function TeacherProfileSettings({ teacherData, setTeacherData }) 
     email: profile.email || 'r.kumar@college.edu',
     employeeId: profile.employeeId || 'EMP-CSE-2018-042',
     office: profile.office || 'Room 304, Academic Block B',
-    phone: profile.phone || '+91 98765 43210',
+    phone: profile.phone || '+91 9876543210',
     officeHours: profile.officeHours || 'Mon - Thu: 3:30 PM - 5:00 PM',
     bio: profile.bio || 'Ph.D. in Computer Science with 12+ years of teaching experience.'
   });

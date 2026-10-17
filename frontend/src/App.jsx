@@ -5,19 +5,26 @@ import Login from './auth/Login';
 import { initialStudentData, initialTeacherData } from './data/mockData';
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [currentRole, setCurrentRole] = useState('Student');
-  const [activeTab, setActiveTab] = useState('home');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentRole, setCurrentRole] = useState('Admin');
+  const [activeTab, setActiveTab] = useState('users');
   const [selectedCourse, setSelectedCourse] = useState('dsa');
   const [selectedAssessment, setSelectedAssessment] = useState('a1');
   const [searchQuery, setSearchQuery] = useState('');
   const [studentData, setStudentData] = useState(initialStudentData);
   const [teacherData, setTeacherData] = useState(initialTeacherData);
 
+  const adminProfile = {
+    name: 'Dr. R. Kumar',
+    email: 'rkumar@esec.ac.in',
+    initials: 'RK',
+    role: 'Institution Admin'
+  };
+
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.setAttribute('data-theme', 'dark');
     try {
-      localStorage.setItem('tutor_theme', 'light');
+      localStorage.setItem('tutor_theme', 'dark');
     } catch (e) {
       // ignore storage errors
     }
@@ -25,21 +32,28 @@ export default function App() {
 
   const handleLogin = ({ email, role }) => {
     setIsLoggedIn(true);
-    setCurrentRole(role || 'Student');
-    setActiveTab('home');
+    setCurrentRole(role || 'Admin');
+    setActiveTab(role === 'Admin' ? 'users' : 'home');
   };
 
   const handleRoleChange = (newRole) => {
     setCurrentRole(newRole);
     // Set appropriate default landing tab if needed
-    if (newRole === 'Teacher' && (activeTab === 'courses' || activeTab === 'practice' || activeTab === 'notes' || activeTab === 'library')) {
+    if (newRole === 'Admin' || newRole === 'Institution') {
+      setActiveTab('users');
+    } else if (newRole === 'Teacher' && (activeTab === 'courses' || activeTab === 'practice' || activeTab === 'notes' || activeTab === 'library' || activeTab === 'users')) {
       setActiveTab('teacherClasses');
-    } else if (newRole === 'Student' && activeTab.startsWith('teacher')) {
+    } else if (newRole === 'Student' && (activeTab.startsWith('teacher') || activeTab === 'users')) {
       setActiveTab('courses');
     }
   };
 
-  const activeProfile = currentRole === 'Teacher' ? teacherData.profile : studentData.profile;
+  const activeProfile =
+    currentRole === 'Admin' || currentRole === 'Institution'
+      ? adminProfile
+      : currentRole === 'Teacher'
+      ? teacherData.profile
+      : studentData.profile;
 
   if (!isLoggedIn) {
     return <Login onLogin={handleLogin} />;

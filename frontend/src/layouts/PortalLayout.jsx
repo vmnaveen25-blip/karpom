@@ -56,6 +56,8 @@ export default function PortalLayout({
           studentProfile={studentProfile}
           sidebarOpen={sidebarOpen}
           onToggleSidebar={handleToggleSidebar}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
         />
 
         {/* Dynamic Page Content Viewport */}

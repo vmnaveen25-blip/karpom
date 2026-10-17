@@ -180,8 +180,9 @@ export default function Assessments({ studentData, setActiveTab, setSelectedAsse
                       borderRadius: '4px',
                       fontSize: '11px',
                       fontWeight: '600',
-                      background: '#eff6ff',
-                      color: '#3b82f6'
+                      background: 'rgba(59, 130, 246, 0.15)',
+                      color: '#60a5fa',
+                      border: '1px solid rgba(59, 130, 246, 0.3)'
                     }}>
                       {item.unit}
                     </span>

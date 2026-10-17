@@ -27,7 +27,7 @@ import {
   TeacherProfileSettings,
   TeacherHelpSupport
 } from '../portals/teacher';
-import { AdminDashboard } from '../portals/admin';
+import { AdminDashboard, AdminUsers } from '../portals/admin';
 import { InstitutionDashboard } from '../portals/institution';
 
 export default function AppRouter({
@@ -72,7 +72,17 @@ export default function AppRouter({
   }
 
   if (currentRole === 'Admin') {
-    return <AdminDashboard setActiveTab={setActiveTab} />;
+    switch (activeTab) {
+      case 'home':
+      case 'dashboard':
+        return <AdminDashboard setActiveTab={setActiveTab} />;
+      case 'users':
+      case 'adminStudents':
+      case 'adminTeachers':
+        return <AdminUsers setActiveTab={setActiveTab} />;
+      default:
+        return <AdminUsers setActiveTab={setActiveTab} />;
+    }
   }
 
   if (currentRole === 'Institution') {

@@ -467,10 +467,10 @@ public class KarpomExample {
           display: 'flex',
           alignItems: 'center',
           gap: '12px',
-          background: '#FFFFFF',
+          background: 'var(--bg-card)',
           borderRadius: '16px',
           border: '1px solid var(--border)',
-          boxShadow: 'var(--shadow-neu-btn)',
+          boxShadow: 'var(--shadow-sm)',
           padding: '10px 18px',
           minWidth: '220px'
         }}>
@@ -534,10 +534,10 @@ public class KarpomExample {
             LEFT COLUMN: Chat History Sidebar Panel
             ======================================================== */}
         <div style={{
-          background: '#FFFFFF',
+          background: 'var(--bg-card)',
           borderRadius: '20px',
           border: '1px solid var(--border)',
-          boxShadow: 'var(--shadow-neu-raised)',
+          boxShadow: 'var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
           padding: '20px 16px',
           display: 'flex',
           flexDirection: 'column',
@@ -638,9 +638,9 @@ public class KarpomExample {
                             gap: '10px',
                             padding: '9px 12px',
                             borderRadius: '12px',
-                            border: isActive ? '1px solid rgba(23, 75, 255, 0.25)' : '1px solid transparent',
-                            background: isActive ? '#EFF5FF' : 'transparent',
-                            color: isActive ? 'var(--primary)' : 'var(--text-secondary)',
+                            border: isActive ? '1px solid rgba(23, 75, 255, 0.35)' : '1px solid transparent',
+                            background: isActive ? 'var(--primary-soft)' : 'transparent',
+                            color: isActive ? '#FFFFFF' : 'var(--text-secondary)',
                             fontWeight: isActive ? '700' : '500',
                             fontSize: '12.5px',
                             textAlign: 'left',
@@ -716,10 +716,10 @@ public class KarpomExample {
         }}>
           {/* A. Mascot Welcome Card */}
           <div style={{
-            background: '#FFFFFF',
+            background: 'var(--bg-card)',
             borderRadius: '20px',
             border: '1px solid var(--border)',
-            boxShadow: 'var(--shadow-neu-raised)',
+            boxShadow: 'var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
             padding: '16px 24px',
             display: 'flex',
             alignItems: 'center',
@@ -749,10 +749,10 @@ public class KarpomExample {
             {/* Speech Bubble Card */}
             <div style={{
               flex: 1,
-              background: '#F8FAFD',
+              background: 'var(--bg-input)',
               borderRadius: '16px',
-              border: '1px solid rgba(215, 224, 237, 0.8)',
-              boxShadow: 'var(--shadow-neu-btn)',
+              border: '1px solid var(--border-subtle)',
+              boxShadow: 'var(--shadow-sm)',
               padding: '16px 20px'
             }}>
               <div style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-main)', marginBottom: '2px' }}>
@@ -782,9 +782,9 @@ public class KarpomExample {
                 gap: '8px',
                 padding: '12px 14px',
                 borderRadius: '14px',
-                background: '#FFFFFF',
+                background: 'var(--bg-card)',
                 border: '1px solid var(--border)',
-                boxShadow: 'var(--shadow-neu-btn)',
+                boxShadow: 'var(--shadow-sm)',
                 color: 'var(--text-main)',
                 fontSize: '13px',
                 fontWeight: '700',
@@ -793,11 +793,13 @@ public class KarpomExample {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = 'var(--shadow-neu-hover)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-md), var(--shadow-glow-sm)';
+                e.currentTarget.style.borderColor = 'rgba(23, 75, 255, 0.4)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'none';
-                e.currentTarget.style.boxShadow = 'var(--shadow-neu-btn)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+                e.currentTarget.style.borderColor = 'var(--border)';
               }}
             >
               <BookOpen size={16} color="var(--primary)" />
@@ -813,9 +815,9 @@ public class KarpomExample {
                 gap: '8px',
                 padding: '12px 14px',
                 borderRadius: '14px',
-                background: '#FFFFFF',
+                background: 'var(--bg-card)',
                 border: '1px solid var(--border)',
-                boxShadow: 'var(--shadow-neu-btn)',
+                boxShadow: 'var(--shadow-sm)',
                 color: 'var(--text-main)',
                 fontSize: '13px',
                 fontWeight: '700',
@@ -824,11 +826,13 @@ public class KarpomExample {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = 'var(--shadow-neu-hover)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-md), var(--shadow-glow-sm)';
+                e.currentTarget.style.borderColor = 'rgba(23, 75, 255, 0.4)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'none';
-                e.currentTarget.style.boxShadow = 'var(--shadow-neu-btn)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+                e.currentTarget.style.borderColor = 'var(--border)';
               }}
             >
               <Code2 size={16} color="var(--primary)" />
@@ -844,9 +848,9 @@ public class KarpomExample {
                 gap: '8px',
                 padding: '12px 14px',
                 borderRadius: '14px',
-                background: '#FFFFFF',
+                background: 'var(--bg-card)',
                 border: '1px solid var(--border)',
-                boxShadow: 'var(--shadow-neu-btn)',
+                boxShadow: 'var(--shadow-sm)',
                 color: 'var(--text-main)',
                 fontSize: '13px',
                 fontWeight: '700',
@@ -855,11 +859,13 @@ public class KarpomExample {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = 'var(--shadow-neu-hover)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-md), var(--shadow-glow-sm)';
+                e.currentTarget.style.borderColor = 'rgba(23, 75, 255, 0.4)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'none';
-                e.currentTarget.style.boxShadow = 'var(--shadow-neu-btn)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+                e.currentTarget.style.borderColor = 'var(--border)';
               }}
             >
               <Bug size={16} color="#EF4444" />
@@ -875,9 +881,9 @@ public class KarpomExample {
                 gap: '8px',
                 padding: '12px 14px',
                 borderRadius: '14px',
-                background: '#FFFFFF',
+                background: 'var(--bg-card)',
                 border: '1px solid var(--border)',
-                boxShadow: 'var(--shadow-neu-btn)',
+                boxShadow: 'var(--shadow-sm)',
                 color: 'var(--text-main)',
                 fontSize: '13px',
                 fontWeight: '700',
@@ -886,11 +892,13 @@ public class KarpomExample {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = 'var(--shadow-neu-hover)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-md), var(--shadow-glow-sm)';
+                e.currentTarget.style.borderColor = 'rgba(23, 75, 255, 0.4)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'none';
-                e.currentTarget.style.boxShadow = 'var(--shadow-neu-btn)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+                e.currentTarget.style.borderColor = 'var(--border)';
               }}
             >
               <FileQuestion size={16} color="var(--primary)" />
@@ -943,9 +951,9 @@ public class KarpomExample {
                     width: '38px',
                     height: '38px',
                     borderRadius: '50%',
-                    background: '#FFFFFF',
-                    border: '1.5px solid rgba(23, 75, 255, 0.25)',
-                    boxShadow: 'var(--shadow-neu-btn)',
+                    background: 'var(--bg-card)',
+                    border: '1.5px solid rgba(23, 75, 255, 0.35)',
+                    boxShadow: 'var(--shadow-sm)',
                     overflow: 'hidden',
                     flexShrink: 0,
                     display: 'flex',
@@ -962,10 +970,10 @@ public class KarpomExample {
                   {/* AI Response Card */}
                   <div style={{
                     flex: 1,
-                    background: '#FFFFFF',
+                    background: 'var(--bg-card)',
                     borderRadius: '20px',
                     border: '1px solid var(--border)',
-                    boxShadow: 'var(--shadow-neu-raised)',
+                    boxShadow: 'var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
                     padding: '22px 24px',
                     display: 'flex',
                     flexDirection: 'column',
@@ -1000,10 +1008,9 @@ public class KarpomExample {
                         </div>
                         {/* Formatted Code Block with Copy Button */}
                         <div style={{
-                          background: '#F8FAFD',
+                          background: 'var(--bg-input)',
                           borderRadius: '14px',
-                          border: '1px solid var(--border)',
-                          boxShadow: 'var(--shadow-neu-inset)',
+                          border: '1px solid var(--border-subtle)',
                           overflow: 'hidden'
                         }}>
                           {/* Code Header */}
@@ -1013,7 +1020,7 @@ public class KarpomExample {
                             justifyContent: 'space-between',
                             padding: '8px 14px',
                             borderBottom: '1px solid var(--border-subtle)',
-                            background: '#F1F5F9'
+                            background: 'rgba(6, 13, 29, 0.85)'
                           }}>
                             <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--primary)' }}>
                               {msg.language || 'Java'}
@@ -1044,7 +1051,7 @@ public class KarpomExample {
                             fontFamily: 'var(--font-mono)',
                             fontSize: '13px',
                             lineHeight: 1.6,
-                            color: '#0F172A',
+                            color: '#E2E8F0',
                             overflowX: 'auto'
                           }}>
                             <code>{msg.codeSnippet}</code>
@@ -1060,11 +1067,11 @@ public class KarpomExample {
             {isLoading && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', paddingLeft: '48px' }}>
                 <div style={{
-                  background: '#FFFFFF',
+                  background: 'var(--bg-card)',
                   borderRadius: '16px',
                   padding: '10px 18px',
                   border: '1px solid var(--border)',
-                  boxShadow: 'var(--shadow-neu-btn)',
+                  boxShadow: 'var(--shadow-sm)',
                   fontSize: '13px',
                   color: 'var(--primary)',
                   fontWeight: '600',
@@ -1089,10 +1096,10 @@ public class KarpomExample {
 
           {/* D. Bottom Floating Input Bar matching Reference Image */}
           <div style={{
-            background: '#FFFFFF',
+            background: 'var(--bg-card)',
             borderRadius: '9999px',
             border: '1px solid var(--border)',
-            boxShadow: 'var(--shadow-neu-raised)',
+            boxShadow: 'var(--shadow-md)',
             padding: '6px 8px 6px 14px',
             display: 'flex',
             alignItems: 'center',

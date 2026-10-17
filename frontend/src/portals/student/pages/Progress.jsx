@@ -123,7 +123,7 @@ export default function Progress({ studentData }) {
 
         {/* Study Time */}
         <div className="ui-card" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <div style={{ width: '52px', height: '52px', borderRadius: '14px', background: '#eff6ff', color: '#3b82f6', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <div style={{ width: '52px', height: '52px', borderRadius: '14px', background: 'rgba(59, 130, 246, 0.15)', color: '#60a5fa', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
             <Clock size={24} />
           </div>
           <div>

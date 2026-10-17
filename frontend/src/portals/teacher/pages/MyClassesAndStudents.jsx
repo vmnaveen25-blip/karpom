@@ -141,11 +141,12 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
           width: '56px',
           height: '56px',
           borderRadius: '14px',
-          background: '#eff6ff',
+          background: 'rgba(37, 99, 235, 0.16)',
+          border: '1px solid rgba(59, 130, 246, 0.25)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: '#2563eb',
+          color: '#60a5fa',
           flexShrink: 0
         }}>
           <Code2 size={28} />
@@ -158,11 +159,12 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
           width: '56px',
           height: '56px',
           borderRadius: '14px',
-          background: '#eff6ff',
+          background: 'rgba(59, 130, 246, 0.16)',
+          border: '1px solid rgba(59, 130, 246, 0.25)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: '#3b82f6',
+          color: '#60a5fa',
           flexShrink: 0
         }}>
           <Settings size={28} />
@@ -578,10 +580,10 @@ export default function MyClassesAndStudents({ teacherData, setActiveTab }) {
           {/* Subheader: Classes using this course + Search */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
             <div>
-              <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', margin: '0 0 2px 0' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--text-main)', margin: '0 0 2px 0' }}>
                 Classes using this course
               </h2>
-              <p style={{ fontSize: '13px', color: '#64748b', margin: 0 }}>
+              <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: 0 }}>
                 This course is offered to {courseClasses.length || 4} classes across 3 departments.
               </p>
             </div>
